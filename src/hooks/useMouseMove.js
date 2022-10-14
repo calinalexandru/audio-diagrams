@@ -1,12 +1,13 @@
 import { useEffect } from 'preact/hooks';
 import { fromEvent, switchMap, takeUntil, tap } from 'rxjs';
 
-export default function useMouseMove({ elRef, xVarName, yVarName }) {
+export default function useMouseMove({ elRef, buttonRef, xVarName, yVarName }) {
+  let { mousedown, mouseup, move } = {};
   useEffect(() => {
-    if (elRef.current) {
-      const mousedown = fromEvent(elRef.current, 'mousedown');
-      const mouseup = fromEvent(elRef.current, 'mouseup');
-      const move = fromEvent(document, 'mousemove');
+    if (buttonRef.current && elRef.current) {
+      mousedown = fromEvent(buttonRef.current, 'mousedown');
+      mouseup = fromEvent(elRef.current, 'mouseup');
+      move = fromEvent(document, 'mousemove');
       const style = getComputedStyle(elRef.current);
       const { width, height } = style;
 
@@ -30,7 +31,6 @@ export default function useMouseMove({ elRef, xVarName, yVarName }) {
         )
         .subscribe(() => null);
     }
-
-    return () => mousedown.unsubscribe();
-  }, [elRef?.current]);
+    return () => mousedown?.unsubscribe?.();
+  }, [buttonRef?.current, elRef?.current]);
 }

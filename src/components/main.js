@@ -1,6 +1,8 @@
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
-import state$ from '../store/store';
+import { NODE_TYPE } from '../constants';
+import useAudioNodes from '../hooks/useAudioNodes';
+import { useImmerx } from '../store/state';
 import Oscillator from './oscillator';
 import Output from './output';
 
@@ -18,24 +20,25 @@ const Container = ({ children }) => (
 );
 
 export default function Main() {
+  const [{ nodes = [], properties = {} }, update] = useImmerx();
+  console.log('Main.state.nodes', nodes);
   // create web audio api context
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-  // create Oscillator node
-  const oscillator = audioCtx.createOscillator();
-
-  oscillator.type = 'square';
-  oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // value in hertz
-  oscillator.connect(audioCtx.destination);
-  // oscillator.start();
-  //
-  useEffect(() => {
-    state$.update((draft) => void (draft.otherParent = {}));
-    state$.update((draft) => void (draft.otherParent = {}));
-  }, []);
+  useAudioNodes({ nodes, properties });
+  const clearAllNodes = () => {
+    update((draft) => void (draft.nodes = []));
+  };
 
   return (
     <Container>
+      <div
+        style={{
+          position: 'absolute',
+          right: 0,
+        }}
+      >
+        <button onClick={clearAllNodes}>Clear all connections</button>
+      </div>
       <Oscillator />
       <Output />
     </Container>

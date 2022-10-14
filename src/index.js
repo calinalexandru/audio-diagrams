@@ -1,5 +1,6 @@
 import { h, render } from 'preact';
 import Main from './components/main';
+import './store/store';
 // import React from 'react';
 // Tells babel to use h for JSX. It's better to configure this globally.
 // See https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#usage
