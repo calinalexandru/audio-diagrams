@@ -1,10 +1,17 @@
+import { State } from 'immerx';
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { useRef } from 'react';
-import { DEFAULT_NODES, NODE_TYPE } from '../constants';
+import {
+  DEFAULT_GAIN,
+  DEFAULT_NODES,
+  DEFAULT_OSCILLATOR,
+  NODE_TYPE,
+} from '../constants';
 import useAudioNodes from '../hooks/useAudioNodes';
 import Line from '../primitives/Line';
 import { useImmerx } from '../store/state';
+import Gain from './gain';
 import Oscillator from './oscillator';
 import Output from './output';
 
@@ -21,26 +28,11 @@ const Container = ({ children }) => (
   </div>
 );
 
-const oscObj = {
-  type: NODE_TYPE.OSCILLATOR,
-  properties: {
-    type: 'sine',
-    frequency: 440,
-    detune: 0,
-  },
-  position: {
-    x: 0,
-    y: 0,
-    width: '100px',
-    height: '50px',
-  },
-};
-
 const fromPos = { position: undefined };
 // const toPos = { position: undefined };
 
 export default function Main() {
-  const [{ nodes = [], wires = [] }, update] = useImmerx();
+  const [{ nodes = [], wires = [], connecting = [] }, update] = useImmerx();
   console.log('Main.state.nodes', nodes);
   // create web audio api context
   // const oscRef = useRef({});
@@ -69,9 +61,15 @@ export default function Main() {
     });
   };
 
-  const addNode = () => {
+  const addOscilator = () => {
     update((draft) => {
-      draft.nodes.push({ ...oscObj });
+      draft.nodes.push({ ...DEFAULT_OSCILLATOR });
+    });
+  };
+
+  const addGain = () => {
+    update((draft) => {
+      draft.nodes.push({ ...DEFAULT_GAIN });
     });
   };
 
@@ -86,13 +84,24 @@ export default function Main() {
         }}
       >
         <button onClick={clearAllNodes}>Remove all audio nodes</button>
-        <button onClick={cancelConnection}>Cancel connection</button>
+        <button
+          onClick={cancelConnection}
+          style={{
+            background: connecting.length ? 'antiquewhite' : '#fff',
+          }}
+        >
+          Cancel connection
+        </button>
         <button onClick={clearAllWires}>Clear all wires</button>
       </div>
-      <button onClick={addNode}>Add Oscillator</button>
+      <button onClick={addOscilator}>Add Oscillator</button>
+      <button onClick={addGain}>Add Gain</button>
       {nodes.map(
         (node, index) =>
-          node.type === NODE_TYPE.OSCILLATOR && <Oscillator index={index} />
+          (node.type === NODE_TYPE.OSCILLATOR && (
+            <Oscillator index={index} />
+          )) ||
+          (node.type === NODE_TYPE.GAIN && <Gain index={index} />)
       )}
       <Output index={outputIndex} />
       {wires.map(({ from: fromIndex, to: toIndex }, index) => {

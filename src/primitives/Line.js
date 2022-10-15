@@ -5,11 +5,6 @@ export default function Line({ from: ogFrom, to: ogTo }) {
   let from = ogFrom;
   let to = ogTo;
 
-  // if (from.y < to.y) {
-  // from = ogTo;
-  // to = ogFrom;
-  // }
-
   const heightRaw = Number(to.height.replace('px', ''));
   const fromHeightRaw = Number(from.height.replace('px', ''));
   const leftRaw = from.x + Number(from.width.replace('px', ''));

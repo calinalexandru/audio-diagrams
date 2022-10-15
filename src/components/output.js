@@ -17,14 +17,19 @@ export default function Output({ index }) {
   const setPosition = (pos) => {
     update((draft) => void (draft.nodes[index].position = pos));
   };
-  useMouseMove({ elRef, buttonRef, xVarName, yVarName, setPosition });
+  useMouseMove({
+    elRef,
+    buttonRef,
+    xVarName,
+    yVarName,
+    position: state.nodes[index].position,
+    setPosition,
+  });
 
   return (
     <div
       ref={elRef}
       style={{
-        [xVarName]: '70%',
-        [yVarName]: '50%',
         boxSizing: 'border-box',
         top: `var(${yVarName})`,
         left: `var(${xVarName})`,
@@ -49,7 +54,7 @@ export default function Output({ index }) {
           addToConnecting(index);
         }}
       >
-        Input
+        Connect
       </button>
       Audio output
     </div>

@@ -22,7 +22,7 @@ const Container = ({ children, style, myRef, ...rest }) => (
       boxSizing: 'border-box',
       padding: '16px',
       position: 'absolute',
-      background: 'orange',
+      background: 'purple',
       ...style,
     }}
     {...rest}
@@ -39,7 +39,7 @@ const lens = {
   },
 };
 
-export default function Oscillator({ index }) {
+export default function Gain({ index }) {
   const elRef = useRef();
   const buttonRef = useRef();
   const [state, update] = useImmerx();
@@ -60,16 +60,8 @@ export default function Oscillator({ index }) {
     setPosition,
   });
 
-  const setOscillatorType = (type) => {
-    update((draft) => void (draft.nodes[index].properties.type = type));
-  };
-
-  const setOscillatorFreq = (freq) => {
-    update((draft) => void (draft.nodes[index].properties.frequency = freq));
-  };
-
-  const setOscillatorDetune = (val) => {
-    update((draft) => void (draft.nodes[index].properties.detune = val));
+  const setGain = (val) => {
+    update((draft) => void (draft.nodes[index].properties.gain = val));
   };
 
   const removeNode = () => {
@@ -80,9 +72,10 @@ export default function Oscillator({ index }) {
     <Container
       myRef={elRef}
       style={{
+        [xVarName]: '20%',
+        [yVarName]: '50%',
         top: `var(${yVarName})`,
         left: `var(${xVarName})`,
-        opacity: state.nodes.includes(NODE_TYPE.OSCILLATOR) ? 1 : 0.6,
       }}
     >
       <div>
@@ -96,76 +89,16 @@ export default function Oscillator({ index }) {
         </button>
         <button onClick={removeNode}>Remove</button>
       </div>
-      <h3>Oscillator</h3>
+      <h3>Gain</h3>
       <div>
-        Freq:{' '}
+        Gain:{' '}
         <input
           type="number"
-          value={state.nodes[index].properties.frequency}
+          value={state.nodes[index].properties.gain}
           onChange={(e) => {
-            setOscillatorFreq(Number(e.target.value));
+            setGain(e.target.value);
           }}
         />
-      </div>
-      <div>
-        Detune:{' '}
-        <input
-          type="number"
-          value={state.nodes[index].properties.detune}
-          onChange={(e) => {
-            setOscillatorDetune(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <label>
-          <input
-            type="radio"
-            value="sine"
-            id="sine"
-            name="type"
-            onClick={() => {
-              setOscillatorType('sine');
-            }}
-          />
-          Sine
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="square"
-            id="square"
-            name="type"
-            onClick={() => {
-              setOscillatorType('square');
-            }}
-          />
-          Square
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="sawtooth"
-            id="sawtooth"
-            name="type"
-            onClick={() => {
-              setOscillatorType('sawtooth');
-            }}
-          />
-          Sawtooth
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="triangle"
-            id="triangle"
-            name="type"
-            onClick={() => {
-              setOscillatorType('triangle');
-            }}
-          />
-          Triangle
-        </label>
       </div>
       <button
         onClick={() => {

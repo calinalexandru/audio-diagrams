@@ -20,14 +20,19 @@ export default function useAudioNodes({ nodes, wires }) {
           );
           oscillator.start();
           return oscillator;
+        } else if (node.type === NODE_TYPE.GAIN) {
+          const gain = audioCtx.createGain();
+          gain.gain.value = node.properties.gain;
+          return gain;
         } else {
           return audioCtx.destination;
         }
       });
     console.log('audioNodes, nodes', audioNodes, nodes);
-    // wires.forEach((wire) => {
-    // audioNodes[wire.from].connect(audioNodes[wire.to]);
-    // });
+    wires.forEach((wire) => {
+      console.log('connecting.wire', wire);
+      audioNodes[wire.from].connect(audioNodes[wire.to]);
+    });
 
     return () => {
       // disconnect all audio nodes from their destination
