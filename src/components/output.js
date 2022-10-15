@@ -31,7 +31,7 @@ export default function Output({ index }) {
         top: `var(${yVarName})`,
         left: `var(${xVarName})`,
         cursor: 'pointer',
-        padding: '16px',
+        padding: '8px',
         position: 'absolute',
         background: 'green',
       }}

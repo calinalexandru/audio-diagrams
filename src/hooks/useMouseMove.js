@@ -10,7 +10,7 @@ export default function useMouseMove({
   position,
   index,
 }) {
-  const { setPosition } = useNodes();
+  const { setPosition, setXY } = useNodes();
   let { mousedown, mouseup, move, x, y, pos = {} } = {};
   useEffect(() => {
     console.log('pozition', position);
@@ -39,13 +39,7 @@ export default function useMouseMove({
               tap((e) => {
                 x = e.clientX - Number(width.replace('px', '')) / 2;
                 y = e.clientY - Number(height.replace('px', '')) / 2;
-                pos = {
-                  x,
-                  y,
-                  width,
-                  height,
-                };
-                setPosition(index, pos);
+                setXY(index, x, y);
                 elRef.current.style.setProperty(xVarName, `${x}px`);
                 elRef.current.style.setProperty(yVarName, `${y}px`);
               }),

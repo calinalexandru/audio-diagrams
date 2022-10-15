@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes borderFlow {
+  0% {
+    border-color: #333;
+  }
+  50% {
+    border-color: #555;
+  }
+  100% {
+    border-color: #333;
+  }
+}

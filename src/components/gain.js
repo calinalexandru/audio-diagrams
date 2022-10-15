@@ -21,7 +21,7 @@ const Container = ({ children, style, myRef, ...rest }) => (
     ref={myRef}
     style={{
       boxSizing: 'border-box',
-      padding: '16px',
+      padding: '8px',
       position: 'absolute',
       background: 'purple',
       ...style,
@@ -66,8 +66,6 @@ export default function Gain({ index }) {
     <Container
       myRef={elRef}
       style={{
-        [xVarName]: '20%',
-        [yVarName]: '50%',
         top: `var(${yVarName})`,
         left: `var(${xVarName})`,
       }}
@@ -95,6 +93,7 @@ export default function Gain({ index }) {
         <input
           type="number"
           value={state.nodes[index].properties.gain}
+          step="0.1"
           onChange={(e) => {
             setGain(e.target.value);
           }}

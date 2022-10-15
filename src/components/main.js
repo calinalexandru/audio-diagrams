@@ -73,6 +73,10 @@ export default function Main() {
     });
   };
 
+  const removeLine = (index) => {
+    update((draft) => void draft.wires.splice(index, 1));
+  };
+
   const outputIndex = nodes.findIndex((node) => node.type === NODE_TYPE.OUTPUT);
 
   return (
@@ -107,7 +111,18 @@ export default function Main() {
       {wires.map(({ from: fromIndex, to: toIndex }, index) => {
         const to = nodes?.[toIndex]?.position;
         const from = nodes?.[fromIndex]?.position;
-        return to && from && <Line from={from} to={to} />;
+        return (
+          to &&
+          from && (
+            <Line
+              onClick={() => {
+                removeLine(index);
+              }}
+              from={from}
+              to={to}
+            />
+          )
+        );
       })}
     </Container>
   );

@@ -1,7 +1,6 @@
 import { h } from 'preact';
 
-export default function Line({ from: ogFrom, to: ogTo }) {
-  console.log('Line', { from, to });
+export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   let from = ogFrom;
   let to = ogTo;
 
@@ -25,14 +24,17 @@ export default function Line({ from: ogFrom, to: ogTo }) {
 
   return (
     <div
+      onClick={onClick}
       style={{
         width,
         left,
         top,
-        borderTop: '10px solid #333',
+        height: '1px',
+        borderTop: '6px solid #333',
         position: 'absolute',
         transformOrigin: 'left center',
         transform: `rotate(${angle}deg)`,
+        animation: 'borderFlow 3s ease-in-out infinite',
       }}
     >
       &nbsp;

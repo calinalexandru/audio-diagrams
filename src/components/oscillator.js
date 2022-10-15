@@ -21,7 +21,7 @@ const Container = ({ children, style, myRef, ...rest }) => (
     ref={myRef}
     style={{
       boxSizing: 'border-box',
-      padding: '16px',
+      padding: '8px',
       position: 'absolute',
       background: 'orange',
       ...style,
@@ -76,7 +76,6 @@ export default function Oscillator({ index }) {
       style={{
         top: `var(${yVarName})`,
         left: `var(${xVarName})`,
-        opacity: state.nodes.includes(NODE_TYPE.OSCILLATOR) ? 1 : 0.6,
       }}
     >
       <div>

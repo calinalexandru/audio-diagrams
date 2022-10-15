@@ -12,6 +12,16 @@ export default function useNodes() {
     [update]
   );
 
+  const setXY = useCallback(
+    (index, x, y) => {
+      update((draft) => {
+        draft.nodes[index].position.x = x;
+        draft.nodes[index].position.y = y;
+      });
+    },
+    [update]
+  );
+
   const remove = useCallback(
     (index) => {
       update((draft) => void draft.nodes.splice(index, 1));
@@ -22,5 +32,6 @@ export default function useNodes() {
   return {
     remove,
     setPosition,
+    setXY,
   };
 }
