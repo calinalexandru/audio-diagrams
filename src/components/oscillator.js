@@ -3,6 +3,7 @@ import { h } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import { NODE_TYPE } from '../constants';
 import useMouseMove from '../hooks/useMouseMove';
+import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import { useImmerx } from '../store/state';
 
@@ -46,10 +47,7 @@ export default function Oscillator({ index }) {
   console.log('state, update', { state, update });
 
   const { addToConnecting } = useWiring();
-
-  const setPosition = (pos) => {
-    update((draft) => void (draft.nodes[index].position = pos));
-  };
+  const { remove } = useNodes();
 
   useMouseMove({
     elRef,
@@ -57,7 +55,7 @@ export default function Oscillator({ index }) {
     xVarName,
     yVarName,
     position: state.nodes[index].position,
-    setPosition,
+    index,
   });
 
   const setOscillatorType = (type) => {
@@ -70,10 +68,6 @@ export default function Oscillator({ index }) {
 
   const setOscillatorDetune = (val) => {
     update((draft) => void (draft.nodes[index].properties.detune = val));
-  };
-
-  const removeNode = () => {
-    update((draft) => void draft.nodes.splice(index, 1));
   };
 
   return (
@@ -94,7 +88,13 @@ export default function Oscillator({ index }) {
         >
           DRAG
         </button>
-        <button onClick={removeNode}>Remove</button>
+        <button
+          onClick={() => {
+            remove(index);
+          }}
+        >
+          Remove
+        </button>
       </div>
       <h3>Oscillator</h3>
       <div>

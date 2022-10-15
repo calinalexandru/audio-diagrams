@@ -31,7 +31,11 @@ export default function useAudioNodes({ nodes, wires }) {
     console.log('audioNodes, nodes', audioNodes, nodes);
     wires.forEach((wire) => {
       console.log('connecting.wire', wire);
-      audioNodes[wire.from].connect(audioNodes[wire.to]);
+      try {
+        audioNodes[wire.from].connect(audioNodes[wire.to]);
+      } catch (e) {
+        console.warn('Failed to connect node x to y', e);
+      }
     });
 
     return () => {

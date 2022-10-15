@@ -11,19 +11,16 @@ const yVarName = '--y';
 export default function Output({ index }) {
   const elRef = useRef();
   const buttonRef = useRef();
-  const [state, update] = useImmerx();
+  const [state] = useImmerx();
   const { addToConnecting } = useWiring();
 
-  const setPosition = (pos) => {
-    update((draft) => void (draft.nodes[index].position = pos));
-  };
   useMouseMove({
     elRef,
     buttonRef,
     xVarName,
     yVarName,
     position: state.nodes[index].position,
-    setPosition,
+    index,
   });
 
   return (

@@ -1,5 +1,6 @@
 import { useEffect } from 'preact/hooks';
 import { fromEvent, switchMap, takeUntil, tap } from 'rxjs';
+import useNodes from './useNodes';
 
 export default function useMouseMove({
   elRef,
@@ -7,8 +8,9 @@ export default function useMouseMove({
   xVarName,
   yVarName,
   position,
-  setPosition,
+  index,
 }) {
+  const { setPosition } = useNodes();
   let { mousedown, mouseup, move, x, y, pos = {} } = {};
   useEffect(() => {
     console.log('pozition', position);
@@ -28,7 +30,7 @@ export default function useMouseMove({
         width,
         height,
       };
-      setPosition(pos);
+      setPosition(index, pos);
 
       mousedown
         .pipe(
@@ -43,7 +45,7 @@ export default function useMouseMove({
                   width,
                   height,
                 };
-                setPosition(pos);
+                setPosition(index, pos);
                 elRef.current.style.setProperty(xVarName, `${x}px`);
                 elRef.current.style.setProperty(yVarName, `${y}px`);
               }),

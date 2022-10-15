@@ -3,6 +3,7 @@ import { h } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import { NODE_TYPE } from '../constants';
 import useMouseMove from '../hooks/useMouseMove';
+import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import { useImmerx } from '../store/state';
 
@@ -46,10 +47,7 @@ export default function Gain({ index }) {
   console.log('state, update', { state, update });
 
   const { addToConnecting } = useWiring();
-
-  const setPosition = (pos) => {
-    update((draft) => void (draft.nodes[index].position = pos));
-  };
+  const { remove } = useNodes();
 
   useMouseMove({
     elRef,
@@ -57,15 +55,11 @@ export default function Gain({ index }) {
     xVarName,
     yVarName,
     position: state.nodes[index].position,
-    setPosition,
+    index,
   });
 
   const setGain = (val) => {
     update((draft) => void (draft.nodes[index].properties.gain = val));
-  };
-
-  const removeNode = () => {
-    update((draft) => void draft.nodes.splice(index, 1));
   };
 
   return (
@@ -87,7 +81,13 @@ export default function Gain({ index }) {
         >
           DRAG
         </button>
-        <button onClick={removeNode}>Remove</button>
+        <button
+          onClick={() => {
+            remove(index);
+          }}
+        >
+          Remove
+        </button>
       </div>
       <h3>Gain</h3>
       <div>
