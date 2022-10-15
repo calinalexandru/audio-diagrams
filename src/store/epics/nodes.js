@@ -1,14 +1,34 @@
 import { ADD, combineEpics, REMOVE, REPLACE } from '@immerx/observable';
-import { filter, ignoreElements, pluck, tap } from 'rxjs';
+import { patchOf } from '@immerx/observable/operators';
+import {
+  concatMap,
+  filter,
+  ignoreElements,
+  map,
+  of,
+  pluck,
+  switchMap,
+  take,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 
-const addAudioNode = (patch$) =>
+const addToConnectingEpic = (patch$, state$) =>
   patch$.pipe(
-    filter((patch) => [ADD, REPLACE, REMOVE].includes(patch.op)),
-    pluck('value'),
-    tap(() => {
-      console.log('something changed in the matrix');
-    }),
-    ignoreElements()
+    patchOf({ op: ADD, path: ['connecting'] }),
+    withLatestFrom(state$),
+    map(([action, state]) => (draft) => {
+      console.log('state$.val', state);
+      if (state.connecting.length >= 2) {
+        draft.wires.push({
+          from: state.connecting[0],
+          to: state.connecting[1],
+        });
+        draft.connecting = [];
+      } else {
+        draft.wires = state.wires;
+      }
+    })
   );
 
-export default combineEpics(addAudioNode);
+export default combineEpics(addToConnectingEpic);

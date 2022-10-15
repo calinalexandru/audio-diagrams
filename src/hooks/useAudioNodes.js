@@ -1,31 +1,33 @@
 import { useEffect } from 'preact/hooks';
 import { NODE_TYPE } from '../constants';
 
-export default function useAudioNodes({ nodes, properties }) {
+export default function useAudioNodes({ nodes, wires }) {
   useEffect(() => {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const audioNodes = nodes
-      .filter((node) => [NODE_TYPE.OSCILLATOR].includes(node))
+      // .filter((node) => [NODE_TYPE.OSCILLATOR].includes(node.type))
       .map((node) => {
-        if (node === NODE_TYPE.OSCILLATOR) {
+        if (node.type === NODE_TYPE.OSCILLATOR) {
           const oscillator = audioCtx.createOscillator();
-          oscillator.type = properties.oscillator.type;
+          oscillator.type = node.properties.type;
           oscillator.detune.setValueAtTime(
-            properties.oscillator.detune,
+            node.properties.detune,
             audioCtx.currentTime
           );
           oscillator.frequency.setValueAtTime(
-            properties.oscillator.frequency,
+            node.properties.frequency,
             audioCtx.currentTime
           );
           oscillator.start();
           return oscillator;
+        } else {
+          return audioCtx.destination;
         }
       });
-    if (audioNodes.length && nodes.includes(NODE_TYPE.OUTPUT)) {
-      // connect last node to audio output
-      audioNodes[audioNodes.length - 1].connect(audioCtx.destination);
-    }
+    console.log('audioNodes, nodes', audioNodes, nodes);
+    // wires.forEach((wire) => {
+    // audioNodes[wire.from].connect(audioNodes[wire.to]);
+    // });
 
     return () => {
       // disconnect all audio nodes from their destination
@@ -33,5 +35,5 @@ export default function useAudioNodes({ nodes, properties }) {
         audioNode.disconnect();
       });
     };
-  }, [nodes]);
+  }, [nodes, wires]);
 }

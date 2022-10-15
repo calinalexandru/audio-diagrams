@@ -8,7 +8,7 @@
       "privateMethod": false,
       "classProperty": false,
       "functionBind": false,
-      "decorators": false,
+      "decorators": true,
       "decoratorsBeforeExport": false
     },
     "transform": {
@@ -17,7 +17,7 @@
         "pragmaFrag": "Fragment",
         "throwIfNamespace": true,
         "development": false,
-        "useBuiltins": false
+        "useBuiltins": true
       },
       "optimizer": {
         "globals": {

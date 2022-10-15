@@ -24,7 +24,26 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-          { loader: 'swc-loader', },
+          { loader: 'swc-loader' },
+          // {
+          //   loader: '@linaria/webpack5-loader',
+          //   options: {
+          //     sourceMap: false,
+          //   },
+          // },
+        ],
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: { injectType: 'singletonStyleTag' },
+          },
+          'css-loader',
         ],
       },
     ],
@@ -49,30 +68,33 @@ const config = {
     minimizer: [],
   },
   resolve: {
-    extensions: [ '*', '.js', '.jsx', ],
+    extensions: ['*', '.js', '.jsx'],
+    modules: [path.resolve(__dirname, './src'), 'node_modules'],
     alias: {
+      // react: 'preact/compat',
+      // 'react-dom': 'preact/compat',
     },
   },
-  target: [ 'web', ],
+  target: ['web'],
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
       template: './public/index.html',
       ...(isEnvProduction
         ? {
-          minify: {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            minifyCSS: true,
-            minifyURLs: true,
-          },
-        }
+            minify: {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeRedundantAttributes: true,
+              useShortDoctype: true,
+              removeEmptyAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              keepClosingSlash: true,
+              minifyJS: true,
+              minifyCSS: true,
+              minifyURLs: true,
+            },
+          }
         : undefined),
     }),
   ],
@@ -90,7 +112,7 @@ if (mode === 'production') {
           drop_console: true,
         },
       },
-    }),
+    })
   );
 }
 

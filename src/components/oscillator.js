@@ -1,11 +1,35 @@
+// import styled from '@emotion/styled';
 import { h } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import { NODE_TYPE } from '../constants';
 import useMouseMove from '../hooks/useMouseMove';
+import useWiring from '../hooks/useWiring';
 import { useImmerx } from '../store/state';
 
 const xVarName = '--x';
 const yVarName = '--y';
+
+// const Container = styled.div`
+// padding: 16px;
+// position: absolute;
+// background: orange;
+// `;
+
+const Container = ({ children, style, myRef, ...rest }) => (
+  <div
+    ref={myRef}
+    style={{
+      boxSizing: 'border-box',
+      padding: '16px',
+      position: 'absolute',
+      background: 'orange',
+      ...style,
+    }}
+    {...rest}
+  >
+    {children}
+  </div>
+);
 
 const lens = {
   get: (state) => state.nodes,
@@ -15,57 +39,66 @@ const lens = {
   },
 };
 
-export default function Oscillator() {
+export default function Oscillator({ index }) {
   const elRef = useRef();
   const buttonRef = useRef();
-  useMouseMove({ elRef, buttonRef, xVarName, yVarName });
   const [state, update] = useImmerx();
   console.log('state, update', { state, update });
 
-  const toggleActive = () => {
-    update((draft) => {
-      draft.nodes = [...new Set([...draft.nodes, NODE_TYPE.OSCILLATOR])];
-    });
+  const { addToConnecting } = useWiring();
+
+  const setPosition = (pos) => {
+    update((draft) => void (draft.nodes[index].position = pos));
   };
 
+  useMouseMove({ elRef, buttonRef, xVarName, yVarName, setPosition });
+
   const setOscillatorType = (type) => {
-    update((draft) => void (draft.properties.oscillator.type = type));
+    update((draft) => void (draft.nodes[index].properties.type = type));
   };
 
   const setOscillatorFreq = (freq) => {
-    update((draft) => void (draft.properties.oscillator.frequency = freq));
+    update((draft) => void (draft.nodes[index].properties.frequency = freq));
   };
 
   const setOscillatorDetune = (val) => {
-    update((draft) => void (draft.properties.oscillator.detune = val));
+    update((draft) => void (draft.nodes[index].properties.detune = val));
+  };
+
+  const removeNode = () => {
+    update((draft) => void draft.nodes.splice(index, 1));
   };
 
   return (
-    <div
-      ref={elRef}
-      onClick={toggleActive}
+    <Container
+      myRef={elRef}
       style={{
-        [xVarName]: '30%',
-        [yVarName]: '30%',
+        [xVarName]: '10%',
+        [yVarName]: '50%',
         top: `var(${yVarName})`,
         left: `var(${xVarName})`,
-        cursor: 'pointer',
-        padding: '16px',
-        position: 'absolute',
-        background: 'orange',
+        opacity: state.nodes.includes(NODE_TYPE.OSCILLATOR) ? 1 : 0.6,
       }}
     >
       <div>
-        <button ref={buttonRef}>move</button>
+        <button
+          style={{
+            cursor: 'pointer',
+          }}
+          ref={buttonRef}
+        >
+          DRAG
+        </button>
+        <button onClick={removeNode}>Remove</button>
       </div>
       <h3>Oscillator</h3>
       <div>
         Freq:{' '}
         <input
           type="number"
-          value={state.properties.oscillator.frequency}
+          value={state.nodes[index].properties.frequency}
           onChange={(e) => {
-            setOscillatorFreq(e.target.value);
+            setOscillatorFreq(Number(e.target.value));
           }}
         />
       </div>
@@ -73,15 +106,14 @@ export default function Oscillator() {
         Detune:{' '}
         <input
           type="number"
-          value={state.properties.oscillator.detune}
+          value={state.nodes[index].properties.detune}
           onChange={(e) => {
             setOscillatorDetune(e.target.value);
           }}
         />
       </div>
       <div>
-        <label for="sine">
-          Sine
+        <label>
           <input
             type="radio"
             value="sine"
@@ -91,10 +123,9 @@ export default function Oscillator() {
               setOscillatorType('sine');
             }}
           />
+          Sine
         </label>
-
-        <label for="square">
-          Square
+        <label>
           <input
             type="radio"
             value="square"
@@ -104,10 +135,9 @@ export default function Oscillator() {
               setOscillatorType('square');
             }}
           />
+          Square
         </label>
-
-        <label for="sawtooth">
-          Sawtooth
+        <label>
           <input
             type="radio"
             value="sawtooth"
@@ -117,10 +147,9 @@ export default function Oscillator() {
               setOscillatorType('sawtooth');
             }}
           />
+          Sawtooth
         </label>
-
-        <label for="triangle">
-          Triangle
+        <label>
           <input
             type="radio"
             value="triangle"
@@ -130,8 +159,16 @@ export default function Oscillator() {
               setOscillatorType('triangle');
             }}
           />
+          Triangle
         </label>
       </div>
-    </div>
+      <button
+        onClick={() => {
+          addToConnecting(index);
+        }}
+      >
+        Output
+      </button>
+    </Container>
   );
 }
