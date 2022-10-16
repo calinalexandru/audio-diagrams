@@ -12,13 +12,9 @@ export default function useMouseMove({
   nodes,
 }) {
   const { setPosition, setXY } = useNodes();
-  let { mousedown, mouseup, move, x, y, pos = {} } = {};
   useEffect(() => {
-    // console.log('pozition', position);
+    let { x, y, pos = {} } = {};
     if (buttonRef.current && elRef.current) {
-      mousedown = fromEvent(buttonRef.current, 'mousedown');
-      mouseup = fromEvent(document, 'mouseup');
-      move = fromEvent(document, 'mousemove');
       const style = getComputedStyle(elRef.current);
       // console.log('useMouseMove.style', style);
       const { width = '30px', height = '20px' } = style || {};
@@ -32,11 +28,10 @@ export default function useMouseMove({
         height,
       };
       setPosition(index, pos);
-
-      mousedown
+      const mousedown = fromEvent(buttonRef.current, 'mousedown')
         .pipe(
           switchMap(() =>
-            move.pipe(
+            fromEvent(document, 'mousemove').pipe(
               tap((e) => {
                 x = e.clientX - Number(width.replace('px', '')) / 2;
                 y = e.clientY - Number(height.replace('px', '')) / 2;
@@ -44,12 +39,14 @@ export default function useMouseMove({
                 elRef.current.style.setProperty(xVarName, `${x}px`);
                 elRef.current.style.setProperty(yVarName, `${y}px`);
               }),
-              takeUntil(mouseup)
+              takeUntil(fromEvent(document, 'mouseup'))
             )
           )
         )
         .subscribe(() => null);
+      return () => {
+        mousedown.unsubscribe();
+      };
     }
-    return () => mousedown?.unsubscribe?.();
-  }, [buttonRef?.current, elRef?.current, nodes]);
+  }, [buttonRef?.current, elRef?.current, nodes, index]);
 }

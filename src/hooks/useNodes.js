@@ -21,6 +21,7 @@ export default function useNodes() {
 
   const setXY = useCallback(
     (index, x, y) => {
+      console.log('setXY', { index, x, y });
       update((draft) => {
         draft.positions[index].x = x;
         draft.positions[index].y = y;
@@ -34,9 +35,20 @@ export default function useNodes() {
       update((draft) => {
         draft.positions.splice(index, 1);
         draft.nodes.splice(index, 1);
+
+        // find and delete any connected wires
+        [
+          ...new Set(
+            state.wires.map((wire, i) =>
+              [wire.from, wire.to].includes(index) ? i : false
+            )
+          ),
+        ].forEach((wireIndex) => {
+          if (!Number.isNaN) draft.wires.splice(wireIndex, 1);
+        });
       });
     },
-    [update]
+    [update, state.wires]
   );
 
   return {
