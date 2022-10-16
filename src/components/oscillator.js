@@ -1,36 +1,8 @@
-// import styled from '@emotion/styled';
 import { h } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
-import { NODE_TYPE } from '../constants';
+import { useRef } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
-import useNodes from '../hooks/useNodes';
-import useWiring from '../hooks/useWiring';
 import { useImmerx } from '../store/state';
-
-const xVarName = '--x';
-const yVarName = '--y';
-
-// const Container = styled.div`
-// padding: 16px;
-// position: absolute;
-// background: orange;
-// `;
-
-const Container = ({ children, style, myRef, ...rest }) => (
-  <div
-    ref={myRef}
-    style={{
-      boxSizing: 'border-box',
-      padding: '8px',
-      position: 'absolute',
-      background: 'orange',
-      ...style,
-    }}
-    {...rest}
-  >
-    {children}
-  </div>
-);
+import BoxNode from './BoxNode';
 
 const lens = {
   get: (state) => state.nodes,
@@ -46,14 +18,9 @@ export default function Oscillator({ index }) {
   const [state, update] = useImmerx();
   console.log('state, update', { state, update });
 
-  const { addToConnecting } = useWiring();
-  const { remove } = useNodes();
-
   useMouseMove({
     elRef,
     buttonRef,
-    xVarName,
-    yVarName,
     position: state.nodes[index].position,
     index,
   });
@@ -71,34 +38,19 @@ export default function Oscillator({ index }) {
   };
 
   return (
-    <Container
-      myRef={elRef}
+    <BoxNode
+      ref={elRef}
+      index={index}
+      buttonRef={buttonRef}
       style={{
-        top: `var(${yVarName})`,
-        left: `var(${xVarName})`,
+        background: 'orange',
       }}
+      name="Oscillator"
     >
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-          }}
-          ref={buttonRef}
-        >
-          DRAG
-        </button>
-        <button
-          onClick={() => {
-            remove(index);
-          }}
-        >
-          Remove
-        </button>
-      </div>
-      <h3>Oscillator</h3>
       <div>
         Freq:{' '}
         <input
+          style={{ width: '50px' }}
           type="number"
           value={state.nodes[index].properties.frequency}
           onChange={(e) => {
@@ -110,13 +62,14 @@ export default function Oscillator({ index }) {
         Detune:{' '}
         <input
           type="number"
+          style={{ width: '50px' }}
           value={state.nodes[index].properties.detune}
           onChange={(e) => {
             setOscillatorDetune(e.target.value);
           }}
         />
       </div>
-      <div>
+      <div style={{ display: 'none' }}>
         <label>
           <input
             type="radio"
@@ -166,13 +119,6 @@ export default function Oscillator({ index }) {
           Triangle
         </label>
       </div>
-      <button
-        onClick={() => {
-          addToConnecting(index);
-        }}
-      >
-        Connect
-      </button>
-    </Container>
+    </BoxNode>
   );
 }

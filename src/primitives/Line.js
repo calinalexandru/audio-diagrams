@@ -1,5 +1,7 @@
 import { h } from 'preact';
 
+const OFFSET_HYPOTHENUSE = 30;
+const OFFSET_LEFT = 30;
 export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   let from = ogFrom;
   let to = ogTo;
@@ -18,7 +20,7 @@ export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   const hypothen = Math.sqrt(Math.pow(c1, 2) + Math.pow(c2, 2));
   console.log(`c1: ${c1}, c2: ${c2}, h: ${hypothen}`);
   const angle = ((Math.atan2(c1, c2) * 180) / Math.PI) * -1;
-  const width = `${hypothen}px`; //`${widthRaw}px`;
+  const width = `${hypothen + OFFSET_HYPOTHENUSE}px`; //`${widthRaw}px`;
 
   console.log('angle', angle);
 
@@ -32,6 +34,7 @@ export default function Line({ from: ogFrom, to: ogTo, onClick }) {
         height: '1px',
         borderTop: '6px solid #333',
         position: 'absolute',
+        zIndex: 10,
         transformOrigin: 'left center',
         transform: `rotate(${angle}deg)`,
         animation: 'borderFlow 3s ease-in-out infinite',

@@ -12,8 +12,8 @@ export default function useWiring() {
   );
 
   const addToConnecting = useCallback(
-    (index) => {
-      update((draft) => void draft.connecting.push(index));
+    (index, direction) => {
+      update((draft) => void draft.connecting.push({ index, direction }));
     },
     [update]
   );

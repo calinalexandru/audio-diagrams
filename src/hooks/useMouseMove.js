@@ -5,8 +5,8 @@ import useNodes from './useNodes';
 export default function useMouseMove({
   elRef,
   buttonRef,
-  xVarName,
-  yVarName,
+  xVarName = '--x',
+  yVarName = '--y',
   position,
   index,
 }) {

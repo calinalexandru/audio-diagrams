@@ -12,8 +12,8 @@ import useAudioNodes from '../hooks/useAudioNodes';
 import Line from '../primitives/Line';
 import { useImmerx } from '../store/state';
 import Gain from './gain';
-import Oscillator from './oscillator';
-import Output from './output';
+import Oscillator from './Oscillator';
+import Output from './Output';
 
 const Container = ({ children }) => (
   <div

@@ -71,7 +71,7 @@ const config = {
     extensions: ['*', '.js', '.jsx'],
     modules: [path.resolve(__dirname, './src'), 'node_modules'],
     alias: {
-      // react: 'preact/compat',
+      react: 'preact/compat',
       // 'react-dom': 'preact/compat',
     },
   },

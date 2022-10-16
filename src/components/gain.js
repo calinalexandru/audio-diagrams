@@ -1,36 +1,9 @@
 // import styled from '@emotion/styled';
 import { h } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
-import { NODE_TYPE } from '../constants';
+import { useRef } from 'preact/hooks';
+import BoxNode from '../components/BoxNode';
 import useMouseMove from '../hooks/useMouseMove';
-import useNodes from '../hooks/useNodes';
-import useWiring from '../hooks/useWiring';
 import { useImmerx } from '../store/state';
-
-const xVarName = '--x';
-const yVarName = '--y';
-
-// const Container = styled.div`
-// padding: 16px;
-// position: absolute;
-// background: orange;
-// `;
-
-const Container = ({ children, style, myRef, ...rest }) => (
-  <div
-    ref={myRef}
-    style={{
-      boxSizing: 'border-box',
-      padding: '8px',
-      position: 'absolute',
-      background: 'purple',
-      ...style,
-    }}
-    {...rest}
-  >
-    {children}
-  </div>
-);
 
 const lens = {
   get: (state) => state.nodes,
@@ -46,14 +19,9 @@ export default function Gain({ index }) {
   const [state, update] = useImmerx();
   console.log('state, update', { state, update });
 
-  const { addToConnecting } = useWiring();
-  const { remove } = useNodes();
-
   useMouseMove({
     elRef,
     buttonRef,
-    xVarName,
-    yVarName,
     position: state.nodes[index].position,
     index,
   });
@@ -63,34 +31,19 @@ export default function Gain({ index }) {
   };
 
   return (
-    <Container
-      myRef={elRef}
+    <BoxNode
+      ref={elRef}
+      buttonRef={buttonRef}
       style={{
-        top: `var(${yVarName})`,
-        left: `var(${xVarName})`,
+        background: 'purple',
       }}
+      index={index}
+      name="Gain"
     >
       <div>
-        <button
-          style={{
-            cursor: 'pointer',
-          }}
-          ref={buttonRef}
-        >
-          DRAG
-        </button>
-        <button
-          onClick={() => {
-            remove(index);
-          }}
-        >
-          Remove
-        </button>
-      </div>
-      <h3>Gain</h3>
-      <div>
-        Gain:{' '}
+        Value:{' '}
         <input
+          style={{ width: '50px' }}
           type="number"
           value={state.nodes[index].properties.gain}
           step="0.1"
@@ -99,13 +52,6 @@ export default function Gain({ index }) {
           }}
         />
       </div>
-      <button
-        onClick={() => {
-          addToConnecting(index);
-        }}
-      >
-        Connect
-      </button>
-    </Container>
+    </BoxNode>
   );
 }

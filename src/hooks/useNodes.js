@@ -1,8 +1,17 @@
 import { useCallback } from 'preact/hooks';
 import { useImmerx } from '../store/state';
 
+// const lens = {
+//   get: (state) => state.nodes,
+//   set: (stateDraft, nodes) => {
+//     console.log('stateDraft', stateDraft, nodes);
+//     stateDraft.nodes = nodes;
+//   },
+// };
 export default function useNodes() {
   const [state, update] = useImmerx();
+
+  console.log('useNodes', state);
 
   const setPosition = useCallback(
     (index, pos) => {

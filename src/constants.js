@@ -11,8 +11,8 @@ export const DEFAULT_NODES = [
     type: 'output',
     properties: {},
     position: {
-      x: 940,
-      y: 700,
+      x: 740,
+      y: 500,
     },
   },
 ];
