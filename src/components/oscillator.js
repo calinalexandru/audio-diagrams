@@ -7,7 +7,7 @@ import BoxNode from './BoxNode';
 const lens = {
   get: (state) => state.nodes,
   set: (stateDraft, nodes) => {
-    console.log('stateDraft', stateDraft, nodes);
+    // console.log('stateDraft', stateDraft, nodes);
     stateDraft.nodes = nodes;
   },
 };
@@ -16,13 +16,15 @@ export default function Oscillator({ index }) {
   const elRef = useRef();
   const buttonRef = useRef();
   const [state, update] = useImmerx();
-  console.log('state, update', { state, update });
+
+  console.log('Oscillator', state);
 
   useMouseMove({
     elRef,
     buttonRef,
-    position: state.nodes[index].position,
+    position: state.positions[index],
     index,
+    nodes: state.nodes,
   });
 
   const setOscillatorType = (type) => {

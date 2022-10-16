@@ -11,12 +11,10 @@ import { useImmerx } from '../store/state';
 export default function useNodes() {
   const [state, update] = useImmerx();
 
-  console.log('useNodes', state);
-
   const setPosition = useCallback(
     (index, pos) => {
       console.log('setPosition', index, pos);
-      update((draft) => void (draft.nodes[index].position = pos));
+      update((draft) => void (draft.positions[index] = pos));
     },
     [update]
   );
@@ -24,8 +22,9 @@ export default function useNodes() {
   const setXY = useCallback(
     (index, x, y) => {
       update((draft) => {
-        draft.nodes[index].position.x = x;
-        draft.nodes[index].position.y = y;
+        console.log('setXY', index, x, y);
+        draft.positions[index].x = x;
+        draft.positions[index].y = y;
       });
     },
     [update]
@@ -33,7 +32,10 @@ export default function useNodes() {
 
   const remove = useCallback(
     (index) => {
-      update((draft) => void draft.nodes.splice(index, 1));
+      update((draft) => {
+        draft.positions.splice(index, 1);
+        draft.nodes.splice(index, 1);
+      });
     },
     [update]
   );

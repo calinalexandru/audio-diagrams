@@ -10,10 +10,13 @@ export const DEFAULT_NODES = [
   {
     type: 'output',
     properties: {},
-    position: {
-      x: 740,
-      y: 500,
-    },
+  },
+];
+
+export const DEFAULT_POSITIONS = [
+  {
+    x: 740,
+    y: 500,
   },
 ];
 
@@ -24,12 +27,13 @@ export const DEFAULT_OSCILLATOR = {
     frequency: 440,
     detune: 0,
   },
-  position: {
-    x: 100,
-    y: 500,
-    width: '100px',
-    height: '50px',
-  },
+};
+
+export const DEFAULT_OSCILLATOR_POSITION = {
+  x: 100,
+  y: 500,
+  width: '100px',
+  height: '50px',
 };
 
 export const DEFAULT_GAIN = {
@@ -37,10 +41,11 @@ export const DEFAULT_GAIN = {
   properties: {
     gain: 0,
   },
-  position: {
-    x: 500,
-    y: 200,
-    width: '100px',
-    height: '50px',
-  },
+};
+
+export const DEFAULT_GAIN_POSITION = {
+  x: 500,
+  y: 200,
+  width: '100px',
+  height: '50px',
 };

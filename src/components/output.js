@@ -9,17 +9,14 @@ import BoxNode from './BoxNode';
 export default function Output({ index }) {
   const elRef = useRef();
   const buttonRef = useRef();
-  const [{ position }] = useImmerx({
-    get: (state) => state.nodes[index],
-  });
-
-  console.log('Output', position);
+  const [state] = useImmerx();
 
   useMouseMove({
     elRef,
     buttonRef,
-    position,
+    position: state.positions[index],
     index,
+    nodes: state.nodes,
   });
 
   return (

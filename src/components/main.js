@@ -4,8 +4,10 @@ import { useEffect } from 'preact/hooks';
 import { useRef } from 'react';
 import {
   DEFAULT_GAIN,
+  DEFAULT_GAIN_POSITION,
   DEFAULT_NODES,
   DEFAULT_OSCILLATOR,
+  DEFAULT_OSCILLATOR_POSITION,
   NODE_TYPE,
 } from '../constants';
 import useAudioNodes from '../hooks/useAudioNodes';
@@ -32,11 +34,16 @@ const fromPos = { position: undefined };
 // const toPos = { position: undefined };
 
 export default function Main() {
-  const [{ nodes = [], wires = [], connecting = [] }, update] = useImmerx();
-  console.log('Main.state.nodes', nodes);
+  const [{ nodes = [], wires = [], connecting = [], positions = [] }, update] =
+    useImmerx();
   // create web audio api context
   // const oscRef = useRef({});
   // const outputRef = useRef({});
+  //
+
+  console.log('Main.wires', wires);
+  console.log('Main.nodes', nodes);
+  console.log('Main.positions', positions);
 
   useAudioNodes({ nodes, wires });
 
@@ -47,6 +54,7 @@ export default function Main() {
       ];
       draft.wires = [];
       draft.connecting = [];
+      draft.positions = [positions[0]];
     });
   };
 
@@ -64,12 +72,14 @@ export default function Main() {
   const addOscilator = () => {
     update((draft) => {
       draft.nodes.push({ ...DEFAULT_OSCILLATOR });
+      draft.positions.push({ ...DEFAULT_OSCILLATOR_POSITION });
     });
   };
 
   const addGain = () => {
     update((draft) => {
       draft.nodes.push({ ...DEFAULT_GAIN });
+      draft.positions.push({ ...DEFAULT_GAIN_POSITION });
     });
   };
 
@@ -109,8 +119,8 @@ export default function Main() {
       )}
       <Output index={outputIndex} />
       {wires.map(({ from: fromIndex, to: toIndex }, index) => {
-        const to = nodes?.[toIndex]?.position;
-        const from = nodes?.[fromIndex]?.position;
+        const to = positions?.[toIndex];
+        const from = positions?.[fromIndex];
         return (
           to &&
           from && (

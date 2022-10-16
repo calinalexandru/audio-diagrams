@@ -9,11 +9,12 @@ export default function useMouseMove({
   yVarName = '--y',
   position,
   index,
+  nodes,
 }) {
   const { setPosition, setXY } = useNodes();
   let { mousedown, mouseup, move, x, y, pos = {} } = {};
   useEffect(() => {
-    console.log('pozition', position);
+    // console.log('pozition', position);
     if (buttonRef.current && elRef.current) {
       mousedown = fromEvent(buttonRef.current, 'mousedown');
       mouseup = fromEvent(document, 'mouseup');
@@ -50,5 +51,5 @@ export default function useMouseMove({
         .subscribe(() => null);
     }
     return () => mousedown?.unsubscribe?.();
-  }, [buttonRef?.current, elRef?.current]);
+  }, [buttonRef?.current, elRef?.current, nodes]);
 }

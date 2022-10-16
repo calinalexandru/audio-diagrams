@@ -28,7 +28,6 @@ export default function useAudioNodes({ nodes, wires }) {
           return audioCtx.destination;
         }
       });
-    console.log('audioNodes, nodes', audioNodes, nodes);
     wires.forEach((wire) => {
       console.log('connecting.wire', wire);
       try {

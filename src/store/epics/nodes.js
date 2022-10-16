@@ -18,7 +18,7 @@ const addToConnectingEpic = (patch$, state$) =>
     patchOf({ op: ADD, path: ['connecting'] }),
     withLatestFrom(state$),
     map(([action, state]) => (draft) => {
-      console.log('state$.val', state);
+      // console.log('state$.val', state);
       if (
         state.connecting.length >= 2 &&
         state.connecting[0].direction === 'output' &&

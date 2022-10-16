@@ -5,25 +5,25 @@ import BoxNode from '../components/BoxNode';
 import useMouseMove from '../hooks/useMouseMove';
 import { useImmerx } from '../store/state';
 
-const lens = {
-  get: (state) => state.nodes,
-  set: (stateDraft, nodes) => {
-    console.log('stateDraft', stateDraft, nodes);
-    stateDraft.nodes = nodes;
-  },
-};
+// const lens = {
+//   get: (state) => state.nodes,
+//   set: (stateDraft, nodes) => {
+//     console.log('stateDraft', stateDraft, nodes);
+//     stateDraft.nodes = nodes;
+//   },
+// };
 
 export default function Gain({ index }) {
   const elRef = useRef();
   const buttonRef = useRef();
   const [state, update] = useImmerx();
-  console.log('state, update', { state, update });
 
   useMouseMove({
     elRef,
     buttonRef,
-    position: state.nodes[index].position,
+    position: state.positions[index],
     index,
+    nodes: state.nodes,
   });
 
   const setGain = (val) => {

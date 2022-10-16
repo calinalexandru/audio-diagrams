@@ -49,13 +49,16 @@ const BoxNode = forwardRef(
             </button>
             <button
               onClick={() => {
+                console.log('remove', index);
                 remove(index);
               }}
             >
               Remove
             </button>
           </div>
-          <Title>{name}</Title>
+          <Title>
+            {name} # {index}
+          </Title>
           {children}
         </Center>
         <Right>
