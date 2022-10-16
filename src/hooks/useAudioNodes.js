@@ -24,6 +24,17 @@ export default function useAudioNodes({ nodes, wires }) {
           const gain = audioCtx.createGain();
           gain.gain.value = node.properties.gain;
           return gain;
+        } else if (node.type === NODE_TYPE.DELAY) {
+          const delay = audioCtx.createDelay();
+          delay.delayTime.setValueAtTime(
+            node.properties.delay,
+            audioCtx.currentTime
+          );
+          return delay;
+        } else if (node.type === NODE_TYPE.PAN) {
+          const pan = audioCtx.createStereoPanner();
+          pan.pan.setValueAtTime(node.properties.pan, audioCtx.currentTime);
+          return pan;
         } else {
           return audioCtx.destination;
         }
@@ -40,7 +51,7 @@ export default function useAudioNodes({ nodes, wires }) {
     return () => {
       // disconnect all audio nodes from their destination
       audioNodes.forEach((audioNode) => {
-        audioNode.disconnect();
+        audioNode?.disconnect?.();
       });
     };
   }, [nodes, wires]);

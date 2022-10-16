@@ -2,17 +2,12 @@ import { State } from 'immerx';
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { useRef } from 'react';
+import Delay from '../components/Delay';
 import Gain from '../components/gain';
 import Oscillator from '../components/Oscillator';
 import Output from '../components/Output';
-import {
-  DEFAULT_GAIN,
-  DEFAULT_GAIN_POSITION,
-  DEFAULT_NODES,
-  DEFAULT_OSCILLATOR,
-  DEFAULT_OSCILLATOR_POSITION,
-  NODE_TYPE,
-} from '../constants';
+import Pan from '../components/Pan';
+import { DEFAULTS, NODE_TYPE } from '../constants';
 import useAudioNodes from '../hooks/useAudioNodes';
 import Line from '../primitives/Line';
 import { useImmerx } from '../store/state';
@@ -71,15 +66,29 @@ export default function Main() {
 
   const addOscilator = () => {
     update((draft) => {
-      draft.nodes.push({ ...DEFAULT_OSCILLATOR });
-      draft.positions.push({ ...DEFAULT_OSCILLATOR_POSITION });
+      draft.nodes.push({ ...DEFAULTS.OSCILLATOR.NODE });
+      draft.positions.push({ ...DEFAULTS.OSCILLATOR.POSITION });
     });
   };
 
   const addGain = () => {
     update((draft) => {
-      draft.nodes.push({ ...DEFAULT_GAIN });
-      draft.positions.push({ ...DEFAULT_GAIN_POSITION });
+      draft.nodes.push({ ...DEFAULTS.GAIN.NODE });
+      draft.positions.push({ ...DEFAULTS.GAIN.POSITION });
+    });
+  };
+
+  const addDelay = () => {
+    update((draft) => {
+      draft.nodes.push({ ...DEFAULTS.DELAY.NODE });
+      draft.positions.push({ ...DEFAULTS.DELAY.POSITION });
+    });
+  };
+
+  const addPan = () => {
+    update((draft) => {
+      draft.nodes.push({ ...DEFAULTS.PAN.NODE });
+      draft.positions.push({ ...DEFAULTS.PAN.POSITION });
     });
   };
 
@@ -110,12 +119,16 @@ export default function Main() {
       </div>
       <button onClick={addOscilator}>Add Oscillator</button>
       <button onClick={addGain}>Add Gain</button>
+      <button onClick={addDelay}>Add Delay</button>
+      <button onClick={addPan}>Add Panner</button>
       {nodes.map(
         (node, index) =>
           (node.type === NODE_TYPE.OSCILLATOR && (
             <Oscillator index={index} />
           )) ||
-          (node.type === NODE_TYPE.GAIN && <Gain index={index} />)
+          (node.type === NODE_TYPE.GAIN && <Gain index={index} />) ||
+          (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
+          (node.type === NODE_TYPE.DELAY && <Delay index={index} />)
       )}
       <Output index={outputIndex} />
       {wires.map(({ from: fromIndex, to: toIndex }, index) => {
