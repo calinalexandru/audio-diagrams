@@ -22,7 +22,6 @@ export default function useNodes() {
   const setXY = useCallback(
     (index, x, y) => {
       update((draft) => {
-        console.log('setXY', index, x, y);
         draft.positions[index].x = x;
         draft.positions[index].y = y;
       });

@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import Main from './components/main';
 import './store/store';
 import './style.css';
+import Main from './views/main';
 render(<Main />, document.body);

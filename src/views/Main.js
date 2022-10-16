@@ -2,6 +2,9 @@ import { State } from 'immerx';
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { useRef } from 'react';
+import Gain from '../components/gain';
+import Oscillator from '../components/Oscillator';
+import Output from '../components/Output';
 import {
   DEFAULT_GAIN,
   DEFAULT_GAIN_POSITION,
@@ -13,9 +16,6 @@ import {
 import useAudioNodes from '../hooks/useAudioNodes';
 import Line from '../primitives/Line';
 import { useImmerx } from '../store/state';
-import Gain from './gain';
-import Oscillator from './Oscillator';
-import Output from './Output';
 
 const Container = ({ children }) => (
   <div

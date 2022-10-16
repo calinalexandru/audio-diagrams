@@ -19,15 +19,22 @@ const addToConnectingEpic = (patch$, state$) =>
     withLatestFrom(state$),
     map(([action, state]) => (draft) => {
       // console.log('state$.val', state);
-      if (
-        state.connecting.length >= 2 &&
-        state.connecting[0].direction === 'output' &&
-        state.connecting[1].direction === 'input'
-      ) {
-        draft.wires.push({
-          from: state.connecting[0].index,
-          to: state.connecting[1].index,
-        });
+      const firstDir = state.connecting?.[0]?.direction;
+      const secondDir = state.connecting?.[1]?.direction;
+      if (state.connecting.length >= 2) {
+        if (new Set(state.connecting.map((con) => con.index)).size <= 1) {
+          draft.connecting = [];
+        } else if (firstDir === 'output' && secondDir === 'input') {
+          draft.wires.push({
+            from: state.connecting[0].index,
+            to: state.connecting[1].index,
+          });
+        } else if (firstDir === 'input' && secondDir === 'output') {
+          draft.wires.push({
+            from: state.connecting[1].index,
+            to: state.connecting[0].index,
+          });
+        }
         draft.connecting = [];
       } else {
         draft.wires = state.wires;
