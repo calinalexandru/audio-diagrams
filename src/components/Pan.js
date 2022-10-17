@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
+import Input from '../primitives/Input';
 import { useImmerx } from '../store/state';
 import BoxNode from './BoxNode';
 
@@ -30,12 +31,10 @@ export default function Pan({ index }) {
         background: 'chocolate',
       }}
       index={index}
-      name="Pan"
+      name="Panner"
     >
       <div>
-        Value:{' '}
-        <input
-          style={{ width: '50px' }}
+        <Input
           type="number"
           value={state.nodes[index].properties.pan}
           step="0.1"

@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
+import Input from '../primitives/Input';
 import { useImmerx } from '../store/state';
 import BoxNode from './BoxNode';
 
@@ -50,22 +51,24 @@ export default function Oscillator({ index }) {
       canInput={false}
       name="Oscillator"
     >
-      <div>
-        Freq:{' '}
-        <input
-          style={{ width: '50px' }}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexFlow: 'column',
+        }}
+      >
+        <Input
           type="number"
+          label="Frequency"
           value={state.nodes[index].properties.frequency}
           onChange={(e) => {
             setOscillatorFreq(Number(e.target.value));
           }}
         />
-      </div>
-      <div>
-        Detune:{' '}
-        <input
+        <Input
           type="number"
-          style={{ width: '50px' }}
+          label="Detune"
           value={state.nodes[index].properties.detune}
           onChange={(e) => {
             setOscillatorDetune(e.target.value);

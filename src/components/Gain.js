@@ -3,6 +3,7 @@ import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import BoxNode from '../components/BoxNode';
 import useMouseMove from '../hooks/useMouseMove';
+import Input from '../primitives/Input';
 import { useImmerx } from '../store/state';
 
 // const lens = {
@@ -41,9 +42,7 @@ export default function Gain({ index }) {
       name="Gain"
     >
       <div>
-        Value:{' '}
-        <input
-          style={{ width: '50px' }}
+        <Input
           type="number"
           value={state.nodes[index].properties.gain}
           step="0.1"

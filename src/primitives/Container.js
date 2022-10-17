@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-flow: row;
   display: flex;
   position: absolute;
-  width: 250px;
+  width: 180px;
   height: 100px;
   z-index: 100;
 

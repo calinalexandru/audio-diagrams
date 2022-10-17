@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
+import Input from '../primitives/Input';
 import { useImmerx } from '../store/state';
 import BoxNode from './BoxNode';
 
@@ -33,7 +34,7 @@ export default function Buffer({ index }) {
     >
       <div>
         Value:{' '}
-        <input
+        <Input
           style={{ width: '50px' }}
           type="number"
           value={state.nodes[index].properties.delay}

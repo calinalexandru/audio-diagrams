@@ -1,4 +1,26 @@
+import styled from '@emotion/styled';
 import { h } from 'preact';
+
+const LineStyled = styled.div`
+  height: 1px;
+  border-top: 6px solid brown;
+  position: absolute;
+  z-index: 10;
+  transform-origin: left center;
+
+  &:after {
+    content: '';
+    right: 8px;
+    height: 15px;
+    width: 15px;
+    border: solid #fff;
+    border-width: 0 4px 4px 0;
+    position: absolute;
+    margin-top: -13px;
+    margin-left: -6px;
+    transform: rotate(-45deg);
+  }
+`;
 
 const OFFSET_HYPOTHENUSE = 5;
 export default function Line({ from: ogFrom, to: ogTo, onClick }) {
@@ -24,22 +46,16 @@ export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   // console.log('angle', angle);
 
   return (
-    <div
+    <LineStyled
       onClick={onClick}
       style={{
         width,
         left,
         top,
-        height: '1px',
-        borderTop: '6px solid brown',
-        position: 'absolute',
-        zIndex: 10,
-        transformOrigin: 'left center',
         transform: `rotate(${angle}deg)`,
-        // animation: 'borderFlow 3s ease-in-out infinite',
       }}
     >
       &nbsp;
-    </div>
+    </LineStyled>
   );
 }

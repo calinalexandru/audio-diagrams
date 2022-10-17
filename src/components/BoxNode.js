@@ -50,7 +50,7 @@ const BoxNode = forwardRef(
                 addToConnecting(index, 'input');
               }}
             >
-              &rarr;
+              I
             </IOButton>
           </Left>
         )}
@@ -87,7 +87,7 @@ const BoxNode = forwardRef(
                 addToConnecting(index, 'output');
               }}
             >
-              &rarr;
+              O
             </IOButton>
           </Right>
         )}
