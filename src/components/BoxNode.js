@@ -70,23 +70,16 @@ const BoxNode = forwardRef(
         ref={ref}
       >
         {canInput && (
-          <Left>
-            <IOButton
-              right={true}
-              onClick={() => {
-                addToConnecting(index, 'input');
-              }}
-            >
-              I
-            </IOButton>
-          </Left>
+          <IOButton
+            left={true}
+            onClick={() => {
+              addToConnecting(index, 'input');
+            }}
+          >
+            &nbsp;
+          </IOButton>
         )}
-        <Center
-          style={{
-            width: canInput && canOutput ? '80%' : '90%',
-          }}
-          ref={dragRef}
-        >
+        <Center ref={dragRef}>
           <CenterTitle>
             <Title>{name}</Title>
             {canRemove && (
@@ -103,16 +96,14 @@ const BoxNode = forwardRef(
           <CenterContent>{children}</CenterContent>
         </Center>
         {canOutput && (
-          <Right>
-            <IOButton
-              left={true}
-              onClick={() => {
-                addToConnecting(index, 'output');
-              }}
-            >
-              O
-            </IOButton>
-          </Right>
+          <IOButton
+            right={true}
+            onClick={() => {
+              addToConnecting(index, 'output');
+            }}
+          >
+            &nbsp;
+          </IOButton>
         )}
       </Container>
     );

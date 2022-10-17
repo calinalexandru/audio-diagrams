@@ -26,7 +26,7 @@ export default function Output({ index }) {
       ref={elRef}
       color="green"
       canRemove={false}
-      name="Output"
+      name="Speaker Output"
       canOutput={false}
     ></BoxNode>
   );

@@ -8,21 +8,23 @@ const LineStyled = styled.div`
   z-index: 10;
   transform-origin: left center;
 
-  &:after {
-    content: '';
-    right: 8px;
-    height: 8px;
-    width: 8px;
-    border: solid #fff;
-    border-width: 0 1px 1px 0;
-    position: absolute;
-    margin-top: -5.5px;
-    margin-right: -8px;
-    transform: rotate(-45deg);
-  }
+  // made an arrow that kinda sux
+  // &:after {
+  //   content: '';
+  //   right: 8px;
+  //   height: 8px;
+  //   width: 8px;
+  //   border: solid #fff;
+  //   border-width: 0 1px 1px 0;
+  //   position: absolute;
+  //   margin-top: -5.5px;
+  //   margin-right: -8px;
+  //   transform: rotate(-45deg);
+  // }
 `;
 
-const OFFSET_HYPOTHENUSE = -3;
+const OFFSET_LEFT = 18;
+const OFFSET_HYPOTHENUSE = -18;
 export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   let from = ogFrom;
   let to = ogTo;
@@ -31,7 +33,7 @@ export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   const fromHeightRaw = Number(from.height.replace('px', ''));
   const leftRaw = from.x + Number(from.width.replace('px', ''));
   const widthRaw = to.x - leftRaw;
-  const left = `${leftRaw}px`;
+  const left = `${leftRaw + OFFSET_LEFT}px`;
   const top = `${from.y + fromHeightRaw / 2}px`;
 
   // c1 + c2 = i2

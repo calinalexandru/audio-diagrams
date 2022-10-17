@@ -17,28 +17,32 @@ export const Container = styled.div`
   &:active {
     cursor: grabbing;
   }
+
+  &:hover {
+    border-style: double;
+  }
 `;
 
-export const Left = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10%;
-`;
+// export const Left = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 10%;
+// `;
 
-export const Right = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10%;
-`;
+// export const Right = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 10%;
+// `;
 
 export const Center = styled.div`
   box-sizing: border-box;
   padding: 8px;
   display: flex;
   flex-flow: column;
-  width: 80%;
+  width: 100%;
 `;
 
 export const CenterTitle = styled.div`
@@ -54,22 +58,22 @@ export const CenterContent = styled.div`
 `;
 
 export const IOButton = styled.button`
-  border-radius: 15px;
-  background: unset;
-  height: 70%;
-  width: 100%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 39%;
   margin: 0;
   padding: 0;
   cursor: pointer;
   border: none;
-  // border-right: ${({ right }) => right && '1px solid #333'};
-  // border-left: ${({ left }) => left && '1px solid #333'};
   color: #fff;
   font-size: 20px;
-  background: #ffffff05;
+  background: #a2a2a291;
+  ${({ left }) => left && 'left: -20px'};
+  ${({ right }) => right && 'right: -20px'};
 
   &:hover {
-    background: #ffffff11;
+    background: #ffffff99;
   }
 `;
 

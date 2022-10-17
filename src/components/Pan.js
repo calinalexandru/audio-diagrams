@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
 import Input from '../primitives/Input';
+import Slider from '../primitives/Slider';
 import { useImmerx } from '../store/state';
 import BoxNode from './BoxNode';
 
@@ -32,8 +33,7 @@ export default function Pan({ index }) {
       name="Panner"
     >
       <div>
-        <Input
-          type="number"
+        <Slider
           value={state.nodes[index].properties.pan}
           step="0.1"
           max="1"
