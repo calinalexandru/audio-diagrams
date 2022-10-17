@@ -22,6 +22,7 @@ export const DEFAULTS = {
         type: 'sine',
         frequency: 440,
         detune: 0,
+        duration: 0,
       },
     },
   },

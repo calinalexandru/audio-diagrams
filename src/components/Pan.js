@@ -27,9 +27,7 @@ export default function Pan({ index }) {
     <BoxNode
       ref={elRef}
       dragRef={dragRef}
-      style={{
-        background: 'chocolate',
-      }}
+      color="chocolate"
       index={index}
       name="Panner"
     >

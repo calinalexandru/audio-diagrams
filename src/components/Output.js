@@ -24,9 +24,7 @@ export default function Output({ index }) {
       index={index}
       dragRef={dragRef}
       ref={elRef}
-      style={{
-        background: 'green',
-      }}
+      color="green"
       canRemove={false}
       name="Output"
       canOutput={false}

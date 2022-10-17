@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  background: #353535b0;
+  border-style: solid;
+  border-width: 2px;
   cursor: grab;
   border-radius: 15px;
   box-sizing: border-box;
@@ -70,6 +73,9 @@ export const IOButton = styled.button`
 `;
 
 export const Title = styled.h3`
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 1px 1px black;
   margin: 0;
   padding: 0;
 `;

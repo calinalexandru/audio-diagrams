@@ -21,6 +21,7 @@ const BoxNode = forwardRef(
     {
       index,
       dragRef,
+      color,
       style,
       children,
       name,
@@ -38,6 +39,7 @@ const BoxNode = forwardRef(
         style={{
           top: `var(${yVarName})`,
           left: `var(${xVarName})`,
+          borderColor: color,
           ...style,
         }}
         ref={ref}
@@ -61,9 +63,7 @@ const BoxNode = forwardRef(
           ref={dragRef}
         >
           <CenterTitle>
-            <Title>
-              {name} # {index}
-            </Title>
+            <Title>{name}</Title>
             {canRemove && (
               <div>
                 <button

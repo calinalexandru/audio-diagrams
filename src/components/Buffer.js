@@ -26,9 +26,7 @@ export default function Buffer({ index }) {
     <BoxNode
       ref={elRef}
       dragRef={dragRef}
-      style={{
-        background: 'cadetblue',
-      }}
+      color="red"
       index={index}
       name="Buffer"
     >

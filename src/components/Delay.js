@@ -26,9 +26,7 @@ export default function Delay({ index }) {
     <BoxNode
       ref={elRef}
       dragRef={dragRef}
-      style={{
-        background: 'cadetblue',
-      }}
+      color="cadetblue"
       index={index}
       name="Delay"
     >
@@ -39,6 +37,7 @@ export default function Delay({ index }) {
           step="0.1"
           max="179"
           min="0"
+          units="s"
           onChange={(e) => {
             setDelay(e.target.value);
           }}

@@ -19,13 +19,18 @@ export default function useAudioNodes({ nodes, wires }) {
             audioCtx.currentTime
           );
           oscillator.start();
+          if (node.properties.duration) {
+            oscillator.stop(
+              audioCtx.currentTime + Number(node.properties.duration)
+            );
+          }
           return oscillator;
         } else if (node.type === NODE_TYPE.GAIN) {
           const gain = audioCtx.createGain();
           gain.gain.value = node.properties.gain;
           return gain;
         } else if (node.type === NODE_TYPE.DELAY) {
-          const delay = audioCtx.createDelay();
+          const delay = audioCtx.createDelay(179);
           delay.delayTime.setValueAtTime(
             node.properties.delay,
             audioCtx.currentTime

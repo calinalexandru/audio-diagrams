@@ -35,9 +35,7 @@ export default function Gain({ index }) {
     <BoxNode
       ref={elRef}
       dragRef={dragRef}
-      style={{
-        background: 'purple',
-      }}
+      color="purple"
       index={index}
       name="Gain"
     >
