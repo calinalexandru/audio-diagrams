@@ -8,6 +8,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "NODE_ENV=production webpack build",
     "test": "jest"
   },
@@ -17,6 +19,7 @@
     "filter",
     "drag"
   ],
+  "homepage": "https://calinalexandru.github.io/audio-diagrams/",
   "author": "Alexandru Calin <calinalexandru1990@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -51,6 +54,7 @@
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-styled-components": "^2.0.7",
     "babel-preset-preact": "^2.0.0",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "swc-loader": "^0.2.3",
     "terser-webpack-plugin": "^5.3.6",

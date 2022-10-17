@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
+const buildDir = 'build';
 const mode = process.env.NODE_ENV || 'development';
 const isEnvProduction = mode === 'production';
 // const isEnvDevelopment = mode === 'development';
@@ -11,7 +12,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     static: {
-      directory: path.join(__dirname, isEnvProduction ? 'dist' : 'public'),
+      directory: path.join(__dirname, isEnvProduction ? buildDir : 'public'),
     },
     compress: false,
     port: 9876,
@@ -49,7 +50,7 @@ const config = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, buildDir),
     filename: 'index.js',
     publicPath: '/',
     chunkFilename: isEnvProduction
