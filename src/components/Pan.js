@@ -12,7 +12,6 @@ export default function Pan({ index }) {
 
   useMouseMove({
     elRef,
-    buttonRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -25,7 +24,6 @@ export default function Pan({ index }) {
   return (
     <BoxNode
       ref={elRef}
-      buttonRef={buttonRef}
       style={{
         background: 'chocolate',
       }}

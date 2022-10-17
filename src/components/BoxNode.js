@@ -15,7 +15,7 @@ const xVarName = '--x';
 const yVarName = '--y';
 
 const BoxNode = forwardRef(
-  ({ index, style, buttonRef, children, name }, ref) => {
+  ({ index, style, children, name, canRemove = true }, ref) => {
     const { addToConnecting } = useWiring();
     const { remove } = useNodes();
 
@@ -38,24 +38,18 @@ const BoxNode = forwardRef(
           </IOButton>
         </Left>
         <Center>
-          <div>
-            <button
-              style={{
-                cursor: 'pointer',
-              }}
-              ref={buttonRef}
-            >
-              DRAG
-            </button>
-            <button
-              onClick={() => {
-                console.log('remove', index);
-                remove(index);
-              }}
-            >
-              Remove
-            </button>
-          </div>
+          {canRemove && (
+            <div>
+              <button
+                onClick={() => {
+                  console.log('remove', index);
+                  remove(index);
+                }}
+              >
+                Remove
+              </button>
+            </div>
+          )}
           <Title>
             {name} # {index}
           </Title>

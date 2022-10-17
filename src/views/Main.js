@@ -6,21 +6,10 @@ import Output from '../components/Output';
 import Pan from '../components/Pan';
 import { DEFAULTS, NODE_TYPE } from '../constants';
 import useAudioNodes from '../hooks/useAudioNodes';
+import Button from '../primitives/Button';
 import Line from '../primitives/Line';
 import { useImmerx } from '../store/state';
-
-const Container = ({ children }) => (
-  <div
-    style={{
-      position: 'relative',
-      width: '100vw',
-      height: '100vh',
-      background: '#eee',
-    }}
-  >
-    {children}
-  </div>
-);
+import { Container } from './style';
 
 const fromPos = { position: undefined };
 // const toPos = { position: undefined };
@@ -103,21 +92,21 @@ export default function Main() {
           right: 0,
         }}
       >
-        <button onClick={clearAllNodes}>Remove all audio nodes</button>
-        <button
+        <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
+        <Button
           onClick={cancelConnection}
           style={{
-            background: connecting.length ? 'antiquewhite' : '#fff',
+            background: connecting.length ? 'antiquewhite' : '#ccc',
           }}
         >
           Cancel connection
-        </button>
-        <button onClick={clearAllWires}>Clear all wires</button>
+        </Button>
+        <Button onClick={clearAllWires}>Clear all wires</Button>
       </div>
-      <button onClick={addOscilator}>Add Oscillator</button>
-      <button onClick={addGain}>Add Gain</button>
-      <button onClick={addDelay}>Add Delay</button>
-      <button onClick={addPan}>Add Panner</button>
+      <Button onClick={addOscilator}>Add Oscillator</Button>
+      <Button onClick={addGain}>Add Gain</Button>
+      <Button onClick={addDelay}>Add Delay</Button>
+      <Button onClick={addPan}>Add Panner</Button>
       {nodes.map(
         (node, index) =>
           (node.type === NODE_TYPE.OSCILLATOR && (

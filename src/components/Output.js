@@ -27,6 +27,7 @@ export default function Output({ index }) {
         background: 'green',
       }}
       buttonRef={buttonRef}
+      canRemove={false}
       name="Output"
     ></BoxNode>
   );

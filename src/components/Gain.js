@@ -20,7 +20,6 @@ export default function Gain({ index }) {
 
   useMouseMove({
     elRef,
-    buttonRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -33,7 +32,6 @@ export default function Gain({ index }) {
   return (
     <BoxNode
       ref={elRef}
-      buttonRef={buttonRef}
       style={{
         background: 'purple',
       }}

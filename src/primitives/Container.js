@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  cursor: grab;
   border-radius: 15px;
   box-sizing: border-box;
   flex-flow: row;
@@ -9,6 +10,10 @@ export const Container = styled.div`
   width: 250px;
   height: 100px;
   z-index: 100;
+
+  &:active {
+    cursor: grabbing;
+  }
 `;
 
 export const Left = styled.div`

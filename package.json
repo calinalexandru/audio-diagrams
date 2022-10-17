@@ -32,7 +32,6 @@
     "immer": "^9.0.15",
     "immerx": "^3.2.2",
     "preact": "^10.11.1",
-    "preact-emotion": "^9.2.12",
     "rxjs": "^7.5.7",
     "style-loader": "^3.3.1"
   },

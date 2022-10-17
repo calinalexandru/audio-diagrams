@@ -11,7 +11,6 @@ export default function Delay({ index }) {
   const [state, update] = useImmerx();
   useMouseMove({
     elRef,
-    buttonRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -24,7 +23,6 @@ export default function Delay({ index }) {
   return (
     <BoxNode
       ref={elRef}
-      buttonRef={buttonRef}
       style={{
         background: 'cadetblue',
       }}

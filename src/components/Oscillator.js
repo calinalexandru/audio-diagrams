@@ -21,7 +21,6 @@ export default function Oscillator({ index }) {
 
   useMouseMove({
     elRef,
-    buttonRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -43,7 +42,6 @@ export default function Oscillator({ index }) {
     <BoxNode
       ref={elRef}
       index={index}
-      buttonRef={buttonRef}
       style={{
         background: 'orange',
       }}
