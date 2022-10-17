@@ -14,13 +14,14 @@ const lens = {
 
 export default function Oscillator({ index }) {
   const elRef = useRef();
-  const buttonRef = useRef();
+  const dragRef = useRef();
   const [state, update] = useImmerx();
 
   console.log('Oscillator', state);
 
   useMouseMove({
     elRef,
+    dragRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -41,6 +42,7 @@ export default function Oscillator({ index }) {
   return (
     <BoxNode
       ref={elRef}
+      dragRef={dragRef}
       index={index}
       style={{
         background: 'orange',

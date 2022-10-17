@@ -4,6 +4,7 @@ import useNodes from './useNodes';
 
 export default function useMouseMove({
   elRef,
+  dragRef,
   xVarName = '--x',
   yVarName = '--y',
   position,
@@ -13,7 +14,7 @@ export default function useMouseMove({
   const { setPosition, setXY } = useNodes();
   useEffect(() => {
     let { x, y, pos = {} } = {};
-    if (elRef.current) {
+    if (elRef.current && dragRef.current) {
       const style = getComputedStyle(elRef.current);
       // console.log('useMouseMove.style', style);
       const { width = '30px', height = '20px' } = style || {};
@@ -27,7 +28,7 @@ export default function useMouseMove({
         height,
       };
       setPosition(index, pos);
-      const mousedown = fromEvent(elRef.current, 'mousedown')
+      const mousedown = fromEvent(dragRef.current, 'mousedown')
         .pipe(
           switchMap(() =>
             fromEvent(document, 'mousemove').pipe(
@@ -47,5 +48,5 @@ export default function useMouseMove({
         mousedown.unsubscribe();
       };
     }
-  }, [elRef?.current, nodes, index]);
+  }, [dragRef?.current, elRef?.current, nodes, index]);
 }

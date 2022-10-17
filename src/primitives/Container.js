@@ -38,7 +38,20 @@ export const Center = styled.div`
   width: 80%;
 `;
 
+export const CenterTitle = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-bottom: 4px;
+`;
+
+export const CenterContent = styled.div`
+  box-sizing: border-box;
+`;
+
 export const IOButton = styled.button`
+  background: unset;
   height: 90%;
   width: 100%;
   margin: 0;
@@ -46,6 +59,8 @@ export const IOButton = styled.button`
   cursor: pointer;
   opacity: 0.7;
   border: none;
+  border-right: ${({ right }) => right && '1px solid #333'};
+  border-left: ${({ left }) => left && '1px solid #333'};
 
   &:hover {
     opacity: 0.3;

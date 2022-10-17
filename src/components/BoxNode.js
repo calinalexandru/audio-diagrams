@@ -4,6 +4,8 @@ import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import {
   Center,
+  CenterContent,
+  CenterTitle,
   Container,
   IOButton,
   Left,
@@ -15,21 +17,22 @@ const xVarName = '--x';
 const yVarName = '--y';
 
 const BoxNode = forwardRef(
-  ({ index, style, children, name, canRemove = true }, ref) => {
+  ({ index, dragRef, style, children, name, canRemove = true }, ref) => {
     const { addToConnecting } = useWiring();
     const { remove } = useNodes();
 
     return (
       <Container
-        ref={ref}
         style={{
           top: `var(${yVarName})`,
           left: `var(${xVarName})`,
           ...style,
         }}
+        ref={ref}
       >
         <Left>
           <IOButton
+            right={true}
             onClick={() => {
               addToConnecting(index, 'input');
             }}
@@ -37,26 +40,29 @@ const BoxNode = forwardRef(
             I
           </IOButton>
         </Left>
-        <Center>
-          {canRemove && (
-            <div>
-              <button
-                onClick={() => {
-                  console.log('remove', index);
-                  remove(index);
-                }}
-              >
-                Remove
-              </button>
-            </div>
-          )}
-          <Title>
-            {name} # {index}
-          </Title>
-          {children}
+        <Center ref={dragRef}>
+          <CenterTitle>
+            <Title>
+              {name} # {index}
+            </Title>
+            {canRemove && (
+              <div>
+                <button
+                  onClick={() => {
+                    console.log('remove', index);
+                    remove(index);
+                  }}
+                >
+                  X
+                </button>
+              </div>
+            )}
+          </CenterTitle>
+          <CenterContent>{children}</CenterContent>
         </Center>
         <Right>
           <IOButton
+            left={true}
             onClick={() => {
               addToConnecting(index, 'output');
             }}

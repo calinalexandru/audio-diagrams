@@ -6,12 +6,13 @@ import BoxNode from './BoxNode';
 
 export default function Pan({ index }) {
   const elRef = useRef();
-  const buttonRef = useRef();
+  const dragRef = useRef();
 
   const [state, update] = useImmerx();
 
   useMouseMove({
     elRef,
+    dragRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -24,6 +25,7 @@ export default function Pan({ index }) {
   return (
     <BoxNode
       ref={elRef}
+      dragRef={dragRef}
       style={{
         background: 'chocolate',
       }}

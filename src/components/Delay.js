@@ -6,11 +6,12 @@ import BoxNode from './BoxNode';
 
 export default function Delay({ index }) {
   const elRef = useRef();
-  const buttonRef = useRef();
+  const dragRef = useRef();
 
   const [state, update] = useImmerx();
   useMouseMove({
     elRef,
+    dragRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -23,6 +24,7 @@ export default function Delay({ index }) {
   return (
     <BoxNode
       ref={elRef}
+      dragRef={dragRef}
       style={{
         background: 'cadetblue',
       }}

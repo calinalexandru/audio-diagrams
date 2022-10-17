@@ -8,12 +8,12 @@ import BoxNode from './BoxNode';
 
 export default function Output({ index }) {
   const elRef = useRef();
-  const buttonRef = useRef();
+  const dragRef = useRef();
   const [state] = useImmerx();
 
   useMouseMove({
     elRef,
-    buttonRef,
+    dragRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
@@ -22,11 +22,11 @@ export default function Output({ index }) {
   return (
     <BoxNode
       index={index}
+      dragRef={dragRef}
       ref={elRef}
       style={{
         background: 'green',
       }}
-      buttonRef={buttonRef}
       canRemove={false}
       name="Output"
     ></BoxNode>
