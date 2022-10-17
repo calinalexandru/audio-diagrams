@@ -1,9 +1,6 @@
-import { State } from 'immerx';
 import { h } from 'preact';
-import { useEffect } from 'preact/hooks';
-import { useRef } from 'react';
 import Delay from '../components/Delay';
-import Gain from '../components/gain';
+import Gain from '../components/Gain';
 import Oscillator from '../components/Oscillator';
 import Output from '../components/Output';
 import Pan from '../components/Pan';
