@@ -52,7 +52,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, buildDir),
     filename: 'index.js',
-    publicPath: '/',
+    publicPath: '',
     chunkFilename: isEnvProduction
       ? '[name].[chunkhash:8].chunk.js'
       : '[name].chunk.js',
