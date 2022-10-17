@@ -47,6 +47,7 @@ export default function Oscillator({ index }) {
       style={{
         background: 'orange',
       }}
+      canInput={false}
       name="Oscillator"
     >
       <div>

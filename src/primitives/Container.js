@@ -61,6 +61,8 @@ export const IOButton = styled.button`
   border: none;
   border-right: ${({ right }) => right && '1px solid #333'};
   border-left: ${({ left }) => left && '1px solid #333'};
+  color: #fff;
+  font-size: 20px;
 
   &:hover {
     opacity: 0.3;

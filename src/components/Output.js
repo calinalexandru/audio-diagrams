@@ -29,6 +29,7 @@ export default function Output({ index }) {
       }}
       canRemove={false}
       name="Output"
+      canOutput={false}
     ></BoxNode>
   );
 }

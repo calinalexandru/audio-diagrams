@@ -17,7 +17,19 @@ const xVarName = '--x';
 const yVarName = '--y';
 
 const BoxNode = forwardRef(
-  ({ index, dragRef, style, children, name, canRemove = true }, ref) => {
+  (
+    {
+      index,
+      dragRef,
+      style,
+      children,
+      name,
+      canRemove = true,
+      canOutput = true,
+      canInput = true,
+    },
+    ref
+  ) => {
     const { addToConnecting } = useWiring();
     const { remove } = useNodes();
 
@@ -30,17 +42,24 @@ const BoxNode = forwardRef(
         }}
         ref={ref}
       >
-        <Left>
-          <IOButton
-            right={true}
-            onClick={() => {
-              addToConnecting(index, 'input');
-            }}
-          >
-            I
-          </IOButton>
-        </Left>
-        <Center ref={dragRef}>
+        {canInput && (
+          <Left>
+            <IOButton
+              right={true}
+              onClick={() => {
+                addToConnecting(index, 'input');
+              }}
+            >
+              &rarr;
+            </IOButton>
+          </Left>
+        )}
+        <Center
+          style={{
+            width: canInput && canOutput ? '80%' : '90%',
+          }}
+          ref={dragRef}
+        >
           <CenterTitle>
             <Title>
               {name} # {index}
@@ -60,16 +79,18 @@ const BoxNode = forwardRef(
           </CenterTitle>
           <CenterContent>{children}</CenterContent>
         </Center>
-        <Right>
-          <IOButton
-            left={true}
-            onClick={() => {
-              addToConnecting(index, 'output');
-            }}
-          >
-            O
-          </IOButton>
-        </Right>
+        {canOutput && (
+          <Right>
+            <IOButton
+              left={true}
+              onClick={() => {
+                addToConnecting(index, 'output');
+              }}
+            >
+              &rarr;
+            </IOButton>
+          </Right>
+        )}
       </Container>
     );
   }

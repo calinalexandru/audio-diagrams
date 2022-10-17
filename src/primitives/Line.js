@@ -31,12 +31,12 @@ export default function Line({ from: ogFrom, to: ogTo, onClick }) {
         left,
         top,
         height: '1px',
-        borderTop: '6px solid #333',
+        borderTop: '6px solid brown',
         position: 'absolute',
         zIndex: 10,
         transformOrigin: 'left center',
         transform: `rotate(${angle}deg)`,
-        animation: 'borderFlow 3s ease-in-out infinite',
+        // animation: 'borderFlow 3s ease-in-out infinite',
       }}
     >
       &nbsp;
