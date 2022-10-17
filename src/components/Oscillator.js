@@ -1,5 +1,5 @@
 import { Fragment, h } from 'preact';
-import { useCallback, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
 import Button from '../primitives/Button';
 import Input from '../primitives/Input';
@@ -28,6 +28,7 @@ export default function Oscillator({ index }) {
     position: state.positions[index],
     index,
     nodes: state.nodes,
+    showMore,
   });
 
   const setOscillatorType = (type) => {
@@ -74,7 +75,7 @@ export default function Oscillator({ index }) {
       color="orange"
       canInput={false}
       name="Oscillator"
-      style={{ height: showMore ? 'auto' : '' }}
+      style={{ height: showMore ? 'auto' : '100px' }}
     >
       <div
         style={{

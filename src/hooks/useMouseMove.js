@@ -10,6 +10,7 @@ export default function useMouseMove({
   position,
   index,
   nodes,
+  ...rest
 }) {
   const { setPosition, setXY } = useNodes();
   useEffect(() => {
@@ -48,5 +49,5 @@ export default function useMouseMove({
         mousedown.unsubscribe();
       };
     }
-  }, [dragRef?.current, elRef?.current, nodes, index]);
+  }, [dragRef?.current, elRef?.current, nodes, index, rest?.showMore]);
 }

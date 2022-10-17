@@ -34,7 +34,7 @@ export default function Delay({ index }) {
         <Input
           type="number"
           value={state.nodes[index].properties.delay}
-          step="0.1"
+          step="1"
           max="179"
           min="0"
           units="s"

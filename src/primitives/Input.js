@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { h } from 'preact';
 
 const InputStyled = styled.input`
+  font-family: inherit;
   position: relative;
   width: 70px;
   border: 0;

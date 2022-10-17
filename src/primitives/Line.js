@@ -3,7 +3,7 @@ import { h } from 'preact';
 
 const LineStyled = styled.div`
   height: 1px;
-  border-top: 6px solid brown;
+  border-top: 2px solid brown;
   position: absolute;
   z-index: 10;
   transform-origin: left center;
@@ -11,18 +11,18 @@ const LineStyled = styled.div`
   &:after {
     content: '';
     right: 8px;
-    height: 15px;
-    width: 15px;
+    height: 8px;
+    width: 8px;
     border: solid #fff;
-    border-width: 0 4px 4px 0;
+    border-width: 0 1px 1px 0;
     position: absolute;
-    margin-top: -13px;
-    margin-left: -6px;
+    margin-top: -5.5px;
+    margin-right: -8px;
     transform: rotate(-45deg);
   }
 `;
 
-const OFFSET_HYPOTHENUSE = 5;
+const OFFSET_HYPOTHENUSE = -3;
 export default function Line({ from: ogFrom, to: ogTo, onClick }) {
   let from = ogFrom;
   let to = ogTo;

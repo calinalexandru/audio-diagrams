@@ -45,7 +45,7 @@ export const CenterTitle = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 4px;
 `;
 
@@ -54,21 +54,22 @@ export const CenterContent = styled.div`
 `;
 
 export const IOButton = styled.button`
+  border-radius: 15px;
   background: unset;
-  height: 90%;
+  height: 70%;
   width: 100%;
   margin: 0;
   padding: 0;
   cursor: pointer;
-  opacity: 0.7;
   border: none;
-  border-right: ${({ right }) => right && '1px solid #333'};
-  border-left: ${({ left }) => left && '1px solid #333'};
+  // border-right: ${({ right }) => right && '1px solid #333'};
+  // border-left: ${({ left }) => left && '1px solid #333'};
   color: #fff;
   font-size: 20px;
+  background: #ffffff05;
 
   &:hover {
-    opacity: 0.3;
+    background: #ffffff11;
   }
 `;
 
