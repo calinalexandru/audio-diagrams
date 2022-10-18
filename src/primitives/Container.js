@@ -39,7 +39,7 @@ export const Container = styled.div`
 
 export const Center = styled.div`
   box-sizing: border-box;
-  padding: 8px;
+  padding: 2px 8px;
   display: flex;
   flex-flow: column;
   width: 100%;
@@ -50,11 +50,12 @@ export const CenterTitle = styled.div`
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;
 
 export const CenterContent = styled.div`
   box-sizing: border-box;
+  padding: 0 2px;
 `;
 
 export const IOButton = styled.button`

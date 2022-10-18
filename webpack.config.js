@@ -1,6 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin',);
+const TerserPlugin = require('terser-webpack-plugin',);
+const path = require('path',);
 
 const buildDir = 'build';
 const mode = process.env.NODE_ENV || 'development';
@@ -12,7 +12,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     static: {
-      directory: path.join(__dirname, isEnvProduction ? buildDir : 'public'),
+      directory: path.join(__dirname, isEnvProduction ? buildDir : 'public',),
     },
     compress: false,
     port: 9876,
@@ -25,7 +25,7 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-          { loader: 'swc-loader' },
+          { loader: 'swc-loader', },
           // {
           //   loader: '@linaria/webpack5-loader',
           //   options: {
@@ -42,15 +42,26 @@ const config = {
         use: [
           {
             loader: 'style-loader',
-            options: { injectType: 'singletonStyleTag' },
+            options: { injectType: 'singletonStyleTag', },
           },
           'css-loader',
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
         ],
       },
     ],
   },
   output: {
-    path: path.resolve(__dirname, buildDir),
+    path: path.resolve(__dirname, buildDir,),
     filename: 'index.js',
     publicPath: '',
     chunkFilename: isEnvProduction
@@ -69,14 +80,14 @@ const config = {
     minimizer: [],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
-    modules: [path.resolve(__dirname, './src'), 'node_modules'],
+    extensions: ['*', '.js', '.jsx',],
+    modules: [path.resolve(__dirname, './src',), 'node_modules',],
     alias: {
       react: 'preact/compat',
       // 'react-dom': 'preact/compat',
     },
   },
-  target: ['web'],
+  target: ['web',],
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
@@ -97,7 +108,7 @@ const config = {
             },
           }
         : undefined),
-    }),
+    },),
   ],
 };
 
@@ -113,7 +124,7 @@ if (mode === 'production') {
           drop_console: true,
         },
       },
-    })
+    },),
   );
 }
 

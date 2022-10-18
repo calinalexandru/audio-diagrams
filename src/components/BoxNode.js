@@ -80,19 +80,18 @@ const BoxNode = forwardRef(
         <Center ref={dragRef}>
           <CenterTitle>
             <Title>{name}</Title>
-            {canRemove && (
-              <RemoveButton
-                onClick={() => {
-                  console.log('remove', index,);
-                  remove(index,);
-                }}
-              >
-                X
-              </RemoveButton>
-            )}
           </CenterTitle>
           <CenterContent>{children}</CenterContent>
         </Center>
+        {canRemove && (
+          <RemoveButton
+            onClick={() => {
+              remove(index,);
+            }}
+          >
+            X
+          </RemoveButton>
+        )}
         {canOutput && (
           <IOButton
             right

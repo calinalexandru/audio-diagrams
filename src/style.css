@@ -16,3 +16,8 @@ body {
     border-color: #333;
   }
 }
+
+a:any-link {
+  color: #fff;
+  text-decoration: none;
+}

@@ -38,6 +38,7 @@ specifiers:
   preact: ^10.11.1
   rxjs: ^7.5.7
   style-loader: ^3.3.1
+  svg-url-loader: ^8.0.0
   swc-loader: ^0.2.3
   terser-webpack-plugin: ^5.3.6
   webpack: ^5.74.0
@@ -84,6 +85,7 @@ devDependencies:
   gh-pages: 4.0.0
   html-webpack-plugin: 5.5.0_webpack@5.74.0
   style-loader: 3.3.1_webpack@5.74.0
+  svg-url-loader: 8.0.0_webpack@5.74.0
   swc-loader: 0.2.3_4gtdw63xm76arietx7hfyj4vwy
   terser-webpack-plugin: 5.3.6_4gtdw63xm76arietx7hfyj4vwy
   webpack: 5.74.0_yaendpg7cv5m7guk32jrztizoy
@@ -3380,6 +3382,17 @@ packages:
       flat-cache: 3.0.4
     dev: true
 
+  /file-loader/6.2.0_webpack@5.74.0:
+    resolution: {integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    dependencies:
+      loader-utils: 2.0.2
+      schema-utils: 3.1.1
+      webpack: 5.74.0_yaendpg7cv5m7guk32jrztizoy
+    dev: true
+
   /filename-reserved-regex/2.0.0:
     resolution: {integrity: sha512-lc1bnsSr4L4Bdif8Xb/qrtokGbq5zlsms/CYH8PP+WtCkGNF65DPiQY8vG3SakEdRn8Dlnm+gW/qWKKjS5sZzQ==}
     engines: {node: '>=4'}
@@ -5199,6 +5212,16 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /svg-url-loader/8.0.0_webpack@5.74.0:
+    resolution: {integrity: sha512-5doSXvl18hY1fGsRLdhWAU5jgzgxJ06/gc/26cpuDnN0xOz1HmmfhkpL29SSrdIvhtxQ1UwGzmk7wTT/l48mKw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      file-loader: 6.2.0_webpack@5.74.0
+      webpack: 5.74.0_yaendpg7cv5m7guk32jrztizoy
+    dev: true
 
   /swc-loader/0.2.3_4gtdw63xm76arietx7hfyj4vwy:
     resolution: {integrity: sha512-D1p6XXURfSPleZZA/Lipb3A8pZ17fP4NObZvFCDjK/OKljroqDpPmsBdTraWhVBqUNpcWBQY1imWdoPScRlQ7A==}

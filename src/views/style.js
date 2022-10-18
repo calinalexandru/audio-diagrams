@@ -21,3 +21,10 @@ export const LeftMenu = styled.div`
   gap: 10px;
   background: #44444482;
 `;
+
+export const Social = styled.div`
+  position: absolute;
+  right: 4px;
+  width: auto;
+  top: 4px;
+`;
