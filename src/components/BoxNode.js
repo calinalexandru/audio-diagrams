@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { h } from 'preact';
-import { forwardRef } from 'preact/compat';
+import { h, } from 'preact';
+import { forwardRef, } from 'preact/compat';
 import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import {
@@ -9,8 +9,6 @@ import {
   CenterTitle,
   Container,
   IOButton,
-  Left,
-  Right,
   Title,
 } from '../primitives/Container';
 
@@ -54,10 +52,10 @@ const BoxNode = forwardRef(
       canOutput = true,
       canInput = true,
     },
-    ref
+    ref,
   ) => {
-    const { addToConnecting } = useWiring();
-    const { remove } = useNodes();
+    const { addToConnecting, } = useWiring();
+    const { remove, } = useNodes();
 
     return (
       <Container
@@ -71,9 +69,9 @@ const BoxNode = forwardRef(
       >
         {canInput && (
           <IOButton
-            left={true}
+            left
             onClick={() => {
-              addToConnecting(index, 'input');
+              addToConnecting(index, 'input',);
             }}
           >
             &nbsp;
@@ -85,8 +83,8 @@ const BoxNode = forwardRef(
             {canRemove && (
               <RemoveButton
                 onClick={() => {
-                  console.log('remove', index);
-                  remove(index);
+                  console.log('remove', index,);
+                  remove(index,);
                 }}
               >
                 X
@@ -97,9 +95,9 @@ const BoxNode = forwardRef(
         </Center>
         {canOutput && (
           <IOButton
-            right={true}
+            right
             onClick={() => {
-              addToConnecting(index, 'output');
+              addToConnecting(index, 'output',);
             }}
           >
             &nbsp;
@@ -107,7 +105,7 @@ const BoxNode = forwardRef(
         )}
       </Container>
     );
-  }
+  },
 );
 
 export default BoxNode;

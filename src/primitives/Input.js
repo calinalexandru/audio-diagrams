@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { h } from 'preact';
+import { h, } from 'preact';
 
 const InputStyled = styled.input`
   font-family: inherit;
@@ -30,7 +30,7 @@ const Units = styled.span`
   color: #fff;
 `;
 
-export default function Input({ label, units, ...rest }) {
+export default function Input({ label, units, ...rest },) {
   return (
     <Container>
       {label && <Label>{label}</Label>}

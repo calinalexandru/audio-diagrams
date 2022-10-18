@@ -1,15 +1,13 @@
-import { h } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
-import { NODE_TYPE } from '../constants';
+import { h, } from 'preact';
+import { useRef, } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
-import useWiring from '../hooks/useWiring';
-import { useImmerx } from '../store/state';
+import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-export default function Output({ index }) {
+export default function Output({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
-  const [state] = useImmerx();
+  const [state,] = useImmerx();
 
   useMouseMove({
     elRef,
@@ -17,7 +15,7 @@ export default function Output({ index }) {
     position: state.positions[index],
     index,
     nodes: state.nodes,
-  });
+  },);
 
   return (
     <BoxNode
@@ -28,6 +26,6 @@ export default function Output({ index }) {
       canRemove={false}
       name="Speaker Output"
       canOutput={false}
-    ></BoxNode>
+    />
   );
 }

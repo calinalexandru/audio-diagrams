@@ -1,26 +1,28 @@
-import { Fragment, h } from 'preact';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { Fragment, h, } from 'preact';
+import {
+  useCallback, useRef, useState,
+} from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
 import Button from '../primitives/Button';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
-import { useImmerx } from '../store/state';
+import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-const lens = {
-  get: (state) => state.nodes,
-  set: (stateDraft, nodes) => {
-    // console.log('stateDraft', stateDraft, nodes);
-    stateDraft.nodes = nodes;
-  },
-};
+// const lens = {
+//   get: (state,) => state.nodes,
+//   set: (stateDraft, nodes,) => {
+//     // console.log('stateDraft', stateDraft, nodes);
+//     stateDraft.nodes = nodes;
+//   },
+// };
 
-export default function Oscillator({ index }) {
+export default function Oscillator({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
-  const [state, update] = useImmerx();
+  const [state, update,] = useImmerx();
 
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore,] = useState(false,);
 
   useMouseMove({
     elRef,
@@ -29,30 +31,30 @@ export default function Oscillator({ index }) {
     index,
     nodes: state.nodes,
     showMore,
-  });
+  },);
 
-  const setOscillatorType = (type) => {
-    update((draft) => void (draft.nodes[index].properties.type = type));
+  const setOscillatorType = (type,) => {
+    update((draft,) => void (draft.nodes[index].properties.type = type),);
   };
 
-  const setOscillatorFreq = (freq) => {
-    update((draft) => void (draft.nodes[index].properties.frequency = freq));
+  const setOscillatorFreq = (freq,) => {
+    update((draft,) => void (draft.nodes[index].properties.frequency = freq),);
   };
 
-  const setOscillatorDetune = (val) => {
-    update((draft) => void (draft.nodes[index].properties.detune = val));
+  const setOscillatorDetune = (val,) => {
+    update((draft,) => void (draft.nodes[index].properties.detune = val),);
   };
 
-  const setOscillatorDuration = (val) => {
-    update((draft) => void (draft.nodes[index].properties.duration = val));
+  const setOscillatorDuration = (val,) => {
+    update((draft,) => void (draft.nodes[index].properties.duration = val),);
   };
 
   const toggleShowMore = useCallback(
-    (e) => {
+    (e,) => {
       e.preventDefault();
-      setShowMore(!showMore);
+      setShowMore(!showMore,);
     },
-    [showMore]
+    [showMore,],
   );
 
   const showMoreButton = (
@@ -75,7 +77,7 @@ export default function Oscillator({ index }) {
       color="orange"
       canInput={false}
       name="Oscillator"
-      style={{ height: showMore ? 'auto' : '100px' }}
+      style={{ height: showMore ? 'auto' : '100px', }}
     >
       <div
         style={{
@@ -89,9 +91,9 @@ export default function Oscillator({ index }) {
           label="Frequency"
           units="&#13200;"
           value={state.nodes[index].properties.frequency}
-          onChange={(e) => {
+          onChange={(e,) => {
             e.preventDefault();
-            setOscillatorFreq(Number(e.target.value));
+            setOscillatorFreq(Number(e.target.value,),);
           }}
         />
         {!showMore && showMoreButton}
@@ -101,24 +103,24 @@ export default function Oscillator({ index }) {
               type="number"
               label="Detune"
               value={state.nodes[index].properties.detune}
-              onChange={(e) => {
+              onChange={(e,) => {
                 e.preventDefault();
-                setOscillatorDetune(e.target.value);
+                setOscillatorDetune(e.target.value,);
               }}
             />
             <Input
               type="number"
               label="Duration"
               value={state.nodes[index].properties.duration}
-              onChange={(e) => {
+              onChange={(e,) => {
                 e.preventDefault();
-                setOscillatorDuration(e.target.value);
+                setOscillatorDuration(e.target.value,);
               }}
             />
             <Select
-              onChange={(e) => {
+              onChange={(e,) => {
                 e.preventDefault();
-                setOscillatorType(e.target.value);
+                setOscillatorType(e.target.value,);
               }}
             >
               <option value="sine">Sine</option>

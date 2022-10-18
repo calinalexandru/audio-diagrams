@@ -6,7 +6,7 @@ export const NODE_TYPE = {
   INPUT: 'input',
   OUTPUT: 'output',
 };
-export const NODES = ['input', 'oscillator', 'output'];
+export const NODES = ['input', 'oscillator', 'output',];
 
 export const DEFAULTS = {
   OSCILLATOR: {
@@ -84,5 +84,5 @@ export const DEFAULTS = {
   },
 };
 
-export const DEFAULT_NODES = [{ ...DEFAULTS.OUTPUT.NODE }];
-export const DEFAULT_POSITIONS = [{ ...DEFAULTS.OUTPUT.POSITION }];
+export const DEFAULT_NODES = [{ ...DEFAULTS.OUTPUT.NODE, },];
+export const DEFAULT_POSITIONS = [{ ...DEFAULTS.OUTPUT.POSITION, },];

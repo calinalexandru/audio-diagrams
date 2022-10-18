@@ -1,10 +1,10 @@
 // import styled from '@emotion/styled';
-import { h } from 'preact';
-import { useRef } from 'preact/hooks';
-import BoxNode from '../components/BoxNode';
+import { h, } from 'preact';
+import { useRef, } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
 import Input from '../primitives/Input';
-import { useImmerx } from '../store/state';
+import { useImmerx, } from '../store/state';
+import BoxNode from './BoxNode';
 
 // const lens = {
 //   get: (state) => state.nodes,
@@ -14,10 +14,10 @@ import { useImmerx } from '../store/state';
 //   },
 // };
 
-export default function Gain({ index }) {
+export default function Gain({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
-  const [state, update] = useImmerx();
+  const [state, update,] = useImmerx();
 
   useMouseMove({
     elRef,
@@ -25,10 +25,10 @@ export default function Gain({ index }) {
     position: state.positions[index],
     index,
     nodes: state.nodes,
-  });
+  },);
 
-  const setGain = (val) => {
-    update((draft) => void (draft.nodes[index].properties.gain = val));
+  const setGain = (val,) => {
+    update((draft,) => void (draft.nodes[index].properties.gain = val),);
   };
 
   return (
@@ -44,8 +44,8 @@ export default function Gain({ index }) {
           type="number"
           value={state.nodes[index].properties.gain}
           step="0.1"
-          onChange={(e) => {
-            setGain(e.target.value);
+          onChange={(e,) => {
+            setGain(e.target.value,);
           }}
         />
       </div>

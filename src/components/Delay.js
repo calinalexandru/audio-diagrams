@@ -1,25 +1,25 @@
-import { h } from 'preact';
-import { useRef } from 'preact/hooks';
+import { h, } from 'preact';
+import { useRef, } from 'preact/hooks';
 import useMouseMove from '../hooks/useMouseMove';
 import Input from '../primitives/Input';
-import { useImmerx } from '../store/state';
+import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-export default function Delay({ index }) {
+export default function Delay({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
 
-  const [state, update] = useImmerx();
+  const [state, update,] = useImmerx();
   useMouseMove({
     elRef,
     dragRef,
     position: state.positions[index],
     index,
     nodes: state.nodes,
-  });
+  },);
 
-  const setDelay = (val) => {
-    update((draft) => void (draft.nodes[index].properties.delay = val));
+  const setDelay = (val,) => {
+    update((draft,) => void (draft.nodes[index].properties.delay = val),);
   };
 
   return (
@@ -38,8 +38,8 @@ export default function Delay({ index }) {
           max="179"
           min="0"
           units="s"
-          onChange={(e) => {
-            setDelay(e.target.value);
+          onChange={(e,) => {
+            setDelay(e.target.value,);
           }}
         />
       </div>

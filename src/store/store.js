@@ -1,8 +1,8 @@
-import { createObservableMiddleware, setAdapter } from '@immerx/observable';
-import { from } from 'rxjs';
-import { create } from './state';
+import { createObservableMiddleware, setAdapter, } from '@immerx/observable';
+import { from, } from 'rxjs';
+import { create, } from './state';
 
-import { DEFAULT_NODES, DEFAULT_POSITIONS } from '../constants';
+import { DEFAULT_NODES, DEFAULT_POSITIONS, } from '../constants';
 import rootEpic from './epics/nodes';
 
 const middleware = createObservableMiddleware();
@@ -13,7 +13,7 @@ const initialState = {
   positions: DEFAULT_POSITIONS,
 };
 
-export default create(initialState, [middleware]);
+export default create(initialState, [middleware,],);
 
-setAdapter(from);
-middleware.run(rootEpic);
+setAdapter(from,);
+middleware.run(rootEpic,);

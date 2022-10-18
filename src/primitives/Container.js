@@ -69,8 +69,8 @@ export const IOButton = styled.button`
   color: #fff;
   font-size: 20px;
   background: #a2a2a291;
-  ${({ left }) => left && 'left: -20px'};
-  ${({ right }) => right && 'right: -20px'};
+  ${({ left, },) => left && 'left: -20px'};
+  ${({ right, },) => right && 'right: -20px'};
 
   &:hover {
     background: #ffffff99;

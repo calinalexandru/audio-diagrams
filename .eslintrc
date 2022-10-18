@@ -20,7 +20,11 @@
     "no-console": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-void": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off"
   },
   "settings": {
     "import/resolver": {

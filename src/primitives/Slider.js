@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { h } from 'preact';
+import { h, } from 'preact';
 
 const Container = styled.div`
   margin-top: 10px;
@@ -15,7 +15,7 @@ const Label = styled.div`
   color: #fff;
 `;
 
-export default function Slider({ value, ...rest }) {
+export default function Slider({ value, ...rest },) {
   return (
     <Container>
       <Label>{value}</Label>

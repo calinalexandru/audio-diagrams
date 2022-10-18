@@ -1,21 +1,21 @@
-import { useCallback } from 'preact/hooks';
-import { useImmerx } from '../store/state';
+import { useCallback, } from 'preact/hooks';
+import { useImmerx, } from '../store/state';
 
 export default function useWiring() {
-  const [_, update] = useImmerx();
+  const [_, update,] = useImmerx();
 
   const addToWiring = useCallback(
-    ({ from, to }) => {
-      update((draft) => void draft.wires.push({ from, to }));
+    ({ from, to, },) => {
+      update((draft,) => void draft.wires.push({ from, to, },),);
     },
-    [update]
+    [update,],
   );
 
   const addToConnecting = useCallback(
-    (index, direction) => {
-      update((draft) => void draft.connecting.push({ index, direction }));
+    (index, direction,) => {
+      update((draft,) => void draft.connecting.push({ index, direction, },),);
     },
-    [update]
+    [update,],
   );
 
   return {
