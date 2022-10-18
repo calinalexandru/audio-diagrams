@@ -1,6 +1,6 @@
 {
   "name": "audio-node-dragger",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Connect audio nodes by dragging them",
   "files": [
     "src"
