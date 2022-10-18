@@ -14,7 +14,15 @@ import GithubLogo from '../primitives/GithubLogo';
 import Line from '../primitives/Line';
 import Slider from '../primitives/Slider';
 import { useImmerx, } from '../store/state';
-import { Container, Interactive, LeftMenu, Social, TopMenu, } from './style';
+import {
+  Container,
+  Interactive,
+  NodesMenu,
+  NodesMenuFooter,
+  NodesMenuHeader,
+  Social,
+  ZoomMenu,
+} from './style';
 
 export default function Main() {
   const [
@@ -40,25 +48,37 @@ export default function Main() {
 
   return (
     <Container>
-      <LeftMenu>
-        <Button color="node" onClick={addOscilator}>
-          Oscillator
-        </Button>
-        <Button color="node" onClick={addGain}>
-          Gain
-        </Button>
-        <Button color="node" onClick={addDelay}>
-          Delay
-        </Button>
-        <Button color="node" onClick={addPan}>
-          Panner
-        </Button>
-        <hr />
-        <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
-        <Button onClick={cancelConnection}>Cancel connection</Button>
-        <Button onClick={clearAllWires}>Clear all wires</Button>
-      </LeftMenu>
-      <TopMenu>
+      <NodesMenu>
+        <NodesMenuHeader>
+          <Button color="node" onClick={addOscilator}>
+            Oscillator
+          </Button>
+          <Button color="node" onClick={addGain}>
+            Gain
+          </Button>
+          <Button color="node" onClick={addDelay}>
+            Delay
+          </Button>
+          <Button color="node" onClick={addPan}>
+            Panner
+          </Button>
+        </NodesMenuHeader>
+        <NodesMenuFooter>
+          <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
+          <Button onClick={cancelConnection}>Cancel connection</Button>
+          <Button onClick={clearAllWires}>Clear all wires</Button>
+          <Social>
+            <a
+              href="https://github.com/calinalexandru/audio-diagrams"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <GithubLogo color="#fff" />
+            </a>
+          </Social>
+        </NodesMenuFooter>
+      </NodesMenu>
+      <ZoomMenu>
         <Slider
           label="Zoom"
           min="0.3"
@@ -69,17 +89,7 @@ export default function Main() {
             zoom(e.target.value,);
           }}
         />
-      </TopMenu>
-
-      <Social>
-        <a
-          href="https://github.com/calinalexandru/audio-diagrams"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <GithubLogo color="#551A8B" />
-        </a>
-      </Social>
+      </ZoomMenu>
       <Interactive scale={scale}>
         {nodes.map(
           (node, index,) =>
@@ -101,6 +111,7 @@ export default function Main() {
                 onClick={() => {
                   removeLine(index,);
                 }}
+                scale={scale}
                 from={from}
                 to={to}
               />

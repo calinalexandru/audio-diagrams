@@ -10,32 +10,44 @@ export const Container = styled.div`
   background-size: 15px 15px;
 `;
 
-export const LeftMenu = styled.div`
+export const NodesMenu = styled.div`
   position: absolute;
-  left: 0;
+  right: 0;
   height: 100vh;
   width: 120px;
   display: flex;
   flex-flow: column;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   background: #44444482;
 `;
 
-export const TopMenu = styled.div`
+export const NodesMenuHeader = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: 6px;
+`
+
+export const NodesMenuFooter = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 6px;
+`
+
+export const ZoomMenu = styled.div`
   position: absolute;
-  top: 0;
+  bottom: 0;
+  left: 6px;
   height: 50px;
   width: 120px;
-  left: calc(50% - 120px / 2);
   color: #fff;
 `
 
 export const Social = styled.div`
-  position: absolute;
-  right: 4px;
-  width: auto;
-  top: 4px;
+  margin: 24px 0 12px 0;
 `;
 
 export const Interactive = styled.div`
