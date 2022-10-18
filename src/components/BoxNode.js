@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
-import { forwardRef, } from 'preact/compat';
+import { forwardRef, useCallback, } from 'preact/compat';
 import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import {
@@ -11,6 +11,7 @@ import {
   IOButton,
   Title,
 } from '../primitives/Container';
+import { useImmerx, } from '../store/state';
 
 const xVarName = '--x';
 const yVarName = '--y';
@@ -54,8 +55,31 @@ const BoxNode = forwardRef(
     },
     ref,
   ) => {
+    const [connecting,] = useImmerx({
+      get: (state,) => state.connecting,
+    },);
+    const [wires,] = useImmerx({
+      get: (state,) => state.wires,
+    },);
+    console.log('wires', wires,);
     const { addToConnecting, } = useWiring();
     const { remove, } = useNodes();
+
+    const isActive = useCallback(
+      (dir,) =>
+        connecting.find(
+          ({ index: i, direction, },) => index === i && direction === dir,
+        ),
+      [connecting, index,],
+    );
+
+    const isWireConnected = useCallback(
+      (dir,) =>
+        wires.find(
+          ({ from, to, },) => (dir === 'output' && from === index) || to === index,
+        ),
+      [wires, index,],
+    );
 
     return (
       <Container
@@ -69,6 +93,9 @@ const BoxNode = forwardRef(
       >
         {canInput && (
           <IOButton
+            active={isActive('input',)}
+            color={color}
+            connected={isWireConnected('input',)}
             left
             onClick={() => {
               addToConnecting(index, 'input',);
@@ -95,6 +122,9 @@ const BoxNode = forwardRef(
         {canOutput && (
           <IOButton
             right
+            color={color}
+            connected={isWireConnected('output',)}
+            active={isActive('output',)}
             onClick={() => {
               addToConnecting(index, 'output',);
             }}

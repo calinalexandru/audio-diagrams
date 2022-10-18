@@ -6,6 +6,7 @@ import Output from '../components/Output';
 import Pan from '../components/Pan';
 import { NODE_TYPE, } from '../constants';
 import useAudioNodes from '../hooks/useAudioNodes';
+import useKeyBindings from '../hooks/useKeyBindings';
 import useMenu from '../hooks/useMenu';
 import Button from '../primitives/Button';
 import GithubLogo from '../primitives/GithubLogo';
@@ -14,7 +15,9 @@ import { useImmerx, } from '../store/state';
 import { Container, LeftMenu, Social, } from './style';
 
 export default function Main() {
-  const [{ nodes = [], wires = [], positions = [], },] = useImmerx();
+  const [{ nodes = [], wires = [], positions = [], connecting = [], },] =
+    useImmerx();
+  useKeyBindings();
   useAudioNodes({ nodes, wires, },);
   const {
     addOscilator,
@@ -46,16 +49,7 @@ export default function Main() {
         </Button>
         <hr />
         <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
-        <Button
-          onClick={cancelConnection}
-          style={
-            {
-              // background: connecting.length ? 'antiquewhite' : '#ccc',
-            }
-          }
-        >
-          Cancel connection
-        </Button>
+        <Button onClick={cancelConnection}>Cancel connection</Button>
         <Button onClick={clearAllWires}>Clear all wires</Button>
       </LeftMenu>
       <Social>

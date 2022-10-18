@@ -61,6 +61,7 @@ export const CenterContent = styled.div`
 export const IOButton = styled.button`
   position: absolute;
   width: 20px;
+  outline: none;
   height: 20px;
   top: 39%;
   margin: 0;
@@ -70,8 +71,11 @@ export const IOButton = styled.button`
   color: #fff;
   font-size: 20px;
   background: #a2a2a291;
-  ${({ left, },) => left && 'left: -20px'};
-  ${({ right, },) => right && 'right: -20px'};
+  opacity: 0.9;
+  ${({ left, },) => left && 'left: -20px;'};
+  ${({ right, },) => right && 'right: -20px;'};
+  ${({ active, },) => active && 'background: currentcolor;'}
+  ${({ connected, color, },) => connected && `background: ${color};`}
 
   &:hover {
     background: #ffffff99;
