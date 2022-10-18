@@ -11,6 +11,7 @@ const initialState = {
   wires: [], // [{index: 1, direction: 'input'}]
   connecting: [], // {from: 1, to: 1}
   positions: DEFAULT_POSITIONS,
+  scale: 1,
 };
 
 export default create(initialState, [middleware,],);

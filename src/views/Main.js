@@ -1,4 +1,5 @@
 import { h, } from 'preact';
+import { useEffect, } from 'preact/hooks';
 import Delay from '../components/Delay';
 import Gain from '../components/Gain';
 import Oscillator from '../components/Oscillator';
@@ -11,12 +12,16 @@ import useMenu from '../hooks/useMenu';
 import Button from '../primitives/Button';
 import GithubLogo from '../primitives/GithubLogo';
 import Line from '../primitives/Line';
+import Slider from '../primitives/Slider';
 import { useImmerx, } from '../store/state';
-import { Container, LeftMenu, Social, } from './style';
+import { Container, Interactive, LeftMenu, Social, TopMenu, } from './style';
 
 export default function Main() {
-  const [{ nodes = [], wires = [], positions = [], connecting = [], },] =
-    useImmerx();
+  const [
+    { nodes = [], wires = [], positions = [], connecting = [], scale, },
+    update,
+  ] = useImmerx();
+
   useKeyBindings();
   useAudioNodes({ nodes, wires, },);
   const {
@@ -28,6 +33,7 @@ export default function Main() {
     clearAllWires,
     cancelConnection,
     removeLine,
+    zoom,
   } = useMenu();
 
   const outputIndex = nodes.findIndex((node,) => node.type === NODE_TYPE.OUTPUT,);
@@ -52,6 +58,19 @@ export default function Main() {
         <Button onClick={cancelConnection}>Cancel connection</Button>
         <Button onClick={clearAllWires}>Clear all wires</Button>
       </LeftMenu>
+      <TopMenu>
+        <Slider
+          label="Zoom"
+          min="0.3"
+          max="1.5"
+          value={scale}
+          step="0.04"
+          onChange={(e,) => {
+            zoom(e.target.value,);
+          }}
+        />
+      </TopMenu>
+
       <Social>
         <a
           href="https://github.com/calinalexandru/audio-diagrams"
@@ -61,32 +80,34 @@ export default function Main() {
           <GithubLogo color="#551A8B" />
         </a>
       </Social>
-      {nodes.map(
-        (node, index,) =>
-          (node.type === NODE_TYPE.OSCILLATOR && (
-            <Oscillator index={index} />
-          )) ||
-          (node.type === NODE_TYPE.GAIN && <Gain index={index} />) ||
-          (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
-          (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
-      )}
-      <Output index={outputIndex} />
-      {wires.map(({ from: fromIndex, to: toIndex, }, index,) => {
-        const to = positions?.[toIndex];
-        const from = positions?.[fromIndex];
-        return (
-          to &&
-          from && (
-            <Line
-              onClick={() => {
-                removeLine(index,);
-              }}
-              from={from}
-              to={to}
-            />
-          )
-        );
-      },)}
+      <Interactive scale={scale}>
+        {nodes.map(
+          (node, index,) =>
+            (node.type === NODE_TYPE.OSCILLATOR && (
+              <Oscillator index={index} />
+            )) ||
+            (node.type === NODE_TYPE.GAIN && <Gain index={index} />) ||
+            (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
+            (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
+        )}
+        <Output index={outputIndex} />
+        {wires.map(({ from: fromIndex, to: toIndex, }, index,) => {
+          const to = positions?.[toIndex];
+          const from = positions?.[fromIndex];
+          return (
+            to &&
+            from && (
+              <Line
+                onClick={() => {
+                  removeLine(index,);
+                }}
+                from={from}
+                to={to}
+              />
+            )
+          );
+        },)}
+      </Interactive>
     </Container>
   );
 }

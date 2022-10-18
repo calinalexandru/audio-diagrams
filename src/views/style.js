@@ -22,9 +22,23 @@ export const LeftMenu = styled.div`
   background: #44444482;
 `;
 
+export const TopMenu = styled.div`
+  position: absolute;
+  top: 0;
+  height: 50px;
+  width: 120px;
+  left: calc(50% - 120px / 2);
+  color: #fff;
+`
+
 export const Social = styled.div`
   position: absolute;
   right: 4px;
   width: auto;
   top: 4px;
+`;
+
+export const Interactive = styled.div`
+  transform: scale(${({ scale, },) => scale});
+  transform-origin: top left;
 `;

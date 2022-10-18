@@ -18,18 +18,18 @@ export default function useKeyBindings() {
     // const mousemove = fromEvent(document, 'mousemove',)
     //   .pipe(
     //     tap((e,) => {
-    //       console.log('ai dat pe mouse', e,);
-    //       const x = e.clientX;
-    //       const y = e.clientY;
-    //       document.body.style.setProperty('--current-line-x', `${x}deg`,);
-    //       document.body.style.setProperty('--current-line-y', `${y}deg`,);
+    //       console.log('ai dat pe mouse x, y', e.clientX, e.clientY,);
+    //       // const x = e.clientX;
+    //       // const y = e.clientY;
+    //       // document.body.style.setProperty('--current-line-x', `${x}deg`,);
+    //       // document.body.style.setProperty('--current-line-y', `${y}deg`,);
     //     },),
     //   )
     //   .subscribe(() => null,);
 
     return () => {
       keypress.unsubscribe();
-      // mousemove.unsubscribe();
+      mousemove.unsubscribe();
     };
   }, [update,],);
 }

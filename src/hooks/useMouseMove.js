@@ -1,7 +1,6 @@
 import { useEffect, } from 'preact/hooks';
-import {
-  fromEvent, switchMap, takeUntil, tap,
-} from 'rxjs';
+import { fromEvent, switchMap, takeUntil, tap, } from 'rxjs';
+import { useImmerx, } from '../store/state';
 import useNodes from './useNodes';
 
 export default function useMouseMove({
@@ -14,35 +13,46 @@ export default function useMouseMove({
   nodes,
   ...rest
 },) {
+  const [scale,] = useImmerx({
+    get: (state,) => state.scale,
+  },);
   const { setPosition, setXY, } = useNodes();
   useEffect(() => {
-    let { x, y, pos = {}, } = {};
+    let { x = 0, y = 0, pos = {}, } = {};
     if (elRef.current && dragRef.current) {
       const style = getComputedStyle(elRef.current,);
       // console.log('useMouseMove.style', style);
       const { width = '30px', height = '20px', } = style || {};
       ({ x, y, } = position);
-      elRef.current.style.setProperty(xVarName, `${x}px`,);
-      elRef.current.style.setProperty(yVarName, `${y}px`,);
+      const newX = x + x - x * scale;
+      const newY = y + y - y * scale;
+      elRef.current.style.setProperty(xVarName, `${newX}px`,);
+      elRef.current.style.setProperty(yVarName, `${newY}px`,);
       pos = {
         x,
         y,
         width,
         height,
       };
+      const widthRaw = Number(width.replace('px', '',),);
+      const heightRaw = Number(height.replace('px', '',),);
       setPosition(index, pos,);
       const mousedown = fromEvent(dragRef.current, 'mousedown',)
         .pipe(
-          switchMap(() => fromEvent(document, 'mousemove',).pipe(
-            tap((e,) => {
-              x = e.clientX - Number(width.replace('px', '',),) / 2;
-              y = e.clientY - Number(height.replace('px', '',),) / 2;
-              setXY(index, x, y,);
-              elRef.current.style.setProperty(xVarName, `${x}px`,);
-              elRef.current.style.setProperty(yVarName, `${y}px`,);
-            },),
-            takeUntil(fromEvent(document, 'mouseup',),),
-          ),),
+          switchMap(() =>
+            fromEvent(document, 'mousemove',).pipe(
+              tap(({ clientX, clientY, },) => {
+                x = clientX - widthRaw / 2;
+                y = clientY - heightRaw / 2;
+                const neX = x + x - x * scale;
+                const neY = y + y - y * scale;
+                setXY(index, x, y,);
+                elRef.current.style.setProperty(xVarName, `${neX}px`,);
+                elRef.current.style.setProperty(yVarName, `${neY}px`,);
+              },),
+              takeUntil(fromEvent(document, 'mouseup',),),
+            ),
+          ),
         )
         .subscribe(() => null,);
       return () => {
@@ -50,5 +60,5 @@ export default function useMouseMove({
       };
     }
     return undefined;
-  }, [dragRef?.current, elRef?.current, nodes, index, rest?.showMore,],);
+  }, [dragRef?.current, elRef?.current, nodes, index, rest?.showMore, scale,],);
 }

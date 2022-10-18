@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
-import { forwardRef, useCallback, } from 'preact/compat';
+import { forwardRef, useCallback, useEffect, } from 'preact/compat';
 import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import {
@@ -61,6 +61,13 @@ const BoxNode = forwardRef(
     const [wires,] = useImmerx({
       get: (state,) => state.wires,
     },);
+    const [scale,] = useImmerx({
+      get: (state,) => state.scale,
+    },);
+    
+    useEffect(() => {
+      console.log('scale changed inside box node', scale,)
+    }, [scale,],)
     console.log('wires', wires,);
     const { addToConnecting, } = useWiring();
     const { remove, } = useNodes();
@@ -76,7 +83,9 @@ const BoxNode = forwardRef(
     const isWireConnected = useCallback(
       (dir,) =>
         wires.find(
-          ({ from, to, },) => (dir === 'output' && from === index) || to === index,
+          ({ from, to, },) =>
+            (dir === 'output' && from === index) ||
+            (to === index && dir === 'input'),
         ),
       [wires, index,],
     );

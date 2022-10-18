@@ -11,14 +11,21 @@ const SliderStyled = styled.input`
 `;
 
 const Label = styled.div`
-  text-align: center;
   color: #fff;
+  display: flex;
+  justify-content: space-evenly;
 `;
 
-export default function Slider({ value, ...rest },) {
+const LabelTitle = styled.div``;
+const LabelValue = styled.div``;
+
+export default function Slider({ value, label = '', ...rest },) {
   return (
     <Container>
-      <Label>{value}</Label>
+      <Label>
+        {label && <LabelTitle>{label}</LabelTitle>}
+        <LabelValue>{value}</LabelValue>
+      </Label>
       <SliderStyled type="range" value={value} {...rest} />
     </Container>
   );

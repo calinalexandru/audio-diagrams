@@ -1,9 +1,9 @@
-import { useCallback, } from "preact/hooks";
-import { DEFAULTS, NODE_TYPE, } from "../constants";
-import { useImmerx, } from "../store/state";
+import { useCallback, } from 'preact/hooks';
+import { DEFAULTS, NODE_TYPE, } from '../constants';
+import { useImmerx, } from '../store/state';
 
 export default function useMenu() {
-  const [{positions,}, update,] = useImmerx();
+  const [{ positions, }, update,] = useImmerx();
 
   const clearAllNodes = useCallback(() => {
     update((draft,) => {
@@ -58,15 +58,28 @@ export default function useMenu() {
   const removeLine = useCallback((index,) => {
     update((draft,) => void draft.wires.splice(index, 1,),);
   }, [],);
-	
-	return {
-		removeLine,
-		addPan,
-		addDelay,
-		addGain,
-		addOscilator,
-		clearAllNodes,
-		clearAllWires,
-		cancelConnection,
-	}
+
+  const zoom = useCallback((type,) => {
+    update((draft,) => {
+      if (type === 'in') {
+        draft.scale += 0.04;
+      } else if (type === 'out') {
+        draft.scale -= 0.04;
+      } else {
+        draft.scale = type;
+      }
+    },);
+  }, [],);
+
+  return {
+    removeLine,
+    addPan,
+    addDelay,
+    addGain,
+    addOscilator,
+    clearAllNodes,
+    clearAllWires,
+    cancelConnection,
+    zoom,
+  };
 }
