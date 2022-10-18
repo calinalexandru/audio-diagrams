@@ -10,6 +10,14 @@ export const Container = styled.div`
   background-size: 15px 15px;
 `;
 
-export function TBD() {
-  return null
-}
+export const LeftMenu = styled.div`
+  position: absolute;
+  left: 0;
+  height: 100vh;
+  width: 120px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 10px;
+  background: #44444482;
+`;

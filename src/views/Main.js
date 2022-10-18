@@ -9,7 +9,7 @@ import useAudioNodes from '../hooks/useAudioNodes';
 import Button from '../primitives/Button';
 import Line from '../primitives/Line';
 import { useImmerx, } from '../store/state';
-import { Container, } from './style';
+import { Container, LeftMenu, } from './style';
 
 // const fromPos = { position: undefined, };
 // const toPos = { position: undefined };
@@ -86,27 +86,31 @@ export default function Main() {
 
   return (
     <Container>
-      <div
-        style={{
-          position: 'absolute',
-          right: 0,
-        }}
-      >
+      <LeftMenu>
+        <Button color="node" onClick={addOscilator}>
+          Oscillator
+        </Button>
+        <Button color="node" onClick={addGain}>
+          Gain
+        </Button>
+        <Button color="node" onClick={addDelay}>
+          Delay
+        </Button>
+        <Button color="node" onClick={addPan}>
+          Panner
+        </Button>
+        <hr />
         <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
         <Button
           onClick={cancelConnection}
           style={{
-            background: connecting.length ? 'antiquewhite' : '#ccc',
+            // background: connecting.length ? 'antiquewhite' : '#ccc',
           }}
         >
           Cancel connection
         </Button>
         <Button onClick={clearAllWires}>Clear all wires</Button>
-      </div>
-      <Button onClick={addOscilator}>Add Oscillator</Button>
-      <Button onClick={addGain}>Add Gain</Button>
-      <Button onClick={addDelay}>Add Delay</Button>
-      <Button onClick={addPan}>Add Panner</Button>
+      </LeftMenu>
       {nodes.map(
         (node, index,) =>
           (node.type === NODE_TYPE.OSCILLATOR && (

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-/* @jsx h */
 import { h, } from 'preact';
 
 const LineStyled = styled.div`
