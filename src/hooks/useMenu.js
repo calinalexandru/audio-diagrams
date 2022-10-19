@@ -35,6 +35,13 @@ export default function useMenu() {
     },);
   }, [],);
 
+  const addBiquadFilter = useCallback(() => {
+    update((draft,) => {
+      draft.nodes.push({ ...DEFAULTS.BIQUAD_FILTER.NODE, },);
+      draft.positions.push({ ...DEFAULTS.BIQUAD_FILTER.POSITION, },);
+    },);
+  }, [],);
+
   const addGain = useCallback(() => {
     update((draft,) => {
       draft.nodes.push({ ...DEFAULTS.GAIN.NODE, },);
@@ -78,6 +85,7 @@ export default function useMenu() {
     addDelay,
     addGain,
     addOscilator,
+    addBiquadFilter,
     clearAllNodes,
     clearAllWires,
     cancelConnection,

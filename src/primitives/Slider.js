@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
+import { forwardRef, } from 'preact/compat';
 
 const Container = styled.div`
   margin-top: 10px;
@@ -19,14 +20,26 @@ const Label = styled.div`
 const LabelTitle = styled.div``;
 const LabelValue = styled.div``;
 
-export default function Slider({ value, label = '', ...rest },) {
-  return (
-    <Container>
-      <Label>
-        {label && <LabelTitle>{label}</LabelTitle>}
-        <LabelValue>{value}</LabelValue>
-      </Label>
-      <SliderStyled type="range" value={value} {...rest} />
-    </Container>
-  );
-}
+const Slider = forwardRef(
+  ({ value, label = '', orientation, ...rest }, ref,) => {
+    const isVertical = orientation === 'vertical';
+    return (
+      <Container
+        style={{
+          transform: isVertical ? 'rotate(-90deg) translate(-60px, 70px)' : '',
+          transformOrigin: 'left',
+          height: isVertical ? '129px' : 'auto',
+          width: isVertical ? '32px' : 'auto',
+        }}
+      >
+        <Label>
+          {label && <LabelTitle>{label}</LabelTitle>}
+          <LabelValue>{value}</LabelValue>
+        </Label>
+        <SliderStyled ref={ref} type="range" value={value} {...rest} />
+      </Container>
+    );
+  },
+);
+
+export default Slider;

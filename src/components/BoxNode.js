@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
-import { forwardRef, useCallback, useEffect, useMemo, } from 'preact/compat';
+import { forwardRef, useCallback, useMemo, } from 'preact/compat';
 import useMouseMove from '../hooks/useMouseMove';
 import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
@@ -59,7 +59,6 @@ const BoxNode = forwardRef(
 
     const [connecting,] = useImmerx('connecting',);
     const [wires,] = useImmerx('wires',);
-    const [scale,] = useImmerx('scale',);
     const [nodes,] = useImmerx('nodes',);
     const [positions,] = useImmerx('positions',);
 

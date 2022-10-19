@@ -1,5 +1,6 @@
 export const NODE_TYPE = {
   OSCILLATOR: 'oscillator',
+  BIQUAD_FILTER: 'biquadFilter',
   DELAY: 'delay',
   PAN: 'pan',
   GAIN: 'gain',
@@ -23,6 +24,25 @@ export const DEFAULTS = {
         frequency: 440,
         detune: 0,
         duration: 0,
+      },
+    },
+  },
+
+  BIQUAD_FILTER: {
+    POSITION: {
+      x: 250,
+      y: 550,
+      width: '100px',
+      height: '50px',
+    },
+    NODE: {
+      type: NODE_TYPE.BIQUAD_FILTER,
+      properties: {
+        type: 'lowpass',
+        frequency: 1000,
+        Q: 0,
+        gain: 0,
+        detune: 0,
       },
     },
   },
@@ -86,3 +106,15 @@ export const DEFAULTS = {
 
 export const DEFAULT_NODES = [{ ...DEFAULTS.OUTPUT.NODE, },];
 export const DEFAULT_POSITIONS = [{ ...DEFAULTS.OUTPUT.POSITION, },];
+export const HZ = '&#13200';
+export const MAX_FREQUENCY = 22400;
+export const BIQUAD_FILTER_TYPES = [
+  'lowpass',
+  'highpass',
+  'bandpass',
+  'lowshelf',
+  'highshelf',
+  'peaking',
+  'notch',
+  'allpass',
+];

@@ -43,7 +43,9 @@ export default function Input({ label, units, ...rest },) {
       {label && <Label>{label}</Label>}
       <InputStyled {...rest} />
       &nbsp;
-      {units && <Units>{units}</Units>}
+      {units && (
+        <Units dangerouslySetInnerHTML={{ __html: units, }} />
+      )}
     </Container>
   );
 }

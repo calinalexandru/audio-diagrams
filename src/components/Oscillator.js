@@ -2,6 +2,7 @@ import { Fragment, h, } from 'preact';
 import {
   useCallback, useRef, useState,
 } from 'preact/hooks';
+import { HZ, } from '../constants';
 import Button from '../primitives/Button';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
@@ -72,7 +73,7 @@ export default function Oscillator({ index, },) {
         <Input
           type="number"
           label="Frequency"
-          units="&#13200;"
+          units={HZ}
           value={nodes[index].properties.frequency}
           onChange={(e,) => {
             e.preventDefault();

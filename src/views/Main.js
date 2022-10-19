@@ -1,4 +1,5 @@
 import { h, } from 'preact';
+import BiquadFilter from '../components/BiquadFilter';
 import Delay from '../components/Delay';
 import Gain from '../components/Gain';
 import Oscillator from '../components/Oscillator';
@@ -33,6 +34,7 @@ export default function Main() {
   useAudioNodes({ nodes, wires, },);
   const {
     addOscilator,
+    addBiquadFilter,
     addDelay,
     addGain,
     addPan,
@@ -51,6 +53,9 @@ export default function Main() {
         <NodesMenuHeader>
           <Button color="node" onClick={addOscilator}>
             Oscillator
+          </Button>
+          <Button color="node" onClick={addBiquadFilter}>
+            Biquad Filter
           </Button>
           <Button color="node" onClick={addGain}>
             Gain
@@ -96,6 +101,7 @@ export default function Main() {
               <Oscillator index={index} />
             )) ||
             (node.type === NODE_TYPE.GAIN && <Gain index={index} />) ||
+            (node.type === NODE_TYPE.BIQUAD_FILTER && <BiquadFilter index={index} />) ||
             (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
             (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
         )}

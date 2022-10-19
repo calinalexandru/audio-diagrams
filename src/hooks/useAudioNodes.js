@@ -25,18 +25,29 @@ export default function useAudioNodes({ nodes, wires, },) {
             );
           }
           return oscillator;
-        } if (node.type === NODE_TYPE.GAIN) {
+        }
+        if (node.type === NODE_TYPE.BIQUAD_FILTER) {
+          const filter = audioCtx.createBiquadFilter();
+          filter.Q.value = node.properties.Q;
+          filter.frequency.value = node.properties.frequency;
+          filter.gain.value = node.properties.gain;
+          filter.type = node.properties.type;
+          return filter;
+        }
+        if (node.type === NODE_TYPE.GAIN) {
           const gain = audioCtx.createGain();
           gain.gain.value = node.properties.gain;
           return gain;
-        } if (node.type === NODE_TYPE.DELAY) {
+        }
+        if (node.type === NODE_TYPE.DELAY) {
           const delay = audioCtx.createDelay(179,);
           delay.delayTime.setValueAtTime(
             node.properties.delay,
             audioCtx.currentTime,
           );
           return delay;
-        } if (node.type === NODE_TYPE.PAN) {
+        }
+        if (node.type === NODE_TYPE.PAN) {
           const pan = audioCtx.createStereoPanner();
           pan.pan.setValueAtTime(node.properties.pan, audioCtx.currentTime,);
           return pan;

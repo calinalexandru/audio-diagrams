@@ -51,7 +51,7 @@ export const CenterTitle = styled.div`
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin-bottom: 8px;
+  margin: 2px 0 4px 0;
 `;
 
 export const CenterContent = styled.div`
