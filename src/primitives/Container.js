@@ -46,6 +46,7 @@ export const Center = styled.div`
 `;
 
 export const CenterTitle = styled.div`
+  user-select: none;
   box-sizing: border-box;
   display: flex;
   flex-flow: row;

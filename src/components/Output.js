@@ -1,21 +1,17 @@
 import { h, } from 'preact';
-import { useRef, } from 'preact/hooks';
-import useMouseMove from '../hooks/useMouseMove';
+import { useEffect, useRef, } from 'preact/hooks';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
 export default function Output({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
-  const [state,] = useImmerx();
+  
+  const [state,] = useImmerx()
 
-  useMouseMove({
-    elRef,
-    dragRef,
-    position: state.positions[index],
-    index,
-    nodes: state.nodes,
-  },);
+  // useEffect(() => {
+  //   //
+  // }, [index, state.nodes, state.positions,],);
 
   return (
     <BoxNode

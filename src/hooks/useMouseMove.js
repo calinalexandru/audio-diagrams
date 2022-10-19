@@ -1,5 +1,5 @@
 import { useEffect, } from 'preact/hooks';
-import { fromEvent, switchMap, takeUntil, tap, } from 'rxjs';
+import { debounceTime, delay, fromEvent, switchMap, takeUntil, tap, throttle, } from 'rxjs';
 import { useImmerx, } from '../store/state';
 import useNodes from './useNodes';
 
@@ -41,6 +41,7 @@ export default function useMouseMove({
         .pipe(
           switchMap(() =>
             fromEvent(document, 'mousemove',).pipe(
+              delay(300,),
               tap(({ clientX, clientY, },) => {
                 x = clientX - widthRaw / 2;
                 y = clientY - heightRaw / 2;

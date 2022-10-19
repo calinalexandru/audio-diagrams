@@ -9,7 +9,7 @@ export default function useKeyBindings() {
       .pipe(
         filter((e,) => e.key === 'Escape',),
         tap((e,) => {
-          console.log('ai dat pe buton', e,);
+          // console.log('ai dat pe buton', e,);
           update((draft,) => void (draft.connecting = []),);
         },),
       )

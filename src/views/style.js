@@ -8,6 +8,7 @@ export const Container = styled.div`
   background-color: #000;
   background-position: 0 0, 50px 50px;
   background-size: 15px 15px;
+  user-select: none;
 `;
 
 export const NodesMenu = styled.div`

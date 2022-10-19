@@ -29,6 +29,9 @@ export default function Main() {
     { nodes = [], wires = [], positions = [], connecting = [], scale, },
     update,
   ] = useImmerx();
+  
+  console.log('Main.nodes', nodes,)
+  console.log('Main.positions', positions,)
 
   useKeyBindings();
   useAudioNodes({ nodes, wires, },);

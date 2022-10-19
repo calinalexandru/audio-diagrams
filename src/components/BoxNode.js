@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
-import { forwardRef, useCallback, useEffect, } from 'preact/compat';
+import { forwardRef, useCallback, useEffect, useMemo, } from 'preact/compat';
+import useMouseMove from '../hooks/useMouseMove';
 import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
 import {
@@ -40,6 +41,16 @@ const RemoveButton = styled.button`
   }
 `;
 
+const lens = {
+  get: (state,) => ({
+    connecting: state.connecting,
+    wires: state.wires,
+    scale: state.scale,
+    nodes: state.nodes,
+    positions: state.positions,
+  }),
+};
+
 const BoxNode = forwardRef(
   (
     {
@@ -55,20 +66,38 @@ const BoxNode = forwardRef(
     },
     ref,
   ) => {
-    const [connecting,] = useImmerx({
-      get: (state,) => state.connecting,
+    const [{ connecting, wires, scale, nodes, positions, },] = useImmerx(lens,);
+    const position = useMemo(() => positions[index], [index, positions,],);
+
+    // const [connecting,] = useImmerx({
+    //   get: (state,) => state.connecting,
+    // },);
+    // const [wires,] = useImmerx({
+    //   get: (state,) => state.wires,
+    // },);
+    // const [scale,] = useImmerx({
+    //   get: (state,) => state.scale,
+    // },);
+    // const [nodes,] = useImmerx({
+    //   get: (state,) => state.nodes,
+    // },);
+    // const [position,] = useImmerx({
+    //   get: (state,) => state.positions[index],
+    // },);
+
+    // console.log({ connecting, wires, scale, nodes, position, },);
+    useMouseMove({
+      elRef: ref,
+      dragRef,
+      position,
+      index,
+      nodes,
     },);
-    const [wires,] = useImmerx({
-      get: (state,) => state.wires,
-    },);
-    const [scale,] = useImmerx({
-      get: (state,) => state.scale,
-    },);
-    
+
     useEffect(() => {
-      console.log('scale changed inside box node', scale,)
-    }, [scale,],)
-    console.log('wires', wires,);
+      // console.log('scale changed inside box node', scale,);
+    }, [scale,],);
+    // console.log('wires', wires,);
     const { addToConnecting, } = useWiring();
     const { remove, } = useNodes();
 

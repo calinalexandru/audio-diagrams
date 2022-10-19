@@ -1,37 +1,23 @@
 import { Fragment, h, } from 'preact';
 import {
-  useCallback, useRef, useState,
+  useCallback, useEffect, useRef, useState,
 } from 'preact/hooks';
-import useMouseMove from '../hooks/useMouseMove';
 import Button from '../primitives/Button';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-// const lens = {
-//   get: (state,) => state.nodes,
-//   set: (stateDraft, nodes,) => {
-//     // console.log('stateDraft', stateDraft, nodes);
-//     stateDraft.nodes = nodes;
-//   },
-// };
-
 export default function Oscillator({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
   const [state, update,] = useImmerx();
 
-  const [showMore, setShowMore,] = useState(false,);
+  // useEffect(() => {
+  //   //
+  // }, [index, state.nodes, state.positions,],);
 
-  useMouseMove({
-    elRef,
-    dragRef,
-    position: state.positions[index],
-    index,
-    nodes: state.nodes,
-    showMore,
-  },);
+  const [showMore, setShowMore,] = useState(false,);
 
   const setOscillatorType = (type,) => {
     update((draft,) => void (draft.nodes[index].properties.type = type),);

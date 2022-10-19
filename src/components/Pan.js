@@ -1,6 +1,5 @@
 import { h, } from 'preact';
-import { useRef, } from 'preact/hooks';
-import useMouseMove from '../hooks/useMouseMove';
+import { useEffect, useRef, } from 'preact/hooks';
 import Slider from '../primitives/Slider';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
@@ -11,13 +10,9 @@ export default function Pan({ index, },) {
 
   const [state, update,] = useImmerx();
 
-  useMouseMove({
-    elRef,
-    dragRef,
-    position: state.positions[index],
-    index,
-    nodes: state.nodes,
-  },);
+  // useEffect(() => {
+  //   //
+  // }, [index, state.nodes, state.positions,],);
 
   const setPan = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.pan = val),);

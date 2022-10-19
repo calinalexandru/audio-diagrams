@@ -32,7 +32,7 @@ export default function useNodes() {
 
   const remove = useCallback(
     (index,) => {
-      console.log('Remove.index', index,);
+      // console.log('Remove.index', index,);
       update((draft,) => {
         // find and delete any connected wires
         const toDelete = [
@@ -43,7 +43,7 @@ export default function useNodes() {
           ),
         ];
         
-        console.log('Remove.toDelete', toDelete,)
+        // console.log('Remove.toDelete', toDelete,)
         
         // to remove multiple items from the stack
         // we must splice it in reverse order
