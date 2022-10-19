@@ -74,6 +74,7 @@ export default function Oscillator({ index, },) {
           }}
         />
         <Select
+          label="Type"
           onChange={(e,) => {
             e.preventDefault();
             setOscillatorType(e.target.value,);

@@ -1,10 +1,10 @@
-import { h, } from 'preact';
-import { useRef, } from 'preact/hooks';
-import { BIQUAD_FILTER_TYPES, HZ, MAX_FREQUENCY, } from '../constants';
+import { h } from 'preact';
+import { useRef } from 'preact/hooks';
+import { BIQUAD_FILTER_TYPES, HZ, MAX_FREQUENCY } from '../constants';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
 import Slider from '../primitives/Slider';
-import { useImmerx, } from '../store/state';
+import { useImmerx } from '../store/state';
 import BoxNode from './BoxNode';
 
 export default function BiquadFilter({ index, },) {
@@ -60,8 +60,12 @@ export default function BiquadFilter({ index, },) {
           display: 'flex',
         }}
       >
-        <div>
+        <div style={{
+          display: 'flex',
+          flexFlow: 'column',
+        }}>
           <Select
+            label="Type"
             onChange={(e,) => {
               setType(e.target.value,);
             }}

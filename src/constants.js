@@ -120,6 +120,12 @@ export const BIQUAD_FILTER_TYPES = [
 ];
 
 export const BOX_SIZE = {
-  WIDTH: 122,
-  HEIGHT: 74,
+  SMALL: {
+    WIDTH: 122,
+    HEIGHT: 74,
+  },
+  BIG: {
+    WIDTH: 194,
+    HEIGHT: 190,
+  },
 };

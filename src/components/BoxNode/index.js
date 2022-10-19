@@ -1,73 +1,23 @@
-import styled from '@emotion/styled';
 import { h, } from 'preact';
 import { forwardRef, useCallback, useMemo, useState, } from 'preact/compat';
-import { BOX_SIZE, } from '../constants';
-import useMouseMove from '../hooks/useMouseMove';
-import useNodes from '../hooks/useNodes';
-import useWiring from '../hooks/useWiring';
+import { BOX_SIZE, } from '../../constants';
+import useMouseMove from '../../hooks/useMouseMove';
+import useNodes from '../../hooks/useNodes';
+import useWiring from '../../hooks/useWiring';
+import { useImmerx, } from '../../store/state';
 import {
   Center,
   CenterContent,
   CenterTitle,
   Container,
+  ExpandButton,
   IOButton,
+  RemoveButton,
   Title,
-} from '../primitives/Container';
-import { useImmerx, } from '../store/state';
+} from './style';
 
 const xVarName = '--x';
 const yVarName = '--y';
-
-const RemoveButton = styled.button`
-  cursor: pointer;
-  color: #fff;
-  position: absolute;
-  right: -14px;
-  background: unset;
-  border: 0;
-  font-size: 10px;
-  top: -10px;
-  text-shadow: 1px 1px black;
-  width: 17px;
-  height: 17px;
-  margin: 0;
-  padding: 0;
-
-  &:hover {
-    background: #cccccc33;
-    border-radius: 50%;
-  }
-
-  &:active {
-    background: #ff000033;
-  }
-`;
-
-const ExpandButton = styled.button`
-  height: auto;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  left: calc(50% - 10px);
-  bottom: -16px;
-  outline: none;
-  background: unset;
-  border: none;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-  transform: rotate(90deg);
-  cursor: pointer;
-
-  &:hover {
-    background: #cccccc22;
-    border-radius: 50%;
-  }
-
-  &:active {
-    background: #cccccc66;
-  }
-`;
 
 const BoxNode = forwardRef(
   (
@@ -149,8 +99,8 @@ const BoxNode = forwardRef(
           left: `var(${xVarName})`,
           borderColor: color,
           ...style,
-          width: expand ? 'auto' : `${BOX_SIZE.WIDTH}px`,
-          height: expand ? 'auto' : `${BOX_SIZE.HEIGHT}px`,
+          width: expand ? BOX_SIZE.BIG.WIDTH : `${BOX_SIZE.SMALL.WIDTH}px`,
+          height: expand ? BOX_SIZE.BIG.HEIGHT: `${BOX_SIZE.SMALL.HEIGHT}px`,
         }}
         ref={ref}
       >

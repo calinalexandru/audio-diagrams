@@ -1,5 +1,6 @@
+import { keyframes, } from '@emotion/react';
 import styled from '@emotion/styled';
-import { BOX_SIZE, } from '../constants';
+import { BOX_SIZE, } from '../../constants';
 
 export const Container = styled.div`
   background: #353535b0;
@@ -11,9 +12,11 @@ export const Container = styled.div`
   flex-flow: row;
   display: flex;
   position: absolute;
-  min-width: ${BOX_SIZE.WIDTH}px;
-  min-height: ${BOX_SIZE.HEIGHT}px;
+  min-width: ${BOX_SIZE.SMALL.WIDTH}px;
+  min-height: ${BOX_SIZE.SMALL.HEIGHT}px;
   z-index: 100;
+
+  transition: width 0.5s, height 0.5s;
 
   &:active {
     cursor: grabbing;
@@ -38,7 +41,7 @@ export const CenterTitle = styled.div`
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin: 2px 0 0 0;
+  margin: 2px 0 6px 0;
 `;
 
 export const CenterContent = styled.div`
@@ -77,4 +80,72 @@ export const Title = styled.h3`
   text-shadow: 1px 1px black;
   margin: 0;
   padding: 0;
+`;
+
+export const RemoveButton = styled.button`
+  cursor: pointer;
+  color: #fff;
+  position: absolute;
+  right: -14px;
+  background: unset;
+  border: 0;
+  font-size: 10px;
+  top: -10px;
+  text-shadow: 1px 1px black;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  padding: 0;
+
+  &:hover {
+    background: #cccccc33;
+    border-radius: 50%;
+  }
+
+  &:active {
+    background: #ff000033;
+  }
+`;
+
+const animateDown = keyframes`
+  from, 20%, 53%, 80%, to {
+    transform: translate3d(0,0,0) rotate(90deg);
+  }
+
+  40%, 43% {
+    transform: translate3d(0, 3px, 0) rotate(90deg);
+  }
+
+  70% {
+    transform: translate3d(0, 2px, 0) rotate(90deg);
+  }
+
+  90% {
+    transform: translate3d(0,1px,0) rotate(90deg);
+  }
+`;
+
+export const ExpandButton = styled.button`
+  height: auto;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: calc(50% - 10px);
+  bottom: -16px;
+  outline: none;
+  background: unset;
+  border: none;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  transform: rotate(90deg);
+  cursor: pointer;
+
+  &:hover {
+    animation: ${animateDown} 1s infinite;
+  }
+
+  &:active {
+    background: #cccccc66;
+  }
 `;

@@ -25,6 +25,7 @@ export default function Delay({ index, },) {
     >
       <div>
         <Input
+          label="Value"
           type="number"
           value={nodes[index].properties.delay}
           step="1"
