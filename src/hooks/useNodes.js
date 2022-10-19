@@ -9,7 +9,7 @@ import { useImmerx, } from '../store/state';
 //   },
 // };
 export default function useNodes() {
-  const [state, update,] = useImmerx();
+  const [{ wires, }, update,] = useImmerx();
 
   const setPosition = useCallback(
     (index, pos,) => {
@@ -32,21 +32,30 @@ export default function useNodes() {
 
   const remove = useCallback(
     (index,) => {
+      console.log('Remove.index', index,);
       update((draft,) => {
+        // find and delete any connected wires
+        const toDelete = [
+          ...new Set(
+            wires.map((wire, i,) =>
+              [wire.from, wire.to,].includes(index,) ? i : false,
+            ),
+          ),
+        ];
+        
+        console.log('Remove.toDelete', toDelete,)
+        
+        // to remove multiple items from the stack
+        // we must splice it in reverse order
+        toDelete.reverse().forEach((wireIndex,) => {
+          if (wireIndex !== false) draft.wires.splice(wireIndex, 1,);
+        },);
+
         draft.positions.splice(index, 1,);
         draft.nodes.splice(index, 1,);
-
-        // find and delete any connected wires
-        [
-          ...new Set(
-            state.wires.map((wire, i,) => ([wire.from, wire.to,].includes(index,) ? i : false),),
-          ),
-        ].forEach((wireIndex,) => {
-          if (!Number.isNaN) draft.wires.splice(wireIndex, 1,);
-        },);
       },);
     },
-    [update, state.wires,],
+    [update, wires,],
   );
 
   return {
