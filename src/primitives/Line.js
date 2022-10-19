@@ -6,6 +6,8 @@ const LineStyled = styled.div`
   border-top: 2px solid brown;
   position: absolute;
   z-index: 10;
+  padding: 5px 0;
+  cursor: pointer;
   transform-origin: left center;
 
   // made an arrow that kinda sux
@@ -54,7 +56,7 @@ export default function Line({ from: ogFrom, to: ogTo, scale = 1, onClick, },) {
 
   return (
     <LineStyled
-      onClick={onClick}
+      onDoubleClick={onClick}
       style={{
         width,
         left,

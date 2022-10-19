@@ -6,27 +6,23 @@ const addToConnectingEpic = (patch$, state$,) =>
   patch$.pipe(
     patchOf({ op: ADD, path: ['connecting',], },),
     withLatestFrom(state$,),
-    map(([action, state,],) => (draft,) => {
-      // console.log('state$.val', state);
-      const firstDir = state.connecting?.[0]?.direction;
-      const secondDir = state.connecting?.[1]?.direction;
-      if (state.connecting.length >= 2) {
-        if (new Set(state.connecting.map((con,) => con.index,),).size <= 1) {
-          draft.connecting = [];
-        } else if (firstDir === 'output' && secondDir === 'input') {
+    map(([, { connecting, },],) => (draft,) => {
+      console.log('addToConnectingEpic',);
+      const [
+        { direction: firstDir, index: firstIndex, } = {},
+        { direction: secondDir, index: secondIndex, } = {},
+      ] = connecting;
+
+      const outputToInput = firstDir === 'output' && secondDir === 'input';
+      const inputToOutput = firstDir === 'input' && secondDir === 'output';
+      if (connecting.length >= 2) {
+        if (outputToInput || inputToOutput) {
           draft.wires.push({
-            from: state.connecting[0].index,
-            to: state.connecting[1].index,
-          },);
-        } else if (firstDir === 'input' && secondDir === 'output') {
-          draft.wires.push({
-            from: state.connecting[1].index,
-            to: state.connecting[0].index,
+            from: outputToInput ? firstIndex : secondIndex,
+            to: outputToInput ? secondIndex : firstIndex,
           },);
         }
         draft.connecting = [];
-      } else {
-        draft.wires = state.wires;
       }
     },),
   );

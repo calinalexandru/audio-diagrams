@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
-import { forwardRef, useCallback, useMemo, } from 'preact/compat';
+import { forwardRef, useCallback, useMemo, useState, } from 'preact/compat';
+import { BOX_SIZE, } from '../constants';
 import useMouseMove from '../hooks/useMouseMove';
 import useNodes from '../hooks/useNodes';
 import useWiring from '../hooks/useWiring';
@@ -36,8 +37,35 @@ const RemoveButton = styled.button`
     background: #cccccc33;
     border-radius: 50%;
   }
+
   &:active {
     background: #ff000033;
+  }
+`;
+
+const ExpandButton = styled.button`
+  height: auto;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: calc(50% - 10px);
+  bottom: -16px;
+  outline: none;
+  background: unset;
+  border: none;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  transform: rotate(90deg);
+  cursor: pointer;
+
+  &:hover {
+    background: #cccccc22;
+    border-radius: 50%;
+  }
+
+  &:active {
+    background: #cccccc66;
   }
 `;
 
@@ -50,13 +78,13 @@ const BoxNode = forwardRef(
       style,
       children,
       name,
+      canExpand = false,
       canRemove = true,
       canOutput = true,
       canInput = true,
     },
     ref,
   ) => {
-
     const [connecting,] = useImmerx('connecting',);
     const [wires,] = useImmerx('wires',);
     const [nodes,] = useImmerx('nodes',);
@@ -74,12 +102,18 @@ const BoxNode = forwardRef(
 
     const { addToConnecting, } = useWiring();
     const { remove, } = useNodes();
+    const [expand, setExpand,] = useState(false,);
 
     const isActive = useCallback(
       (dir,) =>
         connecting.find(
           ({ index: i, direction, },) => index === i && direction === dir,
         ),
+      [connecting, index,],
+    );
+
+    const hasSelfWire = useMemo(
+      () => connecting.find(({ index: i, },) => index === i,),
       [connecting, index,],
     );
 
@@ -93,6 +127,21 @@ const BoxNode = forwardRef(
       [wires, index,],
     );
 
+    const toggleShowMore = useCallback(
+      (e,) => {
+        e.preventDefault();
+        setExpand(!expand,);
+      },
+      [expand,],
+    );
+
+    const showExpandButton = (
+      <ExpandButton
+        onClick={toggleShowMore}
+        dangerouslySetInnerHTML={{ __html: expand ? '&laquo;' : '&raquo;', }}
+      />
+    );
+
     return (
       <Container
         style={{
@@ -100,6 +149,8 @@ const BoxNode = forwardRef(
           left: `var(${xVarName})`,
           borderColor: color,
           ...style,
+          width: expand ? 'auto' : `${BOX_SIZE.WIDTH}px`,
+          height: expand ? 'auto' : `${BOX_SIZE.HEIGHT}px`,
         }}
         ref={ref}
       >
@@ -110,7 +161,7 @@ const BoxNode = forwardRef(
             connected={isWireConnected('input',)}
             left
             onClick={() => {
-              addToConnecting(index, 'input',);
+              if (!hasSelfWire) addToConnecting(index, 'input',);
             }}
           >
             &nbsp;
@@ -138,12 +189,13 @@ const BoxNode = forwardRef(
             connected={isWireConnected('output',)}
             active={isActive('output',)}
             onClick={() => {
-              addToConnecting(index, 'output',);
+              if (!hasSelfWire) addToConnecting(index, 'output',);
             }}
           >
             &nbsp;
           </IOButton>
         )}
+        {canExpand && showExpandButton}
       </Container>
     );
   },

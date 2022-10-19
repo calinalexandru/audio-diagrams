@@ -25,10 +25,11 @@ import {
 } from './style';
 
 export default function Main() {
-  const [{ nodes = [], wires = [], positions = [], scale, },] = useImmerx();
+  const [{ nodes = [], wires = [], positions = [], connecting = [], scale, },] = useImmerx();
 
   console.log('Main.nodes', nodes,);
   console.log('Main.positions', positions,);
+  console.log('Main.connecting', connecting,);
 
   useKeyBindings();
   useAudioNodes({ nodes, wires, },);

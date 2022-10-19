@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { BOX_SIZE, } from '../constants';
 
 export const Container = styled.div`
   background: #353535b0;
@@ -10,8 +11,8 @@ export const Container = styled.div`
   flex-flow: row;
   display: flex;
   position: absolute;
-  width: 180px;
-  height: 100px;
+  min-width: ${BOX_SIZE.WIDTH}px;
+  min-height: ${BOX_SIZE.HEIGHT}px;
   z-index: 100;
 
   &:active {
@@ -22,20 +23,6 @@ export const Container = styled.div`
     border-style: double;
   }
 `;
-
-// export const Left = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 10%;
-// `;
-
-// export const Right = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 10%;
-// `;
 
 export const Center = styled.div`
   box-sizing: border-box;
@@ -51,12 +38,13 @@ export const CenterTitle = styled.div`
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin: 2px 0 4px 0;
+  margin: 2px 0 0 0;
 `;
 
 export const CenterContent = styled.div`
   box-sizing: border-box;
   padding: 0 2px;
+  overflow: hidden;
 `;
 
 export const IOButton = styled.button`

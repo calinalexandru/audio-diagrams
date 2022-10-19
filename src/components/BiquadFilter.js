@@ -49,6 +49,7 @@ export default function BiquadFilter({ index, },) {
       dragRef={dragRef}
       color="cornflowerblue"
       index={index}
+      canExpand
       name="BiquadFilter"
       style={{
         height: 'auto',

@@ -7,6 +7,7 @@ const Container = styled.div`
 `;
 
 const SliderStyled = styled.input`
+  width: 100%;
   padding: 0;
   margin: 4px 0;
 `;
@@ -36,7 +37,15 @@ const Slider = forwardRef(
           {label && <LabelTitle>{label}</LabelTitle>}
           <LabelValue>{value}</LabelValue>
         </Label>
-        <SliderStyled ref={ref} type="range" value={value} {...rest} />
+        <SliderStyled
+          style={{
+            ...rest.style,
+          }}
+          ref={ref}
+          type="range"
+          value={value}
+          {...rest}
+        />
       </Container>
     );
   },

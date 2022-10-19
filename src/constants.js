@@ -118,3 +118,8 @@ export const BIQUAD_FILTER_TYPES = [
   'notch',
   'allpass',
 ];
+
+export const BOX_SIZE = {
+  WIDTH: 122,
+  HEIGHT: 74,
+};

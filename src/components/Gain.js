@@ -25,6 +25,7 @@ export default function Gain({ index, },) {
     >
       <div>
         <Input
+          label="Value"
           type="number"
           value={nodes[index].properties.gain}
           step="0.1"
