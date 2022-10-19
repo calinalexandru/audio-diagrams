@@ -2,7 +2,7 @@ import { useCallback, } from 'preact/hooks';
 import { useImmerx, } from '../store/state';
 
 export default function useWiring() {
-  const [_, update,] = useImmerx();
+  const [, update,] = useImmerx();
 
   const addToWiring = useCallback(
     ({ from, to, },) => {

@@ -1,5 +1,4 @@
 import { h, } from 'preact';
-import { useEffect, } from 'preact/hooks';
 import Delay from '../components/Delay';
 import Gain from '../components/Gain';
 import Oscillator from '../components/Oscillator';
@@ -25,13 +24,10 @@ import {
 } from './style';
 
 export default function Main() {
-  const [
-    { nodes = [], wires = [], positions = [], connecting = [], scale, },
-    update,
-  ] = useImmerx();
-  
-  console.log('Main.nodes', nodes,)
-  console.log('Main.positions', positions,)
+  const [{ nodes = [], wires = [], positions = [], scale, },] = useImmerx();
+
+  console.log('Main.nodes', nodes,);
+  console.log('Main.positions', positions,);
 
   useKeyBindings();
   useAudioNodes({ nodes, wires, },);

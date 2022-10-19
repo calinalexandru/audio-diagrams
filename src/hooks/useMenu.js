@@ -3,27 +3,28 @@ import { DEFAULTS, NODE_TYPE, } from '../constants';
 import { useImmerx, } from '../store/state';
 
 export default function useMenu() {
-  const [{ positions, }, update,] = useImmerx();
+  const [positions,] = useImmerx('positions',);
+  const [, update,] = useImmerx(null,);
 
   const clearAllNodes = useCallback(() => {
     update((draft,) => {
       draft.nodes = [
         draft.nodes.find((node,) => node.type === NODE_TYPE.OUTPUT,),
       ];
-      draft.wires = [];
-      draft.connecting = [];
+      draft.wires.length = 0;
+      draft.connecting.length = 0;
       draft.positions = [positions[0],];
     },);
   }, [positions,],);
 
   const cancelConnection = useCallback(() => {
-    update((draft,) => void (draft.connecting = []),);
+    update((draft,) => void (draft.connecting.length = 0),);
   }, [],);
 
   const clearAllWires = useCallback(() => {
     update((draft,) => {
-      draft.wires = [];
-      draft.connecting = [];
+      draft.wires.length = 0;
+      draft.connecting.length = 0;
     },);
   }, [],);
 

@@ -8,11 +8,8 @@ export default function Delay({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
 
-  const [state, update,] = useImmerx();
-
-  // useEffect(() => {
-  //   //
-  // }, [index, state.nodes, state.positions,],);
+  const [nodes,] = useImmerx('nodes',);
+  const [, update,] = useImmerx(null,);
 
   const setDelay = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.delay = val),);
@@ -29,7 +26,7 @@ export default function Delay({ index, },) {
       <div>
         <Input
           type="number"
-          value={state.nodes[index].properties.delay}
+          value={nodes[index].properties.delay}
           step="1"
           max="179"
           min="0"

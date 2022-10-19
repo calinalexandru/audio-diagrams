@@ -8,7 +8,8 @@ export default function Buffer({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
 
-  const [state, update,] = useImmerx();
+  const [nodes,] = useImmerx('nodes',);
+  const [, update,] = useImmerx(null,);
 
   const setDelay = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.delay = val),);
@@ -28,7 +29,7 @@ export default function Buffer({ index, },) {
         <Input
           style={{ width: '50px', }}
           type="number"
-          value={state.nodes[index].properties.delay}
+          value={nodes[index].properties.delay}
           step="1"
           max="180"
           min="0"

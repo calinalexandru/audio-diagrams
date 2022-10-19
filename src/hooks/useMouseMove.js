@@ -1,5 +1,5 @@
 import { useEffect, } from 'preact/hooks';
-import { debounceTime, delay, fromEvent, switchMap, takeUntil, tap, throttle, } from 'rxjs';
+import { concatWith, fromEvent, switchMap, takeUntil, tap, timer, } from 'rxjs';
 import { useImmerx, } from '../store/state';
 import useNodes from './useNodes';
 
@@ -13,9 +13,7 @@ export default function useMouseMove({
   nodes,
   ...rest
 },) {
-  const [scale,] = useImmerx({
-    get: (state,) => state.scale,
-  },);
+  const [scale,] = useImmerx('scale',);
   const { setPosition, setXY, } = useNodes();
   useEffect(() => {
     let { x = 0, y = 0, pos = {}, } = {};
@@ -40,17 +38,21 @@ export default function useMouseMove({
       const mousedown = fromEvent(dragRef.current, 'mousedown',)
         .pipe(
           switchMap(() =>
-            fromEvent(document, 'mousemove',).pipe(
-              delay(300,),
-              tap(({ clientX, clientY, },) => {
-                x = clientX - widthRaw / 2;
-                y = clientY - heightRaw / 2;
-                const neX = x + x - x * scale;
-                const neY = y + y - y * scale;
-                setXY(index, x, y,);
-                elRef.current.style.setProperty(xVarName, `${neX}px`,);
-                elRef.current.style.setProperty(yVarName, `${neY}px`,);
-              },),
+            timer(100,).pipe(
+              concatWith(
+                fromEvent(document, 'mousemove',).pipe(
+                  tap(({ clientX, clientY, },) => {
+                    x = clientX - widthRaw / 2;
+                    y = clientY - heightRaw / 2;
+                    const neX = x + x - x * scale;
+                    const neY = y + y - y * scale;
+                    setXY(index, x, y,);
+                    elRef.current.style.setProperty(xVarName, `${neX}px`,);
+                    elRef.current.style.setProperty(yVarName, `${neY}px`,);
+                  },),
+                  takeUntil(fromEvent(document, 'mouseup',),),
+                ),
+              ),
               takeUntil(fromEvent(document, 'mouseup',),),
             ),
           ),

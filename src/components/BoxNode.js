@@ -41,16 +41,6 @@ const RemoveButton = styled.button`
   }
 `;
 
-const lens = {
-  get: (state,) => ({
-    connecting: state.connecting,
-    wires: state.wires,
-    scale: state.scale,
-    nodes: state.nodes,
-    positions: state.positions,
-  }),
-};
-
 const BoxNode = forwardRef(
   (
     {
@@ -66,26 +56,15 @@ const BoxNode = forwardRef(
     },
     ref,
   ) => {
-    const [{ connecting, wires, scale, nodes, positions, },] = useImmerx(lens,);
+
+    const [connecting,] = useImmerx('connecting',);
+    const [wires,] = useImmerx('wires',);
+    const [scale,] = useImmerx('scale',);
+    const [nodes,] = useImmerx('nodes',);
+    const [positions,] = useImmerx('positions',);
+
     const position = useMemo(() => positions[index], [index, positions,],);
 
-    // const [connecting,] = useImmerx({
-    //   get: (state,) => state.connecting,
-    // },);
-    // const [wires,] = useImmerx({
-    //   get: (state,) => state.wires,
-    // },);
-    // const [scale,] = useImmerx({
-    //   get: (state,) => state.scale,
-    // },);
-    // const [nodes,] = useImmerx({
-    //   get: (state,) => state.nodes,
-    // },);
-    // const [position,] = useImmerx({
-    //   get: (state,) => state.positions[index],
-    // },);
-
-    // console.log({ connecting, wires, scale, nodes, position, },);
     useMouseMove({
       elRef: ref,
       dragRef,
@@ -94,10 +73,6 @@ const BoxNode = forwardRef(
       nodes,
     },);
 
-    useEffect(() => {
-      // console.log('scale changed inside box node', scale,);
-    }, [scale,],);
-    // console.log('wires', wires,);
     const { addToConnecting, } = useWiring();
     const { remove, } = useNodes();
 

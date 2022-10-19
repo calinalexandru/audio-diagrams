@@ -1,15 +1,9 @@
 import { useCallback, } from 'preact/hooks';
 import { useImmerx, } from '../store/state';
 
-// const lens = {
-//   get: (state) => state.nodes,
-//   set: (stateDraft, nodes) => {
-//     console.log('stateDraft', stateDraft, nodes);
-//     stateDraft.nodes = nodes;
-//   },
-// };
 export default function useNodes() {
-  const [{ wires, }, update,] = useImmerx();
+  const [, update,] = useImmerx(null,);
+  const [wires,] = useImmerx('wires',);
 
   const setPosition = useCallback(
     (index, pos,) => {
@@ -43,11 +37,9 @@ export default function useNodes() {
           ),
         ];
         
-        // console.log('Remove.toDelete', toDelete,)
-        
         // to remove multiple items from the stack
         // we must splice it in reverse order
-        toDelete.reverse().forEach((wireIndex,) => {
+        toDelete.sort().reverse().forEach((wireIndex,) => {
           if (wireIndex !== false) draft.wires.splice(wireIndex, 1,);
         },);
 

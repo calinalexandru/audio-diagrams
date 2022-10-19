@@ -1,5 +1,5 @@
 import { h, } from 'preact';
-import { useEffect, useRef, } from 'preact/hooks';
+import { useRef, } from 'preact/hooks';
 import Slider from '../primitives/Slider';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
@@ -8,11 +8,8 @@ export default function Pan({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
 
-  const [state, update,] = useImmerx();
-
-  // useEffect(() => {
-  //   //
-  // }, [index, state.nodes, state.positions,],);
+  const [nodes,] = useImmerx('nodes',);
+  const [, update,] = useImmerx(null,);
 
   const setPan = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.pan = val),);
@@ -28,7 +25,7 @@ export default function Pan({ index, },) {
     >
       <div>
         <Slider
-          value={state.nodes[index].properties.pan}
+          value={nodes[index].properties.pan}
           step="0.1"
           max="1"
           min="-1"

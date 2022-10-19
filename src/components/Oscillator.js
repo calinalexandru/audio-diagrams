@@ -1,6 +1,6 @@
 import { Fragment, h, } from 'preact';
 import {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useRef, useState,
 } from 'preact/hooks';
 import Button from '../primitives/Button';
 import Input from '../primitives/Input';
@@ -11,11 +11,8 @@ import BoxNode from './BoxNode';
 export default function Oscillator({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
-  const [state, update,] = useImmerx();
-
-  // useEffect(() => {
-  //   //
-  // }, [index, state.nodes, state.positions,],);
+  const [nodes,] = useImmerx('nodes',);
+  const [, update,] = useImmerx(null,);
 
   const [showMore, setShowMore,] = useState(false,);
 
@@ -76,7 +73,7 @@ export default function Oscillator({ index, },) {
           type="number"
           label="Frequency"
           units="&#13200;"
-          value={state.nodes[index].properties.frequency}
+          value={nodes[index].properties.frequency}
           onChange={(e,) => {
             e.preventDefault();
             setOscillatorFreq(Number(e.target.value,),);
@@ -88,7 +85,7 @@ export default function Oscillator({ index, },) {
             <Input
               type="number"
               label="Detune"
-              value={state.nodes[index].properties.detune}
+              value={nodes[index].properties.detune}
               onChange={(e,) => {
                 e.preventDefault();
                 setOscillatorDetune(e.target.value,);
@@ -97,7 +94,7 @@ export default function Oscillator({ index, },) {
             <Input
               type="number"
               label="Duration"
-              value={state.nodes[index].properties.duration}
+              value={nodes[index].properties.duration}
               onChange={(e,) => {
                 e.preventDefault();
                 setOscillatorDuration(e.target.value,);
