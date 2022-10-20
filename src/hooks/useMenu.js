@@ -28,38 +28,10 @@ export default function useMenu() {
     },);
   }, [],);
 
-  const addOscilator = useCallback(() => {
+  const add = useCallback((type,) => {
     update((draft,) => {
-      draft.nodes.push({ ...DEFAULTS.OSCILLATOR.NODE, },);
-      draft.positions.push({ ...DEFAULTS.OSCILLATOR.POSITION, },);
-    },);
-  }, [],);
-
-  const addBiquadFilter = useCallback(() => {
-    update((draft,) => {
-      draft.nodes.push({ ...DEFAULTS.BIQUAD_FILTER.NODE, },);
-      draft.positions.push({ ...DEFAULTS.BIQUAD_FILTER.POSITION, },);
-    },);
-  }, [],);
-
-  const addGain = useCallback(() => {
-    update((draft,) => {
-      draft.nodes.push({ ...DEFAULTS.GAIN.NODE, },);
-      draft.positions.push({ ...DEFAULTS.GAIN.POSITION, },);
-    },);
-  }, [],);
-
-  const addDelay = useCallback(() => {
-    update((draft,) => {
-      draft.nodes.push({ ...DEFAULTS.DELAY.NODE, },);
-      draft.positions.push({ ...DEFAULTS.DELAY.POSITION, },);
-    },);
-  }, [],);
-
-  const addPan = useCallback(() => {
-    update((draft,) => {
-      draft.nodes.push({ ...DEFAULTS.PAN.NODE, },);
-      draft.positions.push({ ...DEFAULTS.PAN.POSITION, },);
+      draft.nodes.push({ ...DEFAULTS[type].NODE, },);
+      draft.positions.push({ ...DEFAULTS[type].POSITION, },);
     },);
   }, [],);
 
@@ -81,11 +53,7 @@ export default function useMenu() {
 
   return {
     removeLine,
-    addPan,
-    addDelay,
-    addGain,
-    addOscilator,
-    addBiquadFilter,
+    add,
     clearAllNodes,
     clearAllWires,
     cancelConnection,

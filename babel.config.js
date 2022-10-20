@@ -1,6 +1,7 @@
 module.exports = {
   plugins: [
-    ['macros'],
+    ['@babel/plugin-transform-runtime', { regenerator: true, },],
+    ['macros',],
     // ["@babel/plugin-syntax-jsx"]
     // ["@babel/plugin-transform-runtime", { "regenerator": true }],
     // ["@babel/plugin-proposal-class-properties"],
@@ -24,7 +25,7 @@ module.exports = {
         modules: false,
       },
     ],
-    ['@babel/preset-react'],
+    ['@babel/preset-react',],
     // ['preact'],
     // ['@linaria'],
   ],

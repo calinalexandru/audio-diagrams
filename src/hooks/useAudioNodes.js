@@ -1,12 +1,13 @@
-import { useEffect, } from 'preact/hooks';
+import { useEffect, useRef, } from 'preact/hooks';
 import { NODE_TYPE, } from '../constants';
 
 export default function useAudioNodes({ nodes, wires, },) {
+  const mediaStreamRef = useRef(null,);
   useEffect(() => {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const audioNodes = nodes
       // .filter((node) => [NODE_TYPE.OSCILLATOR].includes(node.type))
-      .map((node,) => {
+      .map(async (node,) => {
         if (node.type === NODE_TYPE.OSCILLATOR) {
           const oscillator = audioCtx.createOscillator();
           oscillator.type = node.properties.type;
@@ -34,6 +35,18 @@ export default function useAudioNodes({ nodes, wires, },) {
           filter.type = node.properties.type;
           return filter;
         }
+        if (node.type === NODE_TYPE.MICROPHONE) {
+          try {
+            mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
+              audio: true,
+            },);
+            const mic = audioCtx.createMediaStreamSource(mediaStreamRef.current,);
+
+            return mic;
+          } catch (err) {
+            console.warn('Microphone not found', err,);
+          }
+        }
         if (node.type === NODE_TYPE.GAIN) {
           const gain = audioCtx.createGain();
           gain.gain.value = node.properties.gain;
@@ -54,20 +67,29 @@ export default function useAudioNodes({ nodes, wires, },) {
         }
         return audioCtx.destination;
       },);
-    wires.forEach((wire,) => {
-      // console.log('connecting.wire', wire,);
+    wires.forEach(async (wire,) => {
+      console.log('connecting.wire', wire,);
+      console.log('audioNodes', audioNodes,);
+      const from = await audioNodes[wire.from];
+      const to = await audioNodes[wire.to];
       try {
-        audioNodes[wire.from].connect(audioNodes[wire.to],);
+        from.connect(to,);
       } catch (e) {
         console.warn('Failed to connect node x to y', e,);
       }
     },);
 
     return () => {
+      // disconnect media source
+      mediaStreamRef.current?.getTracks?.().forEach((track,) => track.stop(),);
+
       // disconnect all audio nodes from their destination
       audioNodes.forEach((audioNode,) => {
         audioNode?.disconnect?.();
       },);
+
+      // close context
+      audioCtx.close();
     };
   }, [nodes, wires,],);
 }

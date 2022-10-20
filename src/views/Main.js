@@ -2,6 +2,7 @@ import { h, } from 'preact';
 import BiquadFilter from '../components/BiquadFilter';
 import Delay from '../components/Delay';
 import Gain from '../components/Gain';
+import Microphone from '../components/Microphone';
 import Oscillator from '../components/Oscillator';
 import Output from '../components/Output';
 import Pan from '../components/Pan';
@@ -25,7 +26,8 @@ import {
 } from './style';
 
 export default function Main() {
-  const [{ nodes = [], wires = [], positions = [], connecting = [], scale, },] = useImmerx();
+  const [{ nodes = [], wires = [], positions = [], connecting = [], scale, },] =
+    useImmerx();
 
   console.log('Main.nodes', nodes,);
   console.log('Main.positions', positions,);
@@ -34,11 +36,7 @@ export default function Main() {
   useKeyBindings();
   useAudioNodes({ nodes, wires, },);
   const {
-    addOscilator,
-    addBiquadFilter,
-    addDelay,
-    addGain,
-    addPan,
+    add,
     clearAllNodes,
     clearAllWires,
     cancelConnection,
@@ -52,20 +50,28 @@ export default function Main() {
     <Container>
       <NodesMenu>
         <NodesMenuHeader>
-          <Button color="node" onClick={addOscilator}>
+          <Button color="node" onClick={() => { add('OSCILLATOR',)}}>
             Oscillator
           </Button>
-          <Button color="node" onClick={addBiquadFilter}>
+          <Button color="node" onClick={() => { add('BIQUAD_FILTER',)}}>
             Biquad Filter
           </Button>
-          <Button color="node" onClick={addGain}>
+          <Button color="node" onClick={() => { add('GAIN',)}}>
             Gain
           </Button>
-          <Button color="node" onClick={addDelay}>
+          <Button color="node" onClick={() => { add('DELAY',)}}>
             Delay
           </Button>
-          <Button color="node" onClick={addPan}>
+          <Button color="node" onClick={() => { add('PAN',)}}>
             Panner
+          </Button>
+          <Button
+            color="node"
+            onClick={() => {
+              add('MICROPHONE',);
+            }}
+          >
+            Microphone
           </Button>
         </NodesMenuHeader>
         <NodesMenuFooter>
@@ -102,8 +108,11 @@ export default function Main() {
               <Oscillator index={index} />
             )) ||
             (node.type === NODE_TYPE.GAIN && <Gain index={index} />) ||
-            (node.type === NODE_TYPE.BIQUAD_FILTER && <BiquadFilter index={index} />) ||
+            (node.type === NODE_TYPE.BIQUAD_FILTER && (
+              <BiquadFilter index={index} />
+            )) ||
             (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
+            (node.type === NODE_TYPE.MICROPHONE && <Microphone index={index} />) ||
             (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
         )}
         <Output index={outputIndex} />

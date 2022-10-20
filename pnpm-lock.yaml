@@ -20,6 +20,7 @@ specifiers:
   babel-plugin-import: ^1.13.5
   babel-plugin-macros: ^3.1.0
   babel-plugin-styled-components: ^2.0.7
+  babel-plugin-transform-runtime: ^6.23.0
   babel-preset-preact: ^2.0.0
   css-loader: ^6.7.1
   eslint: ^8.25.0
@@ -36,6 +37,7 @@ specifiers:
   immer: ^9.0.15
   immerx: ^3.2.2
   preact: ^10.11.1
+  regenerator-runtime: ^0.13.10
   rxjs: ^7.5.7
   style-loader: ^3.3.1
   svg-url-loader: ^8.0.0
@@ -55,6 +57,7 @@ dependencies:
   immer: 9.0.15
   immerx: 3.2.2_immer@9.0.15
   preact: 10.11.2
+  regenerator-runtime: 0.13.10
   rxjs: 7.5.7
 
 devDependencies:
@@ -72,6 +75,7 @@ devDependencies:
   babel-plugin-import: 1.13.5
   babel-plugin-macros: 3.1.0
   babel-plugin-styled-components: 2.0.7
+  babel-plugin-transform-runtime: 6.23.0
   babel-preset-preact: 2.0.0_@babel+core@7.19.3
   eslint: 8.25.0
   eslint-config-airbnb: 19.0.4_4ces55zid76bgvayjtslcl5sne
@@ -2343,12 +2347,25 @@ packages:
     resolution: {integrity: sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==}
     dev: true
 
+  /babel-plugin-transform-runtime/6.23.0:
+    resolution: {integrity: sha512-cpGMVC1vt/772y3jx1gwSaTitQVZuFDlllgreMsZ+rTYC6jlYXRyf5FQOgSnckOiA5QmzbXTyBY2A5AmZXF1fA==}
+    dependencies:
+      babel-runtime: 6.26.0
+    dev: true
+
   /babel-preset-preact/2.0.0_@babel+core@7.19.3:
     resolution: {integrity: sha512-gqJCALE4XXEienLkzgAQ351XyoVHTIiZRAKjEJupK7cTVhFyovEuSrVoNrTNrUu3R78vAarjxkrR6j0vr+Rg8Q==}
     dependencies:
       '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
+    dev: true
+
+  /babel-runtime/6.26.0:
+    resolution: {integrity: sha512-ITKNuq2wKlW1fJg9sSW52eepoYgZBggvOAHC0u/CYu/qxQ9EVzThCgR69BnSXLHjy2f7SY5zaQ4yt7H9ZVxY2g==}
+    dependencies:
+      core-js: 2.6.12
+      regenerator-runtime: 0.11.1
     dev: true
 
   /balanced-match/1.0.2:
@@ -2614,6 +2631,12 @@ packages:
 
   /core-js-pure/3.25.5:
     resolution: {integrity: sha512-oml3M22pHM+igfWHDfdLVq2ShWmjM2V4L+dQEBs0DWVIqEm9WHCwGAlZ6BmyBQGy5sFrJmcx+856D9lVKyGWYg==}
+    requiresBuild: true
+    dev: true
+
+  /core-js/2.6.12:
+    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
+    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
     requiresBuild: true
     dev: true
 
@@ -4746,6 +4769,10 @@ packages:
 
   /regenerate/1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
+    dev: true
+
+  /regenerator-runtime/0.11.1:
+    resolution: {integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==}
     dev: true
 
   /regenerator-runtime/0.13.10:

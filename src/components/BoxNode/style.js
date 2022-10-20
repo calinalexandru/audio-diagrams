@@ -80,6 +80,7 @@ export const Title = styled.h3`
   text-shadow: 1px 1px black;
   margin: 0;
   padding: 0;
+  text-align: center;
 `;
 
 export const RemoveButton = styled.button`
@@ -145,7 +146,4 @@ export const ExpandButton = styled.button`
     animation: ${animateDown} 1s infinite;
   }
 
-  &:active {
-    background: #cccccc66;
-  }
 `;

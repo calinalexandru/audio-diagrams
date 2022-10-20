@@ -6,6 +6,7 @@ export const NODE_TYPE = {
   GAIN: 'gain',
   INPUT: 'input',
   OUTPUT: 'output',
+  MICROPHONE: 'microphone',
 };
 export const NODES = ['input', 'oscillator', 'output',];
 
@@ -89,6 +90,19 @@ export const DEFAULTS = {
       properties: {
         pan: 0,
       },
+    },
+  },
+
+  MICROPHONE: {
+    NODE: {
+      type: NODE_TYPE.MICROPHONE,
+      properties: {},
+    },
+    POSITION: {
+      x: 240,
+      y: 300,
+      width: '100px',
+      height: '50px',
     },
   },
 
