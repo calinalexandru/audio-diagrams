@@ -1,4 +1,6 @@
 import { h, } from 'preact';
+import { useEffect, } from 'preact/hooks';
+import Analyser from '../components/Analyser';
 import BiquadFilter from '../components/BiquadFilter';
 import Buffer from '../components/Buffer';
 import Delay from '../components/Delay';
@@ -35,7 +37,11 @@ export default function Main() {
   console.log('Main.connecting', connecting,);
 
   useKeyBindings();
-  useAudioNodes({ nodes, wires, },);
+  const live = useAudioNodes({ nodes, wires, },);
+  useEffect(() => {
+    // bamboleo
+  }, [live?.current,],);
+  console.log('Main.live', live,);
   const {
     add,
     clearAllNodes,
@@ -104,6 +110,9 @@ export default function Main() {
               <Microphone index={index} />
             )) ||
             (node.type === NODE_TYPE.BUFFER && <Buffer index={index} />) ||
+            (node.type === NODE_TYPE.ANALYSER && (
+              <Analyser audioNode={live.current[index]} index={index} />
+            )) ||
             (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
         )}
         <Output index={outputIndex} />

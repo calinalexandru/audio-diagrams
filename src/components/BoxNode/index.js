@@ -32,6 +32,7 @@ const BoxNode = forwardRef(
       canRemove = true,
       canOutput = true,
       canInput = true,
+      isExpanded = false,
     },
     ref,
   ) => {
@@ -52,7 +53,7 @@ const BoxNode = forwardRef(
 
     const { addToConnecting, } = useWiring();
     const { remove, } = useNodes();
-    const [expand, setExpand,] = useState(false,);
+    const [expand, setExpand,] = useState(isExpanded,);
 
     const isActive = useCallback(
       (dir,) =>

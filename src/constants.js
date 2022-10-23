@@ -1,5 +1,6 @@
 export const NODE_TYPE = {
   OSCILLATOR: 'oscillator',
+  ANALYSER: 'analyser',
   BIQUAD_FILTER: 'biquadFilter',
   DELAY: 'delay',
   PAN: 'pan',
@@ -8,7 +9,33 @@ export const NODE_TYPE = {
   OUTPUT: 'output',
   MICROPHONE: 'microphone',
 };
-export const NODES = [...Object.keys(NODE_TYPE,),];
+export const NODES = [...Object.keys(NODE_TYPE,).filter((n,) => n !== 'OUTPUT',),];
+
+export const FFT_SIZES = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,]
+export const HZ = '&#13200';
+export const MAX_FREQUENCY = 22400;
+export const BIQUAD_FILTER_TYPES = [
+  'lowpass',
+  'highpass',
+  'bandpass',
+  'lowshelf',
+  'highshelf',
+  'peaking',
+  'notch',
+  'allpass',
+];
+
+export const BOX_SIZE = {
+  SMALL: {
+    WIDTH: 122,
+    HEIGHT: 74,
+  },
+  BIG: {
+    WIDTH: 194,
+    HEIGHT: 190,
+  },
+};
+
 
 export const DEFAULTS = {
   OSCILLATOR: {
@@ -31,7 +58,7 @@ export const DEFAULTS = {
 
   BUFFER: {
     POSITION: {
-      x: 100,
+      x: 413,
       y: 500,
       width: '100px',
       height: '50px',
@@ -40,12 +67,29 @@ export const DEFAULTS = {
       type: NODE_TYPE.BUFFER,
       properties: {
         detune: 0,
-        duration: 0,
         buffer: [],
-        loop: false,
+        loop: true,
         loopStart: 0,
         loopEnd: 0,
         playbackRate: 1.0,
+      },
+    },
+  },
+
+  ANALYSER: {
+    POSITION: {
+      x: 613,
+      y: 500,
+      width: '100px',
+      height: '50px',
+    },
+    NODE: {
+      type: NODE_TYPE.ANALYSER,
+      properties: {
+        fftSize: 2048,
+        minDecibels: 0,
+        maxDecibels: 0,
+        smoothingTimeConstant: 0,
       },
     },
   },
@@ -141,26 +185,3 @@ export const DEFAULTS = {
 
 export const DEFAULT_NODES = [{ ...DEFAULTS.OUTPUT.NODE, },];
 export const DEFAULT_POSITIONS = [{ ...DEFAULTS.OUTPUT.POSITION, },];
-export const HZ = '&#13200';
-export const MAX_FREQUENCY = 22400;
-export const BIQUAD_FILTER_TYPES = [
-  'lowpass',
-  'highpass',
-  'bandpass',
-  'lowshelf',
-  'highshelf',
-  'peaking',
-  'notch',
-  'allpass',
-];
-
-export const BOX_SIZE = {
-  SMALL: {
-    WIDTH: 122,
-    HEIGHT: 74,
-  },
-  BIG: {
-    WIDTH: 194,
-    HEIGHT: 190,
-  },
-};
