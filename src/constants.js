@@ -4,11 +4,11 @@ export const NODE_TYPE = {
   DELAY: 'delay',
   PAN: 'pan',
   GAIN: 'gain',
-  INPUT: 'input',
+  BUFFER: 'buffer',
   OUTPUT: 'output',
   MICROPHONE: 'microphone',
 };
-export const NODES = ['input', 'oscillator', 'output',];
+export const NODES = [...Object.keys(NODE_TYPE,),];
 
 export const DEFAULTS = {
   OSCILLATOR: {
@@ -25,6 +25,27 @@ export const DEFAULTS = {
         frequency: 440,
         detune: 0,
         duration: 0,
+      },
+    },
+  },
+
+  BUFFER: {
+    POSITION: {
+      x: 100,
+      y: 500,
+      width: '100px',
+      height: '50px',
+    },
+    NODE: {
+      type: NODE_TYPE.BUFFER,
+      properties: {
+        detune: 0,
+        duration: 0,
+        buffer: [],
+        loop: false,
+        loopStart: 0,
+        loopEnd: 0,
+        playbackRate: 1.0,
       },
     },
   },

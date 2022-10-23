@@ -1,12 +1,13 @@
 import { h, } from 'preact';
 import BiquadFilter from '../components/BiquadFilter';
+import Buffer from '../components/Buffer';
 import Delay from '../components/Delay';
 import Gain from '../components/Gain';
 import Microphone from '../components/Microphone';
 import Oscillator from '../components/Oscillator';
 import Output from '../components/Output';
 import Pan from '../components/Pan';
-import { NODE_TYPE, } from '../constants';
+import { NODES, NODE_TYPE, } from '../constants';
 import useAudioNodes from '../hooks/useAudioNodes';
 import useKeyBindings from '../hooks/useKeyBindings';
 import useMenu from '../hooks/useMenu';
@@ -50,29 +51,16 @@ export default function Main() {
     <Container>
       <NodesMenu>
         <NodesMenuHeader>
-          <Button color="node" onClick={() => { add('OSCILLATOR',)}}>
-            Oscillator
-          </Button>
-          <Button color="node" onClick={() => { add('BIQUAD_FILTER',)}}>
-            Biquad Filter
-          </Button>
-          <Button color="node" onClick={() => { add('GAIN',)}}>
-            Gain
-          </Button>
-          <Button color="node" onClick={() => { add('DELAY',)}}>
-            Delay
-          </Button>
-          <Button color="node" onClick={() => { add('PAN',)}}>
-            Panner
-          </Button>
-          <Button
-            color="node"
-            onClick={() => {
-              add('MICROPHONE',);
-            }}
-          >
-            Microphone
-          </Button>
+          {NODES.map((node,) => (
+            <Button
+              color="node"
+              onClick={() => {
+                add(node,);
+              }}
+            >
+              {node}
+            </Button>
+          ),)}
         </NodesMenuHeader>
         <NodesMenuFooter>
           <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
@@ -112,7 +100,10 @@ export default function Main() {
               <BiquadFilter index={index} />
             )) ||
             (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
-            (node.type === NODE_TYPE.MICROPHONE && <Microphone index={index} />) ||
+            (node.type === NODE_TYPE.MICROPHONE && (
+              <Microphone index={index} />
+            )) ||
+            (node.type === NODE_TYPE.BUFFER && <Buffer index={index} />) ||
             (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
         )}
         <Output index={outputIndex} />

@@ -23,21 +23,17 @@ export default function Buffer({ index, },) {
       index={index}
       name="Buffer"
     >
-      <div>
-        Value:
-        {' '}
-        <Input
-          style={{ width: '50px', }}
-          type="number"
-          value={nodes[index].properties.delay}
-          step="1"
-          max="180"
-          min="0"
-          onChange={(e,) => {
-            setDelay(e.target.value,);
-          }}
-        />
-      </div>
+      <Input
+        label="Value"
+        type="number"
+        value={nodes[index].properties.delay}
+        step="1"
+        max="180"
+        min="0"
+        onChange={(e,) => {
+          setDelay(e.target.value,);
+        }}
+      />
     </BoxNode>
   );
 }

@@ -40,12 +40,19 @@ export default function useAudioNodes({ nodes, wires, },) {
             mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
               audio: true,
             },);
-            const mic = audioCtx.createMediaStreamSource(mediaStreamRef.current,);
+            const mic = audioCtx.createMediaStreamSource(
+              mediaStreamRef.current,
+            );
 
             return mic;
           } catch (err) {
             console.warn('Microphone not found', err,);
           }
+        }
+        if (node.type === NODE_TYPE.BUFFER) {
+          const buffer = audioCtx.createBufferSource();
+          buffer.loop = true;
+          return buffer;
         }
         if (node.type === NODE_TYPE.GAIN) {
           const gain = audioCtx.createGain();
@@ -67,13 +74,60 @@ export default function useAudioNodes({ nodes, wires, },) {
         }
         return audioCtx.destination;
       },);
+
+    const sampleData = (analyser, buffer, dataArray,) =>
+      new Promise((resolve, reject,) => {
+        const myArrayBuffer = audioCtx.createBuffer(
+          2,
+          audioCtx.sampleRate * 3,
+          audioCtx.sampleRate,
+        );
+        // every milisec
+        try {
+          const reqAnim = setInterval(() => {
+            analyser.getByteFrequencyData(dataArray,);
+            for (
+              let channel = 0;
+              channel < myArrayBuffer.numberOfChannels;
+              channel++
+            ) {
+              const nowBuffering = myArrayBuffer.getChannelData(channel,);
+              for (let i = 0; i < analyser.frequencyBinCount; i++) {
+                nowBuffering[i] = dataArray[i]; // Math.random() * 2 - 1;
+              }
+            }
+          }, 100,);
+
+          setTimeout(() => {
+            clearInterval(reqAnim,);
+            buffer.buffer = myArrayBuffer;
+            buffer.start();
+            resolve(true,);
+          }, 2000,);
+        } catch (e) {
+          reject(e,);
+        }
+      },);
+
     wires.forEach(async (wire,) => {
       console.log('connecting.wire', wire,);
       console.log('audioNodes', audioNodes,);
       const from = await audioNodes[wire.from];
       const to = await audioNodes[wire.to];
       try {
-        from.connect(to,);
+        if (nodes[wire.to].type === NODE_TYPE.BUFFER) {
+          const analyser = audioCtx.createAnalyser();
+          from.connect(analyser,);
+          analyser.fftSize = 2048;
+          const bufferLength = analyser.frequencyBinCount;
+          const dataArray = new Uint8Array(bufferLength,);
+
+          await sampleData(analyser, to, dataArray,);
+
+          // analyser.connect(to,);
+        } else {
+          from.connect(to,);
+        }
       } catch (e) {
         console.warn('Failed to connect node x to y', e,);
       }
