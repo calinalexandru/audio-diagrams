@@ -150,7 +150,9 @@ export default function useAudioNodes({ nodes, wires, },) {
         }
 
         if (nodes[wire.to].type === NODE_TYPE.ANALYSER) {
+          //* mutate live node with current audio
           live.current[wire.to] = to;
+          
           //! force component update due to using ref
           setTimer(new Date().getTime(),)
         }
