@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { BOX_SIZE, } from '../../constants';
 
 export const Container = styled.div`
-  background: #353535b0;
+  background: #3535358c;
   border-style: solid;
   border-width: 2px;
   cursor: grab;

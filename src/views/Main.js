@@ -1,5 +1,4 @@
 import { h, } from 'preact';
-import { useEffect, } from 'preact/hooks';
 import Analyser from '../components/Analyser';
 import BiquadFilter from '../components/BiquadFilter';
 import Buffer from '../components/Buffer';
@@ -28,19 +27,27 @@ import {
   ZoomMenu,
 } from './style';
 
+const nodesToComponents = {
+  [NODE_TYPE.OSCILLATOR]: Oscillator,
+  [NODE_TYPE.ANALYSER]: Analyser,
+  [NODE_TYPE.BIQUAD_FILTER]: BiquadFilter,
+  [NODE_TYPE.BUFFER]: Buffer,
+  [NODE_TYPE.DELAY]: Delay,
+  [NODE_TYPE.GAIN]: Gain,
+  [NODE_TYPE.MICROPHONE]: Microphone,
+  [NODE_TYPE.PAN]: Pan,
+};
+
 export default function Main() {
   const [{ nodes = [], wires = [], positions = [], connecting = [], scale, },] =
     useImmerx();
 
-  console.log('Main.nodes', nodes,);
-  console.log('Main.positions', positions,);
-  console.log('Main.connecting', connecting,);
+  // console.log('Main.nodes', nodes,);
+  // console.log('Main.positions', positions,);
+  // console.log('Main.connecting', connecting,);
 
   useKeyBindings();
   const live = useAudioNodes({ nodes, wires, },);
-  useEffect(() => {
-    // bamboleo
-  }, [live?.current,],);
   console.log('Main.live', live,);
   const {
     add,
@@ -96,24 +103,11 @@ export default function Main() {
         />
       </ZoomMenu>
       <Interactive scale={scale}>
-        {nodes.map(
-          (node, index,) =>
-            (node.type === NODE_TYPE.OSCILLATOR && (
-              <Oscillator index={index} />
-            )) ||
-            (node.type === NODE_TYPE.GAIN && <Gain index={index} />) ||
-            (node.type === NODE_TYPE.BIQUAD_FILTER && (
-              <BiquadFilter index={index} />
-            )) ||
-            (node.type === NODE_TYPE.PAN && <Pan index={index} />) ||
-            (node.type === NODE_TYPE.MICROPHONE && (
-              <Microphone index={index} />
-            )) ||
-            (node.type === NODE_TYPE.BUFFER && <Buffer index={index} />) ||
-            (node.type === NODE_TYPE.ANALYSER && (
-              <Analyser audioNode={live.current[index]} index={index} />
-            )) ||
-            (node.type === NODE_TYPE.DELAY && <Delay index={index} />),
+        {nodes.map((node, index,) =>
+          h(nodesToComponents[node.type], {
+            index,
+            audioNode: live.current[index],
+          },),
         )}
         <Output index={outputIndex} />
         {wires.map(({ from: fromIndex, to: toIndex, }, index,) => {
