@@ -40,8 +40,8 @@ export const BOX_SIZE = {
 export const DEFAULTS = {
   OSCILLATOR: {
     POSITION: {
-      x: 100,
-      y: 500,
+      x: 50,
+      y: 50,
       width: '100px',
       height: '50px',
     },
@@ -58,8 +58,8 @@ export const DEFAULTS = {
 
   BUFFER: {
     POSITION: {
-      x: 413,
-      y: 500,
+      x: 50,
+      y: 130,
       width: '100px',
       height: '50px',
     },
@@ -78,8 +78,8 @@ export const DEFAULTS = {
 
   ANALYSER: {
     POSITION: {
-      x: 613,
-      y: 500,
+      x: 50,
+      y: 210,
       width: '100px',
       height: '50px',
     },
@@ -96,8 +96,8 @@ export const DEFAULTS = {
 
   BIQUAD_FILTER: {
     POSITION: {
-      x: 250,
-      y: 550,
+      x: 50,
+      y: 290,
       width: '100px',
       height: '50px',
     },
@@ -115,8 +115,8 @@ export const DEFAULTS = {
 
   GAIN: {
     POSITION: {
-      x: 500,
-      y: 200,
+      x: 50,
+      y: 370,
       width: '100px',
       height: '50px',
     },
@@ -130,8 +130,8 @@ export const DEFAULTS = {
 
   DELAY: {
     POSITION: {
-      x: 400,
-      y: 500,
+      x: 50,
+      y: 460,
       width: '100px',
       height: '50px',
     },
@@ -145,8 +145,8 @@ export const DEFAULTS = {
 
   PAN: {
     POSITION: {
-      x: 200,
-      y: 700,
+      x: 50,
+      y: 540,
       width: '100px',
       height: '50px',
     },
@@ -164,8 +164,8 @@ export const DEFAULTS = {
       properties: {},
     },
     POSITION: {
-      x: 240,
-      y: 300,
+      x: 50,
+      y: 550,
       width: '100px',
       height: '50px',
     },
@@ -177,8 +177,8 @@ export const DEFAULTS = {
       properties: {},
     },
     POSITION: {
-      x: 740,
-      y: 500,
+      x: 50,
+      y: 560,
     },
   },
 };
