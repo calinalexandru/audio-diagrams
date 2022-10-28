@@ -2,7 +2,7 @@ import { useCallback, useEffect, } from 'preact/hooks';
 import { DEFAULTS, NODE_TYPE, } from '../constants';
 import { useImmerx, } from '../store/state';
 
-export default function useMenu({ downloadAnchorRef, fileUploadRef, },) {
+export default function useMenu({ fileUploadRef, },) {
   const [state,] = useImmerx();
   const [, update,] = useImmerx(null,);
 
@@ -35,12 +35,16 @@ export default function useMenu({ downloadAnchorRef, fileUploadRef, },) {
     const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(
       JSON.stringify(state,),
     )}`;
-    downloadAnchorRef.current.setAttribute('href', dataStr,);
-    downloadAnchorRef.current.click();
-  }, [state, downloadAnchorRef?.current,],);
+    const downloadAnchor = document.createElement('a',);
+    downloadAnchor.setAttribute('href', dataStr,);
+    downloadAnchor.setAttribute('download', 'state.json',)
+    document.body.appendChild(downloadAnchor,);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  }, [state,],);
 
   const loadState = useCallback(() => {
-    fileUploadRef.current.click();
+    fileUploadRef.current.click()
   }, [fileUploadRef?.current,],);
 
   const clearAllNodes = useCallback(() => {

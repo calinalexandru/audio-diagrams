@@ -47,7 +47,6 @@ export default function Main() {
   const [{ nodes = [], wires = [], positions = [], connecting = [], scale, },] =
     useImmerx();
 
-  const downloadAnchorRef = useRef();
   const fileUploadRef = useRef();
 
   // console.log('Main.nodes', nodes,);
@@ -66,7 +65,7 @@ export default function Main() {
     cancelConnection,
     removeLine,
     zoom,
-  } = useMenu({ downloadAnchorRef, fileUploadRef, },);
+  } = useMenu({ fileUploadRef, },);
 
   const outputIndex = nodes.findIndex((node,) => node.type === NODE_TYPE.OUTPUT,);
 
@@ -140,14 +139,6 @@ export default function Main() {
           );
         },)}
       </Interactive>
-      <a
-        href="/"
-        ref={downloadAnchorRef}
-        download="state.json"
-        style={{ display: 'none', }}
-      >
-        download
-      </a>
       <input type="file" ref={fileUploadRef} style={{ display: 'none', }} />
     </Container>
   );
