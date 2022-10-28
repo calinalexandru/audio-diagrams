@@ -1,4 +1,5 @@
 import { h, } from 'preact';
+import { useRef, } from 'preact/hooks';
 import Analyser from '../components/Analyser';
 import BiquadFilter from '../components/BiquadFilter';
 import Buffer from '../components/Buffer';
@@ -46,6 +47,9 @@ export default function Main() {
   const [{ nodes = [], wires = [], positions = [], connecting = [], scale, },] =
     useImmerx();
 
+  const downloadAnchorRef = useRef();
+  const fileUploadRef = useRef();
+
   // console.log('Main.nodes', nodes,);
   // console.log('Main.positions', positions,);
   // console.log('Main.connecting', connecting,);
@@ -55,12 +59,14 @@ export default function Main() {
   console.log('Main.live', live,);
   const {
     add,
+    loadState,
+    exportState,
     clearAllNodes,
     clearAllWires,
     cancelConnection,
     removeLine,
     zoom,
-  } = useMenu();
+  } = useMenu({ downloadAnchorRef, fileUploadRef, },);
 
   const outputIndex = nodes.findIndex((node,) => node.type === NODE_TYPE.OUTPUT,);
 
@@ -80,6 +86,8 @@ export default function Main() {
           ),)}
         </NodesMenuHeader>
         <NodesMenuFooter>
+          <Button onClick={exportState}>Export state</Button>
+          <Button onClick={loadState}>Load state</Button>
           <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
           <Button onClick={cancelConnection}>Cancel connection</Button>
           <Button onClick={clearAllWires}>Clear all wires</Button>
@@ -132,6 +140,15 @@ export default function Main() {
           );
         },)}
       </Interactive>
+      <a
+        href="/"
+        ref={downloadAnchorRef}
+        download="state.json"
+        style={{ display: 'none', }}
+      >
+        download
+      </a>
+      <input type="file" ref={fileUploadRef} style={{ display: 'none', }} />
     </Container>
   );
 }

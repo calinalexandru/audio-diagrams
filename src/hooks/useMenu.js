@@ -1,10 +1,47 @@
-import { useCallback, } from 'preact/hooks';
+import { useCallback, useEffect, } from 'preact/hooks';
 import { DEFAULTS, NODE_TYPE, } from '../constants';
 import { useImmerx, } from '../store/state';
 
-export default function useMenu() {
-  const [positions,] = useImmerx('positions',);
+export default function useMenu({ downloadAnchorRef, fileUploadRef, },) {
+  const [state,] = useImmerx();
   const [, update,] = useImmerx(null,);
+
+  const onReaderLoad = useCallback(
+    (e,) => {
+      //! TODO verifiy state integrity
+
+      update((draft,) => {
+        Object.assign(draft, JSON.parse(e.target.result,),);
+      },);
+    },
+    [update,],
+  );
+
+  const onFileChange = useCallback((e,) => {
+    const reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(e.target.files[0],);
+  }, [],);
+
+  useEffect(() => {
+    fileUploadRef?.current?.addEventListener?.('change', onFileChange,);
+
+    return () => {
+      fileUploadRef?.current?.removeEventListner?.('change', onFileChange,);
+    };
+  }, [fileUploadRef?.current, onFileChange,],);
+
+  const exportState = useCallback(() => {
+    const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(
+      JSON.stringify(state,),
+    )}`;
+    downloadAnchorRef.current.setAttribute('href', dataStr,);
+    downloadAnchorRef.current.click();
+  }, [state, downloadAnchorRef?.current,],);
+
+  const loadState = useCallback(() => {
+    fileUploadRef.current.click();
+  }, [fileUploadRef?.current,],);
 
   const clearAllNodes = useCallback(() => {
     update((draft,) => {
@@ -13,9 +50,9 @@ export default function useMenu() {
       ];
       draft.wires.length = 0;
       draft.connecting.length = 0;
-      draft.positions = [positions[0],];
+      draft.positions = [state.positions[0],];
     },);
-  }, [positions,],);
+  }, [state.positions,],);
 
   const cancelConnection = useCallback(() => {
     update((draft,) => void (draft.connecting.length = 0),);
@@ -56,6 +93,8 @@ export default function useMenu() {
     add,
     clearAllNodes,
     clearAllWires,
+    exportState,
+    loadState,
     cancelConnection,
     zoom,
   };
