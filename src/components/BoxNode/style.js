@@ -37,6 +37,7 @@ export const Center = styled.div`
 
 export const CenterTitle = styled.div`
   user-select: none;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-flow: row;
@@ -75,12 +76,17 @@ export const IOButton = styled.button`
 `;
 
 export const Title = styled.h3`
+  font-size: 1em;
   text-transform: uppercase;
   color: #fff;
   text-shadow: 1px 1px black;
   margin: 0;
   padding: 0;
   text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const RemoveButton = styled.button`
@@ -145,5 +151,4 @@ export const ExpandButton = styled.button`
   &:hover {
     animation: ${animateDown} 1s infinite;
   }
-
 `;

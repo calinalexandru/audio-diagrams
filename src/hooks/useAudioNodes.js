@@ -36,6 +36,11 @@ export default function useAudioNodes({ nodes, wires, },) {
         filter.type = node.properties.type;
         return filter;
       }
+      if (node.type === NODE_TYPE.DYNAMICS_COMPRESSOR) {
+        const dynamicsCompressor = audioCtx.createDynamicsCompressor();
+        dynamicsCompressor.threshold.value = node.properties.threshold;
+        return dynamicsCompressor
+      }
       if (node.type === NODE_TYPE.MICROPHONE) {
         try {
           mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
@@ -67,6 +72,11 @@ export default function useAudioNodes({ nodes, wires, },) {
         const gain = audioCtx.createGain();
         gain.gain.value = node.properties.gain;
         return gain;
+      }
+      if (node.type === NODE_TYPE.CONVOLVER) {
+        const convolver = audioCtx.createConvolver();
+        convolver.normalize = node.properties.normalize;
+        return convolver;
       }
       if (node.type === NODE_TYPE.ANALYSER) {
         const analyser = audioCtx.createAnalyser();

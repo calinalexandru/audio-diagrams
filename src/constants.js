@@ -1,5 +1,7 @@
 export const NODE_TYPE = {
   OSCILLATOR: 'oscillator',
+  CONVOLVER: 'convolver',
+  DYNAMICS_COMPRESSOR: 'dynamicsCompressor',
   ANALYSER: 'analyser',
   BIQUAD_FILTER: 'biquadFilter',
   DELAY: 'delay',
@@ -52,6 +54,41 @@ export const DEFAULTS = {
         frequency: 440,
         detune: 0,
         duration: 0,
+      },
+    },
+  },
+
+  CONVOLVER: {
+    POSITION: {
+      x: 50,
+      y: 70,
+      width: '100px',
+      height: '50px',
+    },
+    NODE: {
+      type: NODE_TYPE.CONVOLVER,
+      properties: {
+        normalize: false,
+      },
+    },
+  },
+
+  DYNAMICS_COMPRESSOR: {
+    POSITION: {
+      x: 50,
+      y: 70,
+      width: '100px',
+      height: '50px',
+    },
+    NODE: {
+      type: NODE_TYPE.DYNAMICS_COMPRESSOR,
+      properties: {
+        threshold: -24,
+        knee: 30,
+        ratio: 12,
+        reduction: 0,
+        attack: 0.003,
+        release: 0.25,
       },
     },
   },

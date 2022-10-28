@@ -50,7 +50,7 @@ export default function BiquadFilter({ index, },) {
       color="cornflowerblue"
       index={index}
       canExpand
-      name="BiquadFilter"
+      name="Biquad Filter"
       style={{
         height: 'auto',
       }}
