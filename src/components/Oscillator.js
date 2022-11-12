@@ -1,11 +1,13 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
+import AudioParams from './AudioParams';
 import { HZ, } from '../constants';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
+const orange = '#ffa500';
 export default function Oscillator({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
@@ -14,14 +16,6 @@ export default function Oscillator({ index, },) {
 
   const setOscillatorType = (type,) => {
     update((draft,) => void (draft.nodes[index].properties.type = type),);
-  };
-
-  const setOscillatorFreq = (freq,) => {
-    update((draft,) => void (draft.nodes[index].properties.frequency = freq),);
-  };
-
-  const setOscillatorDetune = (val,) => {
-    update((draft,) => void (draft.nodes[index].properties.detune = val),);
   };
 
   const setOscillatorDuration = (val,) => {
@@ -33,7 +27,7 @@ export default function Oscillator({ index, },) {
       ref={elRef}
       dragRef={dragRef}
       index={index}
-      color="orange"
+      color={orange}
       canInput={false}
       canExpand
       name="Oscillator"
@@ -45,33 +39,19 @@ export default function Oscillator({ index, },) {
           flexFlow: 'column',
         }}
       >
-        <Input
-          type="number"
+        <AudioParams
+          valueName="frequency"
           label="Frequency"
+          color={orange}
           units={HZ}
-          value={nodes[index].properties.frequency}
-          onChange={(e,) => {
-            e.preventDefault();
-            setOscillatorFreq(Number(e.target.value,),);
-          }}
+          index={index}
         />
-        <Input
-          type="number"
+        <AudioParams
+          valueName="detune"
           label="Detune"
-          value={nodes[index].properties.detune}
-          onChange={(e,) => {
-            e.preventDefault();
-            setOscillatorDetune(e.target.value,);
-          }}
-        />
-        <Input
-          type="number"
-          label="Duration"
-          value={nodes[index].properties.duration}
-          onChange={(e,) => {
-            e.preventDefault();
-            setOscillatorDuration(e.target.value,);
-          }}
+          color={orange}
+          units="cents"
+          index={index}
         />
         <Select
           label="Type"
@@ -85,6 +65,15 @@ export default function Oscillator({ index, },) {
           <option value="sawtooth">Sawtooth</option>
           <option value="triangle">Triangle</option>
         </Select>
+        <Input
+          type="number"
+          label="Duration"
+          value={nodes[index].properties.duration}
+          onChange={(e,) => {
+            e.preventDefault();
+            setOscillatorDuration(e.target.value,);
+          }}
+        />
       </div>
     </BoxNode>
   );

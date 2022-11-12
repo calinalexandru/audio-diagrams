@@ -12,16 +12,36 @@ export default function useAudioNodes({ nodes, wires, },) {
       if (node.type === NODE_TYPE.OSCILLATOR) {
         const oscillator = audioCtx.createOscillator();
         oscillator.type = node.properties.type;
-        oscillator.detune.setValueAtTime(
-          node.properties.detune,
-          audioCtx.currentTime,
-        );
-        oscillator.frequency.setValueAtTime(
-          node.properties.frequency,
-          audioCtx.currentTime,
-        );
+        if (node.properties.detune.valueType === 'setValueCurveAtTime') {
+          oscillator.detune.setValueCurveAtTime(
+            node.properties.detune.setValueCurveAtTime.values,
+            node.properties.detune.setValueCurveAtTime.startTime ??
+              audioCtx.currentTime,
+            node.properties.detune.setValueCurveAtTime.duration,
+          );
+        } else {
+          oscillator.detune.setValueAtTime(
+            node.properties.detune.setValueAtTime.value,
+            node.properties.detune.setValueAtTime.startTime ??
+              audioCtx.currentTime,
+          );
+        }
+        if (node.properties.frequency.valueType === 'setValueCurveAtTime') {
+          oscillator.frequency.setValueCurveAtTime(
+            node.properties.frequency.setValueCurveAtTime.values,
+            node.properties.frequency.setValueCurveAtTime.startTime ??
+              audioCtx.currentTime,
+            node.properties.frequency.setValueCurveAtTime.duration,
+          );
+        } else {
+          oscillator.frequency.setValueAtTime(
+            node.properties.frequency.setValueAtTime.value,
+            node.properties.frequency.setValueAtTime.startTime ??
+              audioCtx.currentTime,
+          );
+        }
         oscillator.start();
-        if (node.properties.duration) {
+        if (Number(node.properties.duration,)) {
           oscillator.stop(
             audioCtx.currentTime + Number(node.properties.duration,),
           );
@@ -39,7 +59,7 @@ export default function useAudioNodes({ nodes, wires, },) {
       if (node.type === NODE_TYPE.DYNAMICS_COMPRESSOR) {
         const dynamicsCompressor = audioCtx.createDynamicsCompressor();
         dynamicsCompressor.threshold.value = node.properties.threshold;
-        return dynamicsCompressor
+        return dynamicsCompressor;
       }
       if (node.type === NODE_TYPE.MICROPHONE) {
         try {
@@ -70,7 +90,19 @@ export default function useAudioNodes({ nodes, wires, },) {
       }
       if (node.type === NODE_TYPE.GAIN) {
         const gain = audioCtx.createGain();
-        gain.gain.value = node.properties.gain;
+        if (node.properties.gain.valueType === 'setValueCurveAtTime') {
+          gain.gain.setValueCurveAtTime(
+            new Float32Array(node.properties.gain.setValueCurveAtTime.values,),
+            node.properties.gain.setValueCurveAtTime.startTime ??
+              audioCtx.currentTime,
+            node.properties.gain.setValueCurveAtTime.duration,
+          );
+        } else {
+          gain.gain.setValueAtTime(
+            node.properties.gain.setValueAtTime.value,
+            node.properties.gain.setValueAtTime.startTime,
+          );
+        }
         return gain;
       }
       if (node.type === NODE_TYPE.CONVOLVER) {
@@ -162,9 +194,9 @@ export default function useAudioNodes({ nodes, wires, },) {
         if (nodes[wire.to].type === NODE_TYPE.ANALYSER) {
           //* mutate live node with current audio
           live.current[wire.to] = to;
-          
+
           //! force component update due to using ref
-          setTimer(new Date().getTime(),)
+          setTimer(new Date().getTime(),);
         }
       } catch (e) {
         console.warn('Failed to connect node x to y', e,);

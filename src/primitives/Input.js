@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
+import { object, oneOfType, string, } from 'prop-types';
 
 const InputStyled = styled.input`
   font-family: inherit;
   position: relative;
-  width: 70px;
   margin: 2px 0;
   padding: 2px;
   outline: none;
@@ -37,15 +37,39 @@ const Units = styled.span`
   color: #fff;
 `;
 
-export default function Input({ label, units, ...rest },) {
+const widthSizes = {
+  small: '50px',
+  medium: '70px',
+  large: '100%',
+};
+
+export default function Input({ label, units, size, style, ...rest },) {
   return (
     <Container>
       {label && <Label>{label}</Label>}
-      <InputStyled {...rest} />
+      <InputStyled
+        style={{
+          width: widthSizes[size],
+          ...style,
+        }}
+        {...rest}
+      />
       &nbsp;
-      {units && (
-        <Units dangerouslySetInnerHTML={{ __html: units, }} />
-      )}
+      {units && <Units dangerouslySetInnerHTML={{ __html: units, }} />}
     </Container>
   );
 }
+
+Input.propTypes = {
+  label: string,
+  units: string,
+  size: string,
+  style: oneOfType([object,],),
+};
+
+Input.defaultProps = {
+  label: '',
+  units: '',
+  size: 'medium',
+  style: {},
+};

@@ -1,13 +1,3 @@
-// import styled from '@emotion/styled';
-
-// export default styled.select`
-//   position: relative;
-//   width: 70px;
-//   border: 0;
-//   margin: 2px 0;
-//   padding: 2px;
-//   outline: none;
-// `;
 import styled from '@emotion/styled';
 import { h, } from 'preact';
 
@@ -42,6 +32,8 @@ const Label = styled.div`
   text-shadow: 1px 1px #060606;
   color: #fff;
   left: 2px;
+  overflow: hidden;
+  min-width: max-content;
 `;
 
 export default function Select({ label, ...rest },) {

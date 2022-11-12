@@ -13,7 +13,9 @@ export const NODE_TYPE = {
 };
 export const NODES = [...Object.keys(NODE_TYPE,).filter((n,) => n !== 'OUTPUT',),];
 
-export const FFT_SIZES = [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,]
+export const FFT_SIZES = [
+  32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,
+];
 export const HZ = '&#13200';
 export const MAX_FREQUENCY = 22400;
 export const BIQUAD_FILTER_TYPES = [
@@ -34,10 +36,9 @@ export const BOX_SIZE = {
   },
   BIG: {
     WIDTH: 194,
-    HEIGHT: 190,
+    HEIGHT: 410,
   },
 };
-
 
 export const DEFAULTS = {
   OSCILLATOR: {
@@ -51,8 +52,30 @@ export const DEFAULTS = {
       type: NODE_TYPE.OSCILLATOR,
       properties: {
         type: 'sine',
-        frequency: 440,
-        detune: 0,
+        frequency: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 440,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 440,],
+            startTime: 0,
+            duration: 10,
+          },
+        },
+        detune: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
         duration: 0,
       },
     },
@@ -160,7 +183,18 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.GAIN,
       properties: {
-        gain: 0,
+        gain: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [],
+            startTime: 0,
+            duration: 0,
+          },
+        },
       },
     },
   },
