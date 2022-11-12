@@ -1,132 +1,42 @@
 import { useEffect, useRef, useState, } from 'preact/hooks';
 import { NODE_TYPE, } from '../constants';
+import oscillatorNode from './nodes/oscillator';
+import biquadFilterNode from './nodes/biquadFilter';
+import dynamicsCompressorNode from './nodes/dynamicsCompressor';
+import microphoneNode from './nodes/microphone';
+import bufferNode from './nodes/buffer';
+import gainNode from './nodes/gain';
+import convolverNode from './nodes/convolver';
+import analyserNode from './nodes/analyser';
+import delayNode from './nodes/delay';
+import panNode from './nodes/pan';
+
+const audioNodesMap = {
+  [NODE_TYPE.OSCILLATOR]: oscillatorNode,
+  [NODE_TYPE.BIQUAD_FILTER]: biquadFilterNode,
+  [NODE_TYPE.DYNAMICS_COMPRESSOR]: dynamicsCompressorNode,
+  [NODE_TYPE.MICROPHONE]: microphoneNode,
+  [NODE_TYPE.BUFFER]: bufferNode,
+  [NODE_TYPE.GAIN]: gainNode,
+  [NODE_TYPE.CONVOLVER]: convolverNode,
+  [NODE_TYPE.ANALYSER]: analyserNode,
+  [NODE_TYPE.DELAY]: delayNode,
+  [NODE_TYPE.PAN]: panNode,
+};
 
 export default function useAudioNodes({ nodes, wires, },) {
-  console.log('useAudioNodes', nodes, wires,);
   const mediaStreamRef = useRef(null,);
   const [, setTimer,] = useState(0,);
   const live = useRef(Array(nodes.length,).fill(null,),);
   useEffect(() => {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const audioNodes = nodes.map(async (node,) => {
-      if (node.type === NODE_TYPE.OSCILLATOR) {
-        const oscillator = audioCtx.createOscillator();
-        oscillator.type = node.properties.type;
-        if (node.properties.detune.valueType === 'setValueCurveAtTime') {
-          oscillator.detune.setValueCurveAtTime(
-            node.properties.detune.setValueCurveAtTime.values,
-            node.properties.detune.setValueCurveAtTime.startTime ??
-              audioCtx.currentTime,
-            node.properties.detune.setValueCurveAtTime.duration,
-          );
-        } else {
-          oscillator.detune.setValueAtTime(
-            node.properties.detune.setValueAtTime.value,
-            node.properties.detune.setValueAtTime.startTime ??
-              audioCtx.currentTime,
-          );
-        }
-        if (node.properties.frequency.valueType === 'setValueCurveAtTime') {
-          oscillator.frequency.setValueCurveAtTime(
-            node.properties.frequency.setValueCurveAtTime.values,
-            node.properties.frequency.setValueCurveAtTime.startTime ??
-              audioCtx.currentTime,
-            node.properties.frequency.setValueCurveAtTime.duration,
-          );
-        } else {
-          oscillator.frequency.setValueAtTime(
-            node.properties.frequency.setValueAtTime.value,
-            node.properties.frequency.setValueAtTime.startTime ??
-              audioCtx.currentTime,
-          );
-        }
-        oscillator.start();
-        if (Number(node.properties.duration,)) {
-          oscillator.stop(
-            audioCtx.currentTime + Number(node.properties.duration,),
-          );
-        }
-        return oscillator;
-      }
-      if (node.type === NODE_TYPE.BIQUAD_FILTER) {
-        const filter = audioCtx.createBiquadFilter();
-        filter.Q.value = node.properties.Q;
-        filter.frequency.value = node.properties.frequency;
-        filter.gain.value = node.properties.gain;
-        filter.type = node.properties.type;
-        return filter;
-      }
-      if (node.type === NODE_TYPE.DYNAMICS_COMPRESSOR) {
-        const dynamicsCompressor = audioCtx.createDynamicsCompressor();
-        dynamicsCompressor.threshold.value = node.properties.threshold;
-        return dynamicsCompressor;
-      }
-      if (node.type === NODE_TYPE.MICROPHONE) {
-        try {
-          mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-          },);
-          const mic = audioCtx.createMediaStreamSource(mediaStreamRef.current,);
-
-          return mic;
-        } catch (err) {
-          console.warn('Microphone not found', err,);
-        }
-      }
-      if (node.type === NODE_TYPE.BUFFER) {
-        const buffer = audioCtx.createBufferSource();
-        buffer.loop = node.properties.loop;
-        buffer.detune.setValueAtTime(
-          node.properties.detune,
-          audioCtx.currentTime,
+      if (typeof audioNodesMap[node.type] === 'function') {
+        return audioNodesMap[node.type]?.(
+          audioCtx,
+          node.properties,
+          mediaStreamRef,
         );
-        buffer.playbackRate.setValueAtTime(
-          node.properties.playbackRate,
-          audioCtx.currentTime,
-        );
-        buffer.loopStart = node.properties.loopStart;
-        buffer.loopEnd = node.properties.loopEnd;
-        return buffer;
-      }
-      if (node.type === NODE_TYPE.GAIN) {
-        const gain = audioCtx.createGain();
-        if (node.properties.gain.valueType === 'setValueCurveAtTime') {
-          gain.gain.setValueCurveAtTime(
-            new Float32Array(node.properties.gain.setValueCurveAtTime.values,),
-            node.properties.gain.setValueCurveAtTime.startTime ??
-              audioCtx.currentTime,
-            node.properties.gain.setValueCurveAtTime.duration,
-          );
-        } else {
-          gain.gain.setValueAtTime(
-            node.properties.gain.setValueAtTime.value,
-            node.properties.gain.setValueAtTime.startTime,
-          );
-        }
-        return gain;
-      }
-      if (node.type === NODE_TYPE.CONVOLVER) {
-        const convolver = audioCtx.createConvolver();
-        convolver.normalize = node.properties.normalize;
-        return convolver;
-      }
-      if (node.type === NODE_TYPE.ANALYSER) {
-        const analyser = audioCtx.createAnalyser();
-        analyser.fftSize = node.properties.fftSize;
-        return analyser;
-      }
-      if (node.type === NODE_TYPE.DELAY) {
-        const delay = audioCtx.createDelay(179,);
-        delay.delayTime.setValueAtTime(
-          node.properties.delay,
-          audioCtx.currentTime,
-        );
-        return delay;
-      }
-      if (node.type === NODE_TYPE.PAN) {
-        const pan = audioCtx.createStereoPanner();
-        pan.pan.setValueAtTime(node.properties.pan, audioCtx.currentTime,);
-        return pan;
       }
       return audioCtx.destination;
     },);

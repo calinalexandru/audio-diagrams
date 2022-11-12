@@ -186,13 +186,13 @@ export const DEFAULTS = {
         gain: {
           valueType: 'setValueAtTime',
           setValueAtTime: {
-            value: 0,
+            value: 1,
             startTime: 0,
           },
           setValueCurveAtTime: {
-            values: [],
+            values: [0, 0.5, 1, 0.5, 0, 0.5, 1,],
             startTime: 0,
-            duration: 0,
+            duration: 1,
           },
         },
       },
