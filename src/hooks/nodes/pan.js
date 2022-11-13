@@ -1,5 +1,7 @@
+import { setValueByType, } from "./util";
+
 export default function panNode(audioCtx, properties,) {
   const pan = audioCtx.createStereoPanner();
-  pan.pan.setValueAtTime(properties.pan, audioCtx.currentTime,);
+  setValueByType(audioCtx, 'pan', pan.pan, properties,);
   return pan;
 }

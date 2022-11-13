@@ -7,7 +7,15 @@ import Select from '../../primitives/Select';
 import { useImmerx, } from '../../store/state';
 import { Container, } from './style';
 
-export default function AudioParams({ index, color, valueName, label, units, },) {
+export default function AudioParams({
+  index,
+  color,
+  valueName,
+  label,
+  max,
+  min,
+  units,
+},) {
   const [nodes,] = useImmerx('nodes',);
   const [, update,] = useImmerx(null,);
 
@@ -68,7 +76,6 @@ export default function AudioParams({ index, color, valueName, label, units, },)
   return (
     <Container color={color}>
       <Select
-        label={`input type: ${valueName}`}
         onChange={(e,) => {
           e.preventDefault();
           console.log('setValueType', e.target.value,);
@@ -85,6 +92,8 @@ export default function AudioParams({ index, color, valueName, label, units, },)
             label={label}
             type="number"
             value={setValueAtTime.value}
+            min={min}
+            max={max}
             units={units}
             step="0.1"
             onChange={(e,) => {
@@ -97,7 +106,7 @@ export default function AudioParams({ index, color, valueName, label, units, },)
         <>
           <Stack>
             <Input
-              label="values"
+              label={`${label} array`}
               type="text"
               size="large"
               onChange={(e,) => {

@@ -1,40 +1,32 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
-import Input from '../primitives/Input';
-import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
+import AudioParams from './AudioParams';
 
+const cadetblue = '#5f9ea0';
 export default function Delay({ index, },) {
   const elRef = useRef();
   const dragRef = useRef();
-
-  const [nodes,] = useImmerx('nodes',);
-  const [, update,] = useImmerx(null,);
-
-  const setDelay = (val,) => {
-    update((draft,) => void (draft.nodes[index].properties.delay = val),);
-  };
 
   return (
     <BoxNode
       ref={elRef}
       dragRef={dragRef}
-      color="cadetblue"
+      color={cadetblue}
       index={index}
+      canExpand
+      isExpanded
       name="Delay"
     >
       <div>
-        <Input
-          label="Value"
-          type="number"
-          value={nodes[index].properties.delay}
-          step="1"
-          max="179"
-          min="0"
+        <AudioParams
+          index={index}
+          color={cadetblue}
+          valueName="delay"
+          label="Delay"
+          min={0}
+          max={179}
           units="s"
-          onChange={(e,) => {
-            setDelay(e.target.value,);
-          }}
         />
       </div>
     </BoxNode>

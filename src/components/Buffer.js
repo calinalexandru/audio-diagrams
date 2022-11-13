@@ -27,6 +27,7 @@ export default function Buffer({ index, },) {
       color="red"
       index={index}
       name="Buffer"
+      canExpand
     >
       <div
         style={{

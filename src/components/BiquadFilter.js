@@ -1,53 +1,52 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
 import { BIQUAD_FILTER_TYPES, HZ, MAX_FREQUENCY, } from '../constants';
-import Input from '../primitives/Input';
 import Select from '../primitives/Select';
-import Slider from '../primitives/Slider';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
+import AudioParams from './AudioParams';
 
+const cornflowerblue = '#6495ed';
 export default function BiquadFilter({ index, },) {
-  const fromHzRef = useRef();
-  const toHzRef = useRef();
+  // const fromHzRef = useRef();
+  // const toHzRef = useRef();
   const elRef = useRef();
   const dragRef = useRef();
 
-  const [nodes,] = useImmerx('nodes',);
   const [, update,] = useImmerx(null,);
 
   const setType = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.type = val),);
   };
 
-  const setGain = (val,) => {
-    update((draft,) => void (draft.nodes[index].properties.gain = val),);
-  };
+  // const setGain = (val,) => {
+  //   update((draft,) => void (draft.nodes[index].properties.gain = val),);
+  // };
 
-  const setFrequency = (val,) => {
-    update((draft,) => void (draft.nodes[index].properties.frequency = val),);
-  };
-  const setQ = (val,) => {
-    update((draft,) => void (draft.nodes[index].properties.Q = val),);
-  };
+  // const setFrequency = (val,) => {
+  //   update((draft,) => void (draft.nodes[index].properties.frequency = val),);
+  // };
+  // const setQ = (val,) => {
+  //   update((draft,) => void (draft.nodes[index].properties.Q = val),);
+  // };
 
-  const onChangeSlider = () => {
-    const fromHz = fromHzRef.current.value;
-    const toHz = toHzRef.current.value;
-    const geometricMean = Math.sqrt(fromHz * toHz,);
-    update((draft,) => {
-      Object.assign(draft.nodes[index].properties, {
-        Q: geometricMean / (toHz - fromHz),
-        frequency: geometricMean,
-      },);
-    },);
-  };
+  // const onChangeSlider = () => {
+  //   const fromHz = fromHzRef.current.value;
+  //   const toHz = toHzRef.current.value;
+  //   const geometricMean = Math.sqrt(fromHz * toHz,);
+  //   update((draft,) => {
+  //     Object.assign(draft.nodes[index].properties, {
+  //       Q: geometricMean / (toHz - fromHz),
+  //       frequency: geometricMean,
+  //     },);
+  //   },);
+  // };
 
   return (
     <BoxNode
       ref={elRef}
       dragRef={dragRef}
-      color="cornflowerblue"
+      color={cornflowerblue}
       index={index}
       canExpand
       name="Biquad Filter"
@@ -60,10 +59,12 @@ export default function BiquadFilter({ index, },) {
           display: 'flex',
         }}
       >
-        <div style={{
-          display: 'flex',
-          flexFlow: 'column',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexFlow: 'column',
+          }}
+        >
           <Select
             label="Type"
             onChange={(e,) => {
@@ -74,7 +75,27 @@ export default function BiquadFilter({ index, },) {
               <option value={biquadFilterType}>{biquadFilterType}</option>
             ),)}
           </Select>
-          <Input
+          <AudioParams
+            index={index}
+            color={cornflowerblue}
+            valueName="gain"
+            label="Gain"
+          />
+          <AudioParams
+            index={index}
+            color={cornflowerblue}
+            units={HZ}
+            max={MAX_FREQUENCY}
+            valueName="frequency"
+            label="Frequency"
+          />
+          <AudioParams
+            index={index}
+            color={cornflowerblue}
+            valueName="Q"
+            label="Q"
+          />
+          {/* <Input
             label="Gain"
             type="number"
             value={nodes[index].properties.gain}
@@ -105,9 +126,9 @@ export default function BiquadFilter({ index, },) {
             onChange={(e,) => {
               setQ(e.target.value,);
             }}
-          />
+          /> */}
         </div>
-        <div
+        {/* <div
           style={{
             display: 'flex',
           }}
@@ -126,7 +147,7 @@ export default function BiquadFilter({ index, },) {
             onChange={onChangeSlider}
             orientation="vertical"
           />
-        </div>
+        </div> */}
       </div>
     </BoxNode>
   );

@@ -106,12 +106,67 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.DYNAMICS_COMPRESSOR,
       properties: {
-        threshold: -24,
-        knee: 30,
-        ratio: 12,
         reduction: 0,
-        attack: 0.003,
-        release: 0.25,
+        threshold: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: -24,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, -24,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        knee: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 30,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 30,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        ratio: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 12,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 12,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        attack: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0.003,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0.003,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        release: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0.25,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0.25,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
       },
     },
   },
@@ -126,12 +181,34 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.BUFFER,
       properties: {
-        detune: 0,
+        detune: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        playbackRate: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 1.0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 1.0,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
         buffer: [],
         loop: true,
         loopStart: 0,
         loopEnd: 0,
-        playbackRate: 1.0,
       },
     },
   },
@@ -165,10 +242,54 @@ export const DEFAULTS = {
       type: NODE_TYPE.BIQUAD_FILTER,
       properties: {
         type: 'lowpass',
-        frequency: 1000,
-        Q: 0,
-        gain: 0,
-        detune: 0,
+        frequency: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 1000,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 1000,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        Q: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        gain: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 1,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 1,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
+        detune: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
       },
     },
   },
@@ -209,7 +330,18 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.DELAY,
       properties: {
-        delay: 0,
+        delay: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 1,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
       },
     },
   },
@@ -224,7 +356,18 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.PAN,
       properties: {
-        pan: 0,
+        pan: {
+          valueType: 'setValueAtTime',
+          setValueAtTime: {
+            value: 0,
+            startTime: 0,
+          },
+          setValueCurveAtTime: {
+            values: [0, 0,],
+            startTime: 0,
+            duration: 1,
+          },
+        },
       },
     },
   },
