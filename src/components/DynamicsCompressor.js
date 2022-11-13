@@ -24,16 +24,31 @@ export default function DynamicsCompressor({ index, },) {
           valueName="threshold"
           label="Threshold"
         />
+        <AudioParams
+          color={darkseagreen}
+          index={index}
+          valueName="attack"
+          label="Attack"
+        />
+        <AudioParams
+          color={darkseagreen}
+          index={index}
+          valueName="knee"
+          label="Knee"
+        />
+        <AudioParams
+          color={darkseagreen}
+          index={index}
+          valueName="ratio"
+          label="Ratio"
+        />
+        <AudioParams
+          color={darkseagreen}
+          index={index}
+          valueName="release"
+          label="Release"
+        />
 
-        {/* <Slider
-          value={nodes[index].properties.threshold}
-          step="0.1"
-          min={-100}
-          max={0}
-          onChange={(e,) => {
-            setThreshold(e.target.value,);
-          }}
-        /> */}
       </div>
     </BoxNode>
   );
