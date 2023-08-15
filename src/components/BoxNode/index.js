@@ -133,7 +133,7 @@ const BoxNode = forwardRef(
           <CenterTitle>
             <Title>{name}</Title>
           </CenterTitle>
-          {editMode && <CenterContent>{children}</CenterContent>}
+          <CenterContent>{children}</CenterContent>
         </Center>
         {!editMode && canRemove && (
           <RemoveButton

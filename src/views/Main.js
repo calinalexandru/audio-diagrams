@@ -68,7 +68,7 @@ export default function Main() {
             ),)}
           </NodesMenuHeader>
           <NodesMenuFooter>
-            <Button onClick={exportState}>Export state</Button>
+            <Button onClick={exportState}>Save state</Button>
             <Button onClick={loadState}>Load state</Button>
             <Button onClick={clearAllNodes}>Remove all audio nodes</Button>
             <Button onClick={cancelConnection}>Cancel connection</Button>
