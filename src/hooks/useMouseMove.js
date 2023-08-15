@@ -61,7 +61,7 @@ export default function useMouseMove({
                       clientY,
                       touches: [{ clientX: touchX, clientY: touchY, } = {},] = [],
                     },) => {
-                      console.log('moving', clientX, clientY, touchX, touchY,);
+                      // console.log('moving', clientX, clientY, touchX, touchY,);
                       x = (clientX || touchX) - widthRaw / 2;
                       y = (clientY || touchY) - heightRaw / 2;
                       const neX = x + x - x * scale;

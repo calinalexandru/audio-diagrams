@@ -1,6 +1,6 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
-import { BIQUAD_FILTER_TYPES, HZ, MAX_FREQUENCY, } from '../constants';
+import { BIQUAD_FILTER_TYPES, HZ, MAX_FREQUENCY, NODE_TYPE, } from '../constants';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
@@ -48,6 +48,7 @@ export default function BiquadFilter({ index, },) {
       dragRef={dragRef}
       color={cornflowerblue}
       index={index}
+      component={NODE_TYPE.BIQUAD_FILTER}
       canExpand
       name="Biquad Filter"
       style={{

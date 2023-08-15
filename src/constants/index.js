@@ -7,10 +7,12 @@ export const NODE_TYPE = {
   DELAY: 'delay',
   PAN: 'pan',
   GAIN: 'gain',
-  BUFFER: 'buffer',
+  // TODO: implement buffer
+  // BUFFER: 'buffer',
   OUTPUT: 'output',
   MICROPHONE: 'microphone',
 };
+
 export const NODES = [...Object.keys(NODE_TYPE,).filter((n,) => n !== 'OUTPUT',),];
 
 export const FFT_SIZES = [

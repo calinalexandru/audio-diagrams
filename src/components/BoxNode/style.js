@@ -3,15 +3,15 @@ import styled from '@emotion/styled';
 import { BOX_SIZE, } from '../../constants';
 
 export const Container = styled.div`
-  background: #3535358c;
+  background: ${({ editMode, },) => (editMode ? 'transparent' : '#3535358c')};
   border-style: solid;
-  border-width: 2px;
+  border-width: ${({ editMode, },) => (editMode ? '0px' : '2px')};
   cursor: grab;
   border-radius: 15px;
   box-sizing: border-box;
   flex-flow: row;
   display: flex;
-  position: absolute;
+  position: ${({ editMode, },) => (editMode ? 'static' : 'absolute')};
   min-width: ${BOX_SIZE.SMALL.WIDTH}px;
   min-height: ${BOX_SIZE.SMALL.HEIGHT}px;
   z-index: 100;
@@ -94,6 +94,31 @@ export const RemoveButton = styled.button`
   color: #fff;
   position: absolute;
   right: -14px;
+  background: unset;
+  border: 0;
+  font-size: 10px;
+  top: -10px;
+  text-shadow: 1px 1px black;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  padding: 0;
+
+  &:hover {
+    background: #cccccc33;
+    border-radius: 50%;
+  }
+
+  &:active {
+    background: #ff000033;
+  }
+`;
+
+export const EditButton = styled.button`
+  cursor: pointer;
+  color: #fff;
+  position: absolute;
+  left: -14px;
   background: unset;
   border: 0;
   font-size: 10px;

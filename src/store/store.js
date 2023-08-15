@@ -12,6 +12,10 @@ const initialState = {
   connecting: [], // {from: 1, to: 1}
   positions: DEFAULT_POSITIONS,
   scale: 1,
+  edit: {
+    node: -1,
+    component: '',
+  },
 };
 
 export default create(initialState, [middleware,],);

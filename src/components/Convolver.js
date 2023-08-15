@@ -1,6 +1,7 @@
 // import styled from '@emotion/styled';
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
+import { NODE_TYPE, } from '../constants';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
@@ -20,6 +21,7 @@ export default function Convolver({ index, },) {
       ref={elRef}
       dragRef={dragRef}
       color="darkseagreen"
+      component={NODE_TYPE.CONVOLVER}
       index={index}
       name="Convolver"
     >

@@ -53,7 +53,7 @@ export default function Line({ from: ogFrom, to: ogTo, scale = 1, onClick, },) {
   const angle = ((Math.atan2(c1, c2,) * 180) / Math.PI) * -1;
   const width = `${hypothen + OFFSET_HYPOTHENUSE}px`; // `${widthRaw}px`;
 
-  console.log('angle', angle,);
+  // console.log('angle', angle,);
 
   // make 3 squared lines
   if (Math.abs(angle,) >= 20 && Math.abs(angle,) <= 90) {

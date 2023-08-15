@@ -78,7 +78,7 @@ export default function AudioParams({
       <Select
         onChange={(e,) => {
           e.preventDefault();
-          console.log('setValueType', e.target.value,);
+          // console.log('setValueType', e.target.value,);
           setValueType(e.target.value,);
         }}
       >

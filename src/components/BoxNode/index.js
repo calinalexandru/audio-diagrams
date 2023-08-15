@@ -12,6 +12,7 @@ import {
   Container,
   ExpandButton,
   IOButton,
+  EditButton,
   RemoveButton,
   Title,
 } from './style';
@@ -27,6 +28,7 @@ const BoxNode = forwardRef(
       color,
       style,
       children,
+      component,
       name,
       canExpand = false,
       canRemove = true,
@@ -40,6 +42,7 @@ const BoxNode = forwardRef(
     const [wires,] = useImmerx('wires',);
     const [nodes,] = useImmerx('nodes',);
     const [positions,] = useImmerx('positions',);
+    const [{ node: editNode, },] = useImmerx('edit',);
 
     const position = useMemo(() => positions[index], [index, positions,],);
 
@@ -52,8 +55,9 @@ const BoxNode = forwardRef(
     },);
 
     const { addToConnecting, } = useWiring();
-    const { remove, } = useNodes();
-    const [expand, setExpand,] = useState(isExpanded,);
+    const { remove, setEditNode, } = useNodes();
+    const editMode = useMemo(() => editNode === index, [editNode, index,],);
+    const [expand, setExpand,] = useState(isExpanded || editMode,);
 
     const isActive = useCallback(
       (dir,) =>
@@ -95,13 +99,22 @@ const BoxNode = forwardRef(
 
     return (
       <Container
+        editMode={editMode}
         style={{
           top: `var(${yVarName})`,
           left: `var(${xVarName})`,
           borderColor: color,
           ...style,
-          width: expand ? BOX_SIZE.BIG.WIDTH : `${BOX_SIZE.SMALL.WIDTH}px`,
-          height: expand ? BOX_SIZE.BIG.HEIGHT: `${BOX_SIZE.SMALL.HEIGHT}px`,
+          width: editMode
+            ? '100%'
+            : expand
+            ? BOX_SIZE.BIG.WIDTH
+            : `${BOX_SIZE.SMALL.WIDTH}px`,
+          height: editMode
+            ? '100%'
+            : expand
+            ? BOX_SIZE.BIG.HEIGHT
+            : `${BOX_SIZE.SMALL.HEIGHT}px`,
         }}
         ref={ref}
       >
@@ -124,7 +137,7 @@ const BoxNode = forwardRef(
           </CenterTitle>
           <CenterContent>{children}</CenterContent>
         </Center>
-        {canRemove && (
+        {!editMode && canRemove && (
           <RemoveButton
             onClick={() => {
               remove(index,);
@@ -133,7 +146,17 @@ const BoxNode = forwardRef(
             X
           </RemoveButton>
         )}
-        {canOutput && (
+        {!editMode && canRemove && (
+          <EditButton
+            onClick={() => {
+              setEditNode(index, component,);
+              // edit(index,);
+            }}
+          >
+            Edit
+          </EditButton>
+        )}
+        {!editMode && canOutput && (
           <IOButton
             right
             color={color}
@@ -146,7 +169,7 @@ const BoxNode = forwardRef(
             &nbsp;
           </IOButton>
         )}
-        {canExpand && showExpandButton}
+        {!editMode && canExpand && showExpandButton}
       </Container>
     );
   },

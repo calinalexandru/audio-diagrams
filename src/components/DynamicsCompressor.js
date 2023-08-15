@@ -2,6 +2,7 @@ import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
 import BoxNode from './BoxNode';
 import AudioParams from './AudioParams';
+import { NODE_TYPE, } from '../constants';
 
 const darkseagreen = '#8fbc8f';
 export default function DynamicsCompressor({ index, },) {
@@ -13,6 +14,7 @@ export default function DynamicsCompressor({ index, },) {
       ref={elRef}
       dragRef={dragRef}
       color={darkseagreen}
+      component={NODE_TYPE.DYNAMICS_COMPRESSOR}
       index={index}
       name="Dynamics Compressor"
       canExpand

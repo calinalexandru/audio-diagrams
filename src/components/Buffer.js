@@ -1,5 +1,6 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
+import { NODE_TYPE, } from '../constants';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
@@ -26,6 +27,7 @@ export default function Buffer({ index, },) {
       dragRef={dragRef}
       color="red"
       index={index}
+      component={NODE_TYPE.BUFFER}
       name="Buffer"
       canExpand
     >

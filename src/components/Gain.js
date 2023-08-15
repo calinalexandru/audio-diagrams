@@ -1,6 +1,7 @@
 // import styled from '@emotion/styled';
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
+import { NODE_TYPE, } from '../constants';
 import AudioParams from './AudioParams';
 import BoxNode from './BoxNode';
 
@@ -14,6 +15,7 @@ export default function Gain({ index, },) {
       ref={elRef}
       dragRef={dragRef}
       color={purple}
+      component={NODE_TYPE.GAIN}
       index={index}
       name="Gain"
       canExpand

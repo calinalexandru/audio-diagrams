@@ -9,11 +9,15 @@ export const setValueCurveAtTime = (
   startTime,
   duration,
 ) => {
-  property.setValueCurveAtTime(
-    new Float32Array(values,),
-    startTime ?? audioCtx.currentTime,
-    duration,
-  );
+  try {
+    property.setValueCurveAtTime(
+      new Float32Array(values,),
+      startTime ?? audioCtx.currentTime,
+      duration,
+    );
+  } catch (e) {
+    console.warn('Invalid values provided for setValueCurveAtTime', e,);
+  }
 };
 
 export const setValueByType = (audioCtx, valName, property, properties,) => {

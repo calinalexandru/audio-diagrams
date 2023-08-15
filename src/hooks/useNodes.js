@@ -24,6 +24,16 @@ export default function useNodes() {
     [update,],
   );
 
+  const setEditNode = useCallback(
+    (index, component,) => {
+      update((draft,) => {
+        draft.edit.node = index;
+        draft.edit.component = component;
+      },);
+    },
+    [update,],
+  );
+
   const remove = useCallback(
     (index,) => {
       // console.log('Remove.index', index,);
@@ -36,12 +46,15 @@ export default function useNodes() {
             ),
           ),
         ];
-        
+
         // to remove multiple items from the stack
         // we must splice it in reverse order
-        toDelete.sort().reverse().forEach((wireIndex,) => {
-          if (wireIndex !== false) draft.wires.splice(wireIndex, 1,);
-        },);
+        toDelete
+          .sort()
+          .reverse()
+          .forEach((wireIndex,) => {
+            if (wireIndex !== false) draft.wires.splice(wireIndex, 1,);
+          },);
 
         draft.positions.splice(index, 1,);
         draft.nodes.splice(index, 1,);
@@ -51,6 +64,7 @@ export default function useNodes() {
   );
 
   return {
+    setEditNode,
     remove,
     setPosition,
     setXY,

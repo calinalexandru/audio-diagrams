@@ -7,7 +7,7 @@ const addToConnectingEpic = (patch$, state$,) =>
     patchOf({ op: ADD, path: ['connecting',], },),
     withLatestFrom(state$,),
     map(([, { connecting, },],) => (draft,) => {
-      console.log('addToConnectingEpic',);
+      // console.log('addToConnectingEpic',);
       const [
         { direction: firstDir, index: firstIndex, } = {},
         { direction: secondDir, index: secondIndex, } = {},

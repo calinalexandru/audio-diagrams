@@ -2,6 +2,7 @@ import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
 import BoxNode from './BoxNode';
 import AudioParams from './AudioParams';
+import { NODE_TYPE, } from '../constants';
 
 const cadetblue = '#5f9ea0';
 export default function Delay({ index, },) {
@@ -14,6 +15,7 @@ export default function Delay({ index, },) {
       dragRef={dragRef}
       color={cadetblue}
       index={index}
+      component={NODE_TYPE.DELAY}
       canExpand
       isExpanded
       name="Delay"

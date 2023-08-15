@@ -1,7 +1,7 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
 import AudioParams from './AudioParams';
-import { HZ, } from '../constants';
+import { HZ, NODE_TYPE, } from '../constants';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
@@ -24,6 +24,7 @@ export default function Oscillator({ index, },) {
 
   return (
     <BoxNode
+      component={NODE_TYPE.OSCILLATOR}
       ref={elRef}
       dragRef={dragRef}
       index={index}

@@ -15,7 +15,7 @@ const config = {
       directory: path.join(__dirname, isEnvProduction ? buildDir : 'public',),
     },
     compress: false,
-    port: 9876,
+    port: 9875,
   },
   mode,
   devtool: mode === 'development' ? 'inline-source-map' : false,

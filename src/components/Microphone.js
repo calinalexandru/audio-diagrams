@@ -1,5 +1,6 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
+import { NODE_TYPE, } from '../constants';
 import BoxNode from './BoxNode';
 
 export default function Microphone({ index, },) {
@@ -11,6 +12,7 @@ export default function Microphone({ index, },) {
       index={index}
       dragRef={dragRef}
       ref={elRef}
+      component={NODE_TYPE.MICROPHONE}
       color="azure"
       name="Microphone"
       canInput={false}

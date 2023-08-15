@@ -1,12 +1,12 @@
 import { h, } from 'preact';
 import { useCallback, useEffect, useRef, } from 'preact/hooks';
-import { FFT_SIZES, } from '../constants';
+import { FFT_SIZES, NODE_TYPE, } from '../constants';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
 export default function Analyser({ index, audioNode: analyser, },) {
-  console.log('Analyser.audioNode', analyser,);
+  // console.log('Analyser.audioNode', analyser,);
   const reqAnim = useRef(null,);
   const canvasRef = useRef();
   const elRef = useRef();
@@ -45,6 +45,7 @@ export default function Analyser({ index, audioNode: analyser, },) {
       // console.log('dataArray', dataArray,)
       for (let i = 0; i < bufferLength; i += 1) {
         const v = dataArray[i] / 128.0;
+        // console.log('v', v,)
         const y = (v * canvasRef.current.height) / 2;
 
         if (i === 0) {
@@ -78,6 +79,7 @@ export default function Analyser({ index, audioNode: analyser, },) {
       dragRef={dragRef}
       color="blue"
       index={index}
+      component={NODE_TYPE.ANALYSER}
       name="Analyser"
       canExpand
     >

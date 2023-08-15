@@ -9,6 +9,8 @@ export const Container = styled.div`
   background-position: 0 0, 50px 50px;
   background-size: 15px 15px;
   user-select: none;
+  filter: ${({ filterBlur, },) => (filterBlur ? 'blur(4px)' : 'unset')};
+  opacity: ${({ filterBlur, },) => (filterBlur ? '0.3' : '1')};
 `;
 
 export const NodesMenu = styled.div`
@@ -29,14 +31,14 @@ export const NodesMenuHeader = styled.div`
   flex-flow: column;
   align-items: center;
   margin-top: 6px;
-`
+`;
 
 export const NodesMenuFooter = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
   margin-bottom: 6px;
-`
+`;
 
 export const ZoomMenu = styled.div`
   position: absolute;
@@ -45,7 +47,7 @@ export const ZoomMenu = styled.div`
   height: 50px;
   width: 120px;
   color: #fff;
-`
+`;
 
 export const Social = styled.div`
   margin: 24px 0 12px 0;
