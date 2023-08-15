@@ -6,7 +6,7 @@ import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-export default function Buffer({ index, },) {
+export default function Buffer({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -29,7 +29,7 @@ export default function Buffer({ index, },) {
       index={index}
       component={NODE_TYPE.BUFFER}
       name="Buffer"
-      canExpand
+      {...props}
     >
       <div
         style={{

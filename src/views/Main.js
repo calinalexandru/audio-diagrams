@@ -37,7 +37,7 @@ export default function Main() {
 
   useKeyBindings();
   const live = useAudioNodes({ nodes, wires, },);
-  // console.log('Main.live', live,);
+  // console.log('Main.live', {nodes, wires,},);
   const {
     add,
     loadState,

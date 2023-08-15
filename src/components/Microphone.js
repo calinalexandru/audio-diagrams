@@ -3,7 +3,7 @@ import { useRef, } from 'preact/hooks';
 import { NODE_TYPE, } from '../constants';
 import BoxNode from './BoxNode';
 
-export default function Microphone({ index, },) {
+export default function Microphone({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -16,6 +16,7 @@ export default function Microphone({ index, },) {
       color="azure"
       name="Microphone"
       canInput={false}
+      {...props}
     />
   );
 }

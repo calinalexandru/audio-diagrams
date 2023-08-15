@@ -5,7 +5,7 @@ import AudioParams from './AudioParams';
 import { NODE_TYPE, } from '../constants';
 
 const cadetblue = '#5f9ea0';
-export default function Delay({ index, },) {
+export default function Delay({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -16,9 +16,9 @@ export default function Delay({ index, },) {
       color={cadetblue}
       index={index}
       component={NODE_TYPE.DELAY}
-      canExpand
       isExpanded
       name="Delay"
+      {...props}
     >
       <div>
         <AudioParams

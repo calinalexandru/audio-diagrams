@@ -26,9 +26,14 @@ export default function useMouseMove({
   useEffect(() => {
     let { x = 0, y = 0, pos = {}, } = {};
     if (elRef.current && dragRef.current) {
-      const style = getComputedStyle(elRef.current,);
-      // console.log('useMouseMove.style', style,);
-      const { width = '30px', height = '20px', } = style || {};
+      // !! start important
+      // ignore computed style, just use static values
+      //  because <Line /> will screw up
+      // !! end important
+      // const style = getComputedStyle(elRef.current,);
+      const width = '122px';
+      const height = '74px';
+
       ({ x, y, } = position);
       const newX = x + x - x * scale;
       const newY = y + y - y * scale;

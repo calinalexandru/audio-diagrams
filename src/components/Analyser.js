@@ -5,7 +5,7 @@ import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-export default function Analyser({ index, audioNode: analyser, },) {
+export default function Analyser({ index, audioNode: analyser, ...props },) {
   // console.log('Analyser.audioNode', analyser,);
   const reqAnim = useRef(null,);
   const canvasRef = useRef();
@@ -81,7 +81,7 @@ export default function Analyser({ index, audioNode: analyser, },) {
       index={index}
       component={NODE_TYPE.ANALYSER}
       name="Analyser"
-      canExpand
+      {...props}
     >
       <div
         style={{

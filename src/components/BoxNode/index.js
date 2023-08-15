@@ -27,14 +27,13 @@ const BoxNode = forwardRef(
       dragRef,
       color,
       style,
-      children,
       component,
+      children,
       name,
-      canExpand = false,
+      editMode = false,
       canRemove = true,
       canOutput = true,
       canInput = true,
-      isExpanded = false,
     },
     ref,
   ) => {
@@ -56,8 +55,7 @@ const BoxNode = forwardRef(
 
     const { addToConnecting, } = useWiring();
     const { remove, setEditNode, } = useNodes();
-    const editMode = useMemo(() => editNode === index, [editNode, index,],);
-    const [expand, setExpand,] = useState(isExpanded || editMode,);
+    const [expand, setExpand,] = useState(editMode,);
 
     const isActive = useCallback(
       (dir,) =>
@@ -135,7 +133,7 @@ const BoxNode = forwardRef(
           <CenterTitle>
             <Title>{name}</Title>
           </CenterTitle>
-          <CenterContent>{children}</CenterContent>
+          {editMode && <CenterContent>{children}</CenterContent>}
         </Center>
         {!editMode && canRemove && (
           <RemoveButton
@@ -169,7 +167,6 @@ const BoxNode = forwardRef(
             &nbsp;
           </IOButton>
         )}
-        {!editMode && canExpand && showExpandButton}
       </Container>
     );
   },

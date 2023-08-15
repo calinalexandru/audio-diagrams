@@ -5,7 +5,7 @@ import AudioParams from './AudioParams';
 import { NODE_TYPE, } from '../constants';
 
 const darkseagreen = '#8fbc8f';
-export default function DynamicsCompressor({ index, },) {
+export default function DynamicsCompressor({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -17,7 +17,7 @@ export default function DynamicsCompressor({ index, },) {
       component={NODE_TYPE.DYNAMICS_COMPRESSOR}
       index={index}
       name="Dynamics Compressor"
-      canExpand
+      {...props}
     >
       <div>
         <AudioParams
@@ -50,7 +50,6 @@ export default function DynamicsCompressor({ index, },) {
           valueName="release"
           label="Release"
         />
-
       </div>
     </BoxNode>
   );

@@ -1,13 +1,18 @@
 import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
-import { BIQUAD_FILTER_TYPES, HZ, MAX_FREQUENCY, NODE_TYPE, } from '../constants';
+import {
+  BIQUAD_FILTER_TYPES,
+  HZ,
+  MAX_FREQUENCY,
+  NODE_TYPE,
+} from '../constants';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 import AudioParams from './AudioParams';
 
 const cornflowerblue = '#6495ed';
-export default function BiquadFilter({ index, },) {
+export default function BiquadFilter({ index, ...props },) {
   // const fromHzRef = useRef();
   // const toHzRef = useRef();
   const elRef = useRef();
@@ -49,8 +54,8 @@ export default function BiquadFilter({ index, },) {
       color={cornflowerblue}
       index={index}
       component={NODE_TYPE.BIQUAD_FILTER}
-      canExpand
       name="Biquad Filter"
+      {...props}
       style={{
         height: 'auto',
       }}

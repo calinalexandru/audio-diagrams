@@ -8,7 +8,7 @@ import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
 const orange = '#ffa500';
-export default function Oscillator({ index, },) {
+export default function Oscillator({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
   const [nodes,] = useImmerx('nodes',);
@@ -30,8 +30,8 @@ export default function Oscillator({ index, },) {
       index={index}
       color={orange}
       canInput={false}
-      canExpand
       name="Oscillator"
+      {...props}
     >
       <div
         style={{

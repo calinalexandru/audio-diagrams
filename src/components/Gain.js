@@ -6,7 +6,7 @@ import AudioParams from './AudioParams';
 import BoxNode from './BoxNode';
 
 const purple = "#800080";
-export default function Gain({ index, },) {
+export default function Gain({ index, ...props},) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -18,8 +18,8 @@ export default function Gain({ index, },) {
       component={NODE_TYPE.GAIN}
       index={index}
       name="Gain"
-      canExpand
       isExpanded
+      {...props}
     >
       <AudioParams color={purple} valueName="gain" label="Gain" index={index} />
     </BoxNode>

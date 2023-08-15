@@ -2,7 +2,7 @@ import { h, } from 'preact';
 import { useRef, } from 'preact/hooks';
 import BoxNode from './BoxNode';
 
-export default function Output({ index, },) {
+export default function Output({ index, ...props},) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -15,6 +15,7 @@ export default function Output({ index, },) {
       canRemove={false}
       name="Speaker Output"
       canOutput={false}
+      {...props}
     />
   );
 }

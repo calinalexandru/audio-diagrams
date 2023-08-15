@@ -5,7 +5,7 @@ import AudioParams from './AudioParams';
 import { NODE_TYPE, } from '../constants';
 
 const chocolate = '#d2691e';
-export default function Pan({ index, },) {
+export default function Pan({ index, props,},) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -17,7 +17,7 @@ export default function Pan({ index, },) {
       component={NODE_TYPE.PAN}
       index={index}
       name="Panner"
-      canExpand
+      {...props}
     >
       <div>
         <AudioParams

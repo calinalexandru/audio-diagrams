@@ -6,12 +6,12 @@ import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 
-export default function Convolver({ index, },) {
+export default function Convolver({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
   const [nodes,] = useImmerx('nodes',);
   const [, update,] = useImmerx(null,);
-  
+
   const setNormalize = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.normalize = val),);
   };
@@ -24,6 +24,7 @@ export default function Convolver({ index, },) {
       component={NODE_TYPE.CONVOLVER}
       index={index}
       name="Convolver"
+      {...props}
     >
       <div>
         <Select
