@@ -1,4 +1,7 @@
 # Audio Diagrams
+<p align="center">
+<img width="855" alt="nodes connected" src="https://github.com/calinalexandru/audio-diagrams/assets/14873239/88cd9bd2-4ecb-435b-97b4-6039a7bc0714">
+</p>
 
 Audio Diagrams is an interactive tool designed to simplify the process of experimenting with and understanding the modern Web Audio API. Users can effortlessly create audio routing graphs using intuitive drag & drop operations. Each draggable component on the interface represents an audio-processing module, closely mimicking the functionalities detailed in the [Web Audio API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
