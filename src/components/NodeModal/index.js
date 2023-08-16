@@ -1,11 +1,11 @@
 import { h, } from 'preact';
-import { useMemo, useState, } from 'preact/hooks';
+import { useMemo,  } from 'preact/hooks';
 import Stack from '../../primitives/Stack';
 import { useImmerx, } from '../../store/state';
 import { Container, RemoveButton, } from './style';
 import { NODES_COMPONENTS_MAP, } from '../../constants/map';
-import DrawFunction from '../../primitives/DrawFunction';
-import Input from '../../primitives/Input';
+// import DrawFunction from '../../primitives/DrawFunction';
+// import Input from '../../primitives/Input';
 
 export default function NodeModal() {
   const [
@@ -14,13 +14,13 @@ export default function NodeModal() {
     },
     update,
   ] = useImmerx();
-  const [x1, setx1,] = useState(200,);
-  const [x2, setx2,] = useState(150,);
+  // const [x1, setx1,] = useState(200,);
+  // const [x2, setx2,] = useState(150,);
 
-  const [y1, sety1,] = useState(340,);
-  const [y2, sety2,] = useState(260,);
+  // const [y1, sety1,] = useState(340,);
+  // const [y2, sety2,] = useState(260,);
 
-  const [nodes,] = useImmerx('nodes',);
+  // const [nodes,] = useImmerx('nodes',);
 
   const closeModal = () => {
     update((draft,) => void (draft.edit.node = -1),);
@@ -53,7 +53,7 @@ export default function NodeModal() {
           }}
         >
           <Stack direction="column">
-            <Stack>
+            {/* <Stack>
               <Input
                 label="x1"
                 type="number"
@@ -98,8 +98,8 @@ export default function NodeModal() {
                   sety2(Number(e.target.value,),);
                 }}
               />
-            </Stack>
-            <DrawFunction x1={x1} x2={x2} y1={y1} y2={y2} />
+            </Stack> */}
+            {/* <DrawFunction x1={x1} x2={x2} y1={y1} y2={y2} /> */}
           </Stack>
         </Stack>
       </Container>

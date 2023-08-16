@@ -1,5 +1,5 @@
 import { h, } from 'preact';
-import { forwardRef, useCallback, useMemo, useState, } from 'preact/compat';
+import { forwardRef, useCallback, useMemo, } from 'preact/compat';
 import { BOX_SIZE, } from '../../constants';
 import useMouseMove from '../../hooks/useMouseMove';
 import useNodes from '../../hooks/useNodes';
@@ -10,12 +10,12 @@ import {
   CenterContent,
   CenterTitle,
   Container,
-  ExpandButton,
-  IOButton,
   EditButton,
+  IOButton,
   RemoveButton,
   Title,
 } from './style';
+import DisplayNode from './DisplayNode';
 
 const xVarName = '--x';
 const yVarName = '--y';
@@ -41,7 +41,6 @@ const BoxNode = forwardRef(
     const [wires,] = useImmerx('wires',);
     const [nodes,] = useImmerx('nodes',);
     const [positions,] = useImmerx('positions',);
-    const [{ node: editNode, },] = useImmerx('edit',);
 
     const position = useMemo(() => positions[index], [index, positions,],);
 
@@ -55,8 +54,7 @@ const BoxNode = forwardRef(
 
     const { addToConnecting, } = useWiring();
     const { remove, setEditNode, } = useNodes();
-    const [expand, setExpand,] = useState(editMode,);
-
+    const isAnalyser = useMemo(() => component === 'analyser', [component,],);
     const isActive = useCallback(
       (dir,) =>
         connecting.find(
@@ -80,21 +78,6 @@ const BoxNode = forwardRef(
       [wires, index,],
     );
 
-    const toggleShowMore = useCallback(
-      (e,) => {
-        e.preventDefault();
-        setExpand(!expand,);
-      },
-      [expand,],
-    );
-
-    const showExpandButton = (
-      <ExpandButton
-        onClick={toggleShowMore}
-        dangerouslySetInnerHTML={{ __html: expand ? '&laquo;' : '&raquo;', }}
-      />
-    );
-
     return (
       <Container
         editMode={editMode}
@@ -103,16 +86,8 @@ const BoxNode = forwardRef(
           left: `var(${xVarName})`,
           borderColor: color,
           ...style,
-          width: editMode
-            ? '100%'
-            : expand
-            ? BOX_SIZE.BIG.WIDTH
-            : `${BOX_SIZE.SMALL.WIDTH}px`,
-          height: editMode
-            ? '100%'
-            : expand
-            ? BOX_SIZE.BIG.HEIGHT
-            : `${BOX_SIZE.SMALL.HEIGHT}px`,
+          width: editMode ? '100%' : `${BOX_SIZE.SMALL.WIDTH}px`,
+          height: editMode ? '100%' : `${BOX_SIZE.SMALL.HEIGHT}px`,
         }}
         ref={ref}
       >
@@ -133,7 +108,11 @@ const BoxNode = forwardRef(
           <CenterTitle>
             <Title>{name}</Title>
           </CenterTitle>
-          <CenterContent>{children}</CenterContent>
+          {editMode || isAnalyser ? (
+            <CenterContent>{children}</CenterContent>
+          ) : (
+            <DisplayNode node={nodes[index]} />
+          )}
         </Center>
         {!editMode && canRemove && (
           <RemoveButton
