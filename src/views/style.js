@@ -49,6 +49,17 @@ export const ZoomMenu = styled.div`
   color: #fff;
 `;
 
+export const MediaMenu = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 110px);
+  height: 50px;
+  width: 220px;
+  color: #fff;
+`
+
 export const Social = styled.div`
   margin: 24px 0 12px 0;
 `;

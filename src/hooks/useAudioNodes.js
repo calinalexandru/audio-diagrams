@@ -1,24 +1,30 @@
 import { useEffect, useRef, useState, } from 'preact/hooks';
-import {  NODE_TYPE, } from '../constants';
-import { AUDIO_NODES_MAP,  } from '../constants/map';
+import { NODE_TYPE, } from '../constants';
+import { AUDIO_NODES_MAP, } from '../constants/map';
 
-
-export default function useAudioNodes({ nodes, wires, },) {
+export default function useAudioNodes(signal, isPlaying, { nodes, wires, },) {
   const mediaStreamRef = useRef(null,);
   const [, setTimer,] = useState(0,);
   const live = useRef(Array(nodes.length,).fill(null,),);
+  const audioCtx = useRef({},);
   useEffect(() => {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    // console.log('audoCtx', audioCtx,)
+    audioCtx.current = new (window.AudioContext || window.webkitAudioContext)();
+
+    if (isPlaying) {
+      audioCtx.current.resume();
+    } else {
+      audioCtx.current.suspend();
+    }
+
     const audioNodes = nodes.map(async (node,) => {
       if (typeof AUDIO_NODES_MAP[node.type] === 'function') {
         return AUDIO_NODES_MAP[node.type]?.(
-          audioCtx,
+          audioCtx.current,
           node.properties,
           mediaStreamRef,
         );
       }
-      return audioCtx.destination;
+      return audioCtx.current.destination;
     },);
 
     // const sampleData = ({
@@ -78,7 +84,7 @@ export default function useAudioNodes({ nodes, wires, },) {
 
         //   // analyser.connect(to,);
         // } else {
-          from.connect(to,);
+        from.connect(to,);
         // }
 
         if (nodes[wire.to].type === NODE_TYPE.ANALYSER) {
@@ -104,9 +110,9 @@ export default function useAudioNodes({ nodes, wires, },) {
       },);
 
       // close context
-      audioCtx.close();
+      audioCtx.current.close();
     };
-  }, [nodes, wires,],);
+  }, [signal, nodes, wires,],);
 
-  return live;
+  return { live, audioCtx, };
 }

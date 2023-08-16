@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export default styled.button`
+  overflow: hidden;
   font-family: inherit;
   border: 0;
   background: #ccc;
