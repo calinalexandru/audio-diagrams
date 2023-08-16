@@ -11,9 +11,9 @@ export default function Analyser({ index, audioNode: analyser, ...props },) {
   const canvasRef = useRef();
   const elRef = useRef();
   const dragRef = useRef();
-  const bufferLength = 1024;
-  const dataArray = new Uint8Array(bufferLength,);
   const [nodes,] = useImmerx('nodes',);
+  const bufferLength = nodes[index].properties.fftSize || 32;
+  const dataArray = new Uint8Array(bufferLength,);
   const [, update,] = useImmerx(null,);
   const draw = useCallback(() => {
     reqAnim.current = requestAnimationFrame(draw,);

@@ -1,5 +1,5 @@
 import { h, } from 'preact';
-import { useMemo,  } from 'preact/hooks';
+import { useMemo, } from 'preact/hooks';
 import Stack from '../../primitives/Stack';
 import { useImmerx, } from '../../store/state';
 import { Container, RemoveButton, } from './style';
@@ -7,7 +7,7 @@ import { NODES_COMPONENTS_MAP, } from '../../constants/map';
 // import DrawFunction from '../../primitives/DrawFunction';
 // import Input from '../../primitives/Input';
 
-export default function NodeModal() {
+export default function NodeModal({ live, },) {
   const [
     {
       edit: { node: editNode, component, },
@@ -28,7 +28,11 @@ export default function NodeModal() {
 
   const theEditComponent = useMemo(
     () =>
-      h(NODES_COMPONENTS_MAP[component], { index: editNode, editMode: true, },),
+      h(NODES_COMPONENTS_MAP[component], {
+        index: editNode,
+        audioNode: live.current[editNode],
+        editMode: true,
+      },),
     [component, editNode,],
   );
 

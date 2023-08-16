@@ -1,5 +1,5 @@
 import { h, Fragment, } from 'preact';
-import { useCallback, useEffect, useRef, useState, } from 'preact/hooks';
+import { useCallback, useRef, useState, } from 'preact/hooks';
 import Output from '../components/Output';
 import NodeModal from '../components/NodeModal';
 import { NODES, NODE_TYPE, } from '../constants';
@@ -34,6 +34,7 @@ export default function Main() {
       edit: { node: editNode, },
     },
   ] = useImmerx();
+  // console.log('Main', { nodes, wires, },);
   const [restartCounter, setRestartCounter,] = useState(1,);
   const [isPlaying, setIsPlaying,] = useState(true,);
   const fileUploadRef = useRef();
@@ -69,11 +70,6 @@ export default function Main() {
     setIsPlaying(true,);
     setRestartCounter(restartCounter + 1,);
   }, [restartCounter, setRestartCounter, setIsPlaying,],);
-
-  useEffect(() => {
-    // restarting cycle
-    console.log('restartCounter', restartCounter,);
-  }, [restartCounter,],);
 
   return (
     restartCounter && (
@@ -155,7 +151,7 @@ export default function Main() {
           </Interactive>
           <input type="file" ref={fileUploadRef} style={{ display: 'none', }} />
         </Container>
-        <NodeModal />
+        <NodeModal live={live} />
       </>
     )
   );
