@@ -1,3 +1,5 @@
+import AudioParam from './AudioParam';
+
 export const NODE_TYPE = {
   OSCILLATOR: 'oscillator',
   CONVOLVER: 'convolver',
@@ -54,30 +56,8 @@ export const DEFAULTS = {
       type: NODE_TYPE.OSCILLATOR,
       properties: {
         type: 'sine',
-        frequency: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 440,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 440,],
-            startTime: 0,
-            duration: 10,
-          },
-        },
-        detune: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
+        frequency: AudioParam.getMethods(),
+        detune: AudioParam.getMethods(),
         duration: 0,
       },
     },
@@ -109,66 +89,15 @@ export const DEFAULTS = {
       type: NODE_TYPE.DYNAMICS_COMPRESSOR,
       properties: {
         reduction: 0,
-        threshold: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: -24,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, -24,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        knee: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 30,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 30,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        ratio: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 12,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 12,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        attack: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0.003,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0.003,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        release: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0.25,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0.25,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
+        threshold: AudioParam.getMethods({
+          value: -24,
+          values: [0, -24,],
+          duration: 1,
+        },),
+        knee: AudioParam.getMethods({ value: 30, },),
+        ratio: AudioParam.getMethods({ value: 12, },),
+        attack: AudioParam.getMethods({ value: 0.003, },),
+        release: AudioParam.getMethods({ value: 0.25, },),
       },
     },
   },
@@ -245,54 +174,10 @@ export const DEFAULTS = {
       type: NODE_TYPE.BIQUAD_FILTER,
       properties: {
         type: 'lowpass',
-        frequency: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 1000,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 1000,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        Q: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        gain: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 1,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 1,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        detune: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
+        frequency: AudioParam.getMethods(),
+        Q: AudioParam.getMethods(),
+        gain: AudioParam.getMethods(),
+        detune: AudioParam.getMethods(),
       },
     },
   },
@@ -307,18 +192,7 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.GAIN,
       properties: {
-        gain: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 1,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0.5, 1, 0.5, 0, 0.5, 1,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
+        gain: AudioParam.getMethods(),
       },
     },
   },
@@ -333,18 +207,7 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.DELAY,
       properties: {
-        delay: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 1,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
+        delay: AudioParam.getMethods({ value: 3, },),
       },
     },
   },
@@ -359,18 +222,7 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.PAN,
       properties: {
-        pan: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
+        pan: AudioParam.getMethods(),
       },
     },
   },

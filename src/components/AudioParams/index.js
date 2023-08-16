@@ -1,11 +1,23 @@
-import { h, Fragment, } from 'preact';
-import { useMemo, } from 'preact/hooks';
+import { h, } from 'preact';
+import { useCallback, useMemo, } from 'preact/hooks';
 import { number, string, } from 'prop-types';
-import Stack from '../../primitives/Stack';
-import Input from '../../primitives/Input';
 import Select from '../../primitives/Select';
 import { useImmerx, } from '../../store/state';
 import { Container, } from './style';
+import SetValueAtTime from './SetValueAtTime';
+import SetValueCurveAtTime from './SetValueCurveAtTime';
+import SetTargetAtTime from './SetTargetAtTime';
+import RampToValueAtTime from './RampToValueAtTime';
+
+const audioParamMethods = [
+  'setValueAtTime',
+  'linearRampToValueAtTime',
+  'exponentialRampToValueAtTime',
+  'setTargetAtTime',
+  'setValueCurveAtTime',
+  // 'cancelScheduledValues',
+  // 'cancelAndHoldAtTime',
+];
 
 export default function AudioParams({
   index,
@@ -19,18 +31,21 @@ export default function AudioParams({
   const [nodes,] = useImmerx('nodes',);
   const [, update,] = useImmerx(null,);
 
-  const { setValueAtTime, setValueCurveAtTime, valueType, } =
-    nodes[index].properties[valueName];
+  const {
+    setValueAtTime,
+    linearRampToValueAtTime,
+    exponentialRampToValueAtTime,
+    setTargetAtTime,
+    setValueCurveAtTime,
+    valueType,
+  } = nodes[index].properties[valueName];
 
-  const isValueAtTime = useMemo(
-    () => valueType === 'setValueAtTime',
-    [valueType,],
-  );
-
-  const isCurveAtTime = useMemo(
-    () => valueType === 'setValueCurveAtTime',
-    [valueType,],
-  );
+  // console.log({
+  //   linearRampToValueAtTime,
+  //   setValueAtTime,
+  //   setValueCurveAtTime,
+  //   valueType,
+  // },);
 
   const setValueType = (val,) => {
     update(
@@ -38,107 +53,102 @@ export default function AudioParams({
     );
   };
 
-  const setValue = (val,) => {
-    update(
-      (draft,) =>
-        void (draft.nodes[index].properties[valueName].setValueAtTime.value =
-          val),
-    );
-  };
+  const setCurrentProperty = useCallback(
+    (val, property,) => {
+      update(
+        (draft,) =>
+          void (draft.nodes[index].properties[valueName][valueType][property] =
+            val),
+      );
+    },
+    [update, valueType, index, valueName,],
+  );
 
-  const setCurveValues = (val,) => {
-    update(
-      (draft,) =>
-        void (draft.nodes[index].properties[
-          valueName
-        ].setValueCurveAtTime.values = val),
-    );
-  };
-
-  const setCurveStartTime = (val,) => {
-    update(
-      (draft,) =>
-        void (draft.nodes[index].properties[
-          valueName
-        ].setValueCurveAtTime.startTime = val),
-    );
-  };
-
-  const setCurveDuration = (val,) => {
-    update(
-      (draft,) =>
-        void (draft.nodes[index].properties[
-          valueName
-        ].setValueCurveAtTime.duration = val),
-    );
-  };
+  const methodToComponentsMap = useMemo(
+    () => ({
+      setValueAtTime: (
+        <SetValueAtTime
+          label={label}
+          min={min}
+          max={max}
+          units={units}
+          value={setValueAtTime.value}
+          onChange={(val,) => setCurrentProperty(val, 'value',)}
+        />
+      ),
+      linearRampToValueAtTime: (
+        <RampToValueAtTime
+          label={label}
+          units={units}
+          value={linearRampToValueAtTime.value}
+          endTime={linearRampToValueAtTime.endTime}
+          onChange={(val,) => setCurrentProperty(val, 'value',)}
+          onEndTimeChange={(val,) => setCurrentProperty(val, 'endTime',)}
+        />
+      ),
+      exponentialRampToValueAtTime: (
+        <RampToValueAtTime
+          label={label}
+          units={units}
+          value={exponentialRampToValueAtTime.value}
+          endTime={exponentialRampToValueAtTime.endTime}
+          onChange={(val,) => setCurrentProperty(val, 'value',)}
+          onEndTimeChange={(val,) => setCurrentProperty(val, 'endTime',)}
+        />
+      ),
+      setTargetAtTime: (
+        <SetTargetAtTime
+          label={label}
+          units={units}
+          target={setTargetAtTime.target}
+          startTime={setTargetAtTime.startTime}
+          timeConstant={setTargetAtTime.timeConstant}
+          onTargetChange={(val,) => setCurrentProperty(val, 'target',)}
+          onStartTimeChange={(val,) => setCurrentProperty(val, 'startTime',)}
+          onTimeConstantChange={(val,) =>
+            setCurrentProperty(val, 'timeConstant',)
+          }
+        />
+      ),
+      setValueCurveAtTime: (
+        <SetValueCurveAtTime
+          label={label}
+          values={setValueCurveAtTime.values}
+          startTime={setValueCurveAtTime.startTime}
+          duration={setValueCurveAtTime.duration}
+          onValuesChange={(val,) => setCurrentProperty(val, 'values',)}
+          onDurationChange={(val,) => setCurrentProperty(val, 'duration',)}
+          onStartTimeChange={(val,) => setCurrentProperty(val, 'startTime',)}
+        />
+      ),
+    }),
+    [
+      setCurrentProperty,
+      min,
+      max,
+      label,
+      units,
+      linearRampToValueAtTime,
+      setValueCurveAtTime,
+      setValueAtTime,
+    ],
+  );
 
   return (
     <Container color={color}>
       <Select
         onChange={(e,) => {
           e.preventDefault();
-          // console.log('setValueType', e.target.value,);
           setValueType(e.target.value,);
         }}
       >
-        <option value="setValueAtTime">setValueAtTime</option>
-        <option value="setValueCurveAtTime">setValueCurveAtTime</option>
+        {audioParamMethods.map((method,) => (
+          <option value={method} selected={method === valueType}>
+            {method}
+          </option>
+        ),)}
       </Select>
-
-      {isValueAtTime && (
-        <Stack>
-          <Input
-            label={label}
-            type="number"
-            value={setValueAtTime.value}
-            min={min}
-            max={max}
-            units={units}
-            step="0.1"
-            onChange={(e,) => {
-              setValue(e.target.value,);
-            }}
-          />
-        </Stack>
-      )}
-      {isCurveAtTime && (
-        <>
-          <Stack>
-            <Input
-              label={`${label} array`}
-              type="text"
-              size="large"
-              onChange={(e,) => {
-                setCurveValues(e.target.value.split(',',),);
-              }}
-              value={setValueCurveAtTime.values}
-            />
-          </Stack>
-          <Stack>
-            <Input
-              label="startTime"
-              type="number"
-              size="small"
-              value={setValueCurveAtTime.startTime}
-              onChange={(e,) => {
-                setCurveStartTime(e.target.value,);
-              }}
-              step="0.1"
-            />
-            <Input
-              label="duration"
-              type="number"
-              size="small"
-              onChange={(e,) => {
-                setCurveDuration(e.target.value,);
-              }}
-              value={setValueCurveAtTime.duration}
-              step="1"
-            />
-          </Stack>
-        </>
-      )}
+      {methodToComponentsMap?.[valueType]}
     </Container>
   );
 }
