@@ -4,9 +4,9 @@ export const NODE_TYPE = {
   DYNAMICS_COMPRESSOR: 'dynamicsCompressor',
   ANALYSER: 'analyser',
   BIQUAD_FILTER: 'biquadFilter',
+  GAIN: 'gain',
   DELAY: 'delay',
   PAN: 'pan',
-  GAIN: 'gain',
   // TODO: implement buffer
   // BUFFER: 'buffer',
   OUTPUT: 'output',
@@ -86,7 +86,7 @@ export const DEFAULTS = {
   CONVOLVER: {
     POSITION: {
       x: 50,
-      y: 70,
+      y: 140,
       width: '100px',
       height: '50px',
     },
@@ -101,7 +101,7 @@ export const DEFAULTS = {
   DYNAMICS_COMPRESSOR: {
     POSITION: {
       x: 50,
-      y: 70,
+      y: 230,
       width: '100px',
       height: '50px',
     },
@@ -173,52 +173,53 @@ export const DEFAULTS = {
     },
   },
 
-  BUFFER: {
-    POSITION: {
-      x: 50,
-      y: 130,
-      width: '100px',
-      height: '50px',
-    },
-    NODE: {
-      type: NODE_TYPE.BUFFER,
-      properties: {
-        detune: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 0,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        playbackRate: {
-          valueType: 'setValueAtTime',
-          setValueAtTime: {
-            value: 1.0,
-            startTime: 0,
-          },
-          setValueCurveAtTime: {
-            values: [0, 1.0,],
-            startTime: 0,
-            duration: 1,
-          },
-        },
-        buffer: [],
-        loop: true,
-        loopStart: 0,
-        loopEnd: 0,
-      },
-    },
-  },
+  // TODO: implement buffer
+  // BUFFER: {
+  //   POSITION: {
+  //     x: 50,
+  //     y: 130,
+  //     width: '100px',
+  //     height: '50px',
+  //   },
+  //   NODE: {
+  //     type: NODE_TYPE.BUFFER,
+  //     properties: {
+  //       detune: {
+  //         valueType: 'setValueAtTime',
+  //         setValueAtTime: {
+  //           value: 0,
+  //           startTime: 0,
+  //         },
+  //         setValueCurveAtTime: {
+  //           values: [0, 0,],
+  //           startTime: 0,
+  //           duration: 1,
+  //         },
+  //       },
+  //       playbackRate: {
+  //         valueType: 'setValueAtTime',
+  //         setValueAtTime: {
+  //           value: 1.0,
+  //           startTime: 0,
+  //         },
+  //         setValueCurveAtTime: {
+  //           values: [0, 1.0,],
+  //           startTime: 0,
+  //           duration: 1,
+  //         },
+  //       },
+  //       buffer: [],
+  //       loop: true,
+  //       loopStart: 0,
+  //       loopEnd: 0,
+  //     },
+  //   },
+  // },
 
   ANALYSER: {
     POSITION: {
       x: 50,
-      y: 210,
+      y: 320,
       width: '100px',
       height: '50px',
     },
@@ -235,8 +236,8 @@ export const DEFAULTS = {
 
   BIQUAD_FILTER: {
     POSITION: {
-      x: 50,
-      y: 290,
+      x: 240,
+      y: 50,
       width: '100px',
       height: '50px',
     },
@@ -298,8 +299,8 @@ export const DEFAULTS = {
 
   GAIN: {
     POSITION: {
-      x: 50,
-      y: 370,
+      x: 240,
+      y: 140,
       width: '100px',
       height: '50px',
     },
@@ -324,8 +325,8 @@ export const DEFAULTS = {
 
   DELAY: {
     POSITION: {
-      x: 50,
-      y: 460,
+      x: 240,
+      y: 230,
       width: '100px',
       height: '50px',
     },
@@ -350,8 +351,8 @@ export const DEFAULTS = {
 
   PAN: {
     POSITION: {
-      x: 50,
-      y: 540,
+      x: 240,
+      y: 320,
       width: '100px',
       height: '50px',
     },
@@ -380,8 +381,8 @@ export const DEFAULTS = {
       properties: {},
     },
     POSITION: {
-      x: 50,
-      y: 550,
+      x: 430,
+      y: 50,
       width: '100px',
       height: '50px',
     },
