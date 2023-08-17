@@ -1,13 +1,15 @@
 import { h, } from 'preact';
-import { useMemo, } from 'preact/hooks';
+import { useMemo, useRef, } from 'preact/hooks';
 import Stack from '../../primitives/Stack';
 import { useImmerx, } from '../../store/state';
 import { Container, RemoveButton, } from './style';
 import { NODES_COMPONENTS_MAP, } from '../../constants/map';
+import useClickAway from '../../hooks/useClickAway';
 // import DrawFunction from '../../primitives/DrawFunction';
 // import Input from '../../primitives/Input';
 
 export default function NodeModal({ live, },) {
+  const containerRef = useRef();
   const [
     {
       edit: { node: editNode, component, },
@@ -36,9 +38,11 @@ export default function NodeModal({ live, },) {
     [component, editNode,],
   );
 
+  useClickAway({ el: containerRef, onClickAway: closeModal, },);
+
   return (
     editNode !== -1 && (
-      <Container>
+      <Container ref={containerRef}>
         <RemoveButton
           onClick={() => {
             closeModal();

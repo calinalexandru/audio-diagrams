@@ -2,7 +2,8 @@ import AudioParam from './AudioParam';
 
 export const NODE_TYPE = {
   OSCILLATOR: 'oscillator',
-  CONVOLVER: 'convolver',
+  // TODO: implement buffer
+  // CONVOLVER: 'convolver',
   DYNAMICS_COMPRESSOR: 'dynamicsCompressor',
   ANALYSER: 'analyser',
   BIQUAD_FILTER: 'biquadFilter',
@@ -15,11 +16,22 @@ export const NODE_TYPE = {
   MICROPHONE: 'microphone',
 };
 
+export const AUDIO_PARAM_PROPS = [
+  'frequency',
+  'gain',
+  'delay',
+  'threshold',
+  'attack',
+  'knee',
+  'ratio',
+];
+
 export const NODES = [...Object.keys(NODE_TYPE,).filter((n,) => n !== 'OUTPUT',),];
 
 export const FFT_SIZES = [
   32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,
 ];
+
 export const HZ = '&#13200';
 export const MAX_FREQUENCY = 22400;
 export const BIQUAD_FILTER_TYPES = [
@@ -192,7 +204,7 @@ export const DEFAULTS = {
     NODE: {
       type: NODE_TYPE.GAIN,
       properties: {
-        gain: AudioParam.getMethods(),
+        gain: AudioParam.getMethods({ value: 1, },),
       },
     },
   },
