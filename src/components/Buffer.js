@@ -6,6 +6,7 @@ import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
 import { createAudioParamProps, } from '../factories/audioParams';
 import MultipleAudioParams from './MultipleAudioParams';
+import Input from '../primitives/Input';
 
 export default function Buffer({ index, ...props },) {
   const elRef = useRef();
@@ -67,14 +68,7 @@ export default function Buffer({ index, ...props },) {
           flexDirection: 'column',
         }}
       >
-        <input
-          type="file"
-          style={{
-            color: '#fff',
-            fontSize: '12px',
-          }}
-          ref={fileRef}
-        />
+        <Input type="file" label="Buffer" ref={fileRef} />
         <MultipleAudioParams
           audioParams={audioProps}
           color="red"

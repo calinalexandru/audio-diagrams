@@ -2,8 +2,7 @@ import AudioParam from './AudioParam';
 
 export const NODE_TYPE = {
   OSCILLATOR: 'oscillator',
-  // TODO: implement buffer
-  // CONVOLVER: 'convolver',
+  CONVOLVER: 'convolver',
   DYNAMICS_COMPRESSOR: 'dynamicsCompressor',
   ANALYSER: 'analyser',
   BIQUAD_FILTER: 'biquadFilter',
@@ -89,6 +88,7 @@ export const DEFAULTS = {
       type: NODE_TYPE.CONVOLVER,
       properties: {
         normalize: false,
+        buffer: null,
       },
     },
   },

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { h, } from 'preact';
+import { forwardRef, } from 'preact/compat';
 import { object, oneOfType, string, } from 'prop-types';
 
 const InputStyled = styled.input`
@@ -43,22 +44,25 @@ const widthSizes = {
   large: '100%',
 };
 
-export default function Input({ label, units, size, style, ...rest },) {
-  return (
+const Input = forwardRef(
+  ({ label, units, size, style, type = 'text', ...rest }, ref,) => (
     <Container>
       {label && <Label>{label}</Label>}
       <InputStyled
+        type={type}
+        ref={ref}
         style={{
           width: widthSizes[size],
           ...style,
+          ...(type === 'file' && { width: '300px', }),
         }}
         {...rest}
       />
       &nbsp;
       {units && <Units dangerouslySetInnerHTML={{ __html: units, }} />}
     </Container>
-  );
-}
+  ),
+);
 
 Input.propTypes = {
   label: string,
@@ -73,3 +77,5 @@ Input.defaultProps = {
   size: 'medium',
   style: {},
 };
+
+export default Input;
