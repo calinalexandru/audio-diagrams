@@ -7,5 +7,7 @@ export default function bufferNode(audioCtx, properties,) {
   setValueByType(audioCtx, 'playbackRate', buffer.playbackRate, properties,);
   buffer.loopStart = properties.loopStart;
   buffer.loopEnd = properties.loopEnd;
+  buffer.buffer = properties.buffer;
+  buffer.start();
   return buffer;
 }

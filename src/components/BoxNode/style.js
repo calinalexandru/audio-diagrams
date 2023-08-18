@@ -6,7 +6,7 @@ export const Container = styled.div`
   background: ${({ editMode, },) => (editMode ? 'transparent' : '#3535358c')};
   border-style: solid;
   border-width: ${({ editMode, },) => (editMode ? '0px' : '2px')};
-  cursor: grab;
+  cursor: ${({ editMode, },) => (editMode ? 'default' : 'grab')};
   border-radius: 15px;
   box-sizing: border-box;
   flex-flow: row;
@@ -19,7 +19,7 @@ export const Container = styled.div`
   transition: width 0.5s, height 0.5s;
 
   &:active {
-    cursor: grabbing;
+    cursor: ${({ editMode, },) => (editMode ? 'default' : 'grabbing')};
   }
 
   &:hover {

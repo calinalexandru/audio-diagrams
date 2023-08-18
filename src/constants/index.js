@@ -10,8 +10,7 @@ export const NODE_TYPE = {
   GAIN: 'gain',
   DELAY: 'delay',
   PAN: 'pan',
-  // TODO: implement buffer
-  // BUFFER: 'buffer',
+  BUFFER: 'buffer',
   OUTPUT: 'output',
   MICROPHONE: 'microphone',
 };
@@ -24,6 +23,9 @@ export const AUDIO_PARAM_PROPS = [
   'attack',
   'knee',
   'ratio',
+  'detune',
+  'playbackRate',
+  'pan',
 ];
 
 export const NODES = [...Object.keys(NODE_TYPE,).filter((n,) => n !== 'OUTPUT',),];
@@ -114,48 +116,25 @@ export const DEFAULTS = {
     },
   },
 
-  // TODO: implement buffer
-  // BUFFER: {
-  //   POSITION: {
-  //     x: 50,
-  //     y: 130,
-  //     width: '100px',
-  //     height: '50px',
-  //   },
-  //   NODE: {
-  //     type: NODE_TYPE.BUFFER,
-  //     properties: {
-  //       detune: {
-  //         valueType: 'setValueAtTime',
-  //         setValueAtTime: {
-  //           value: 0,
-  //           startTime: 0,
-  //         },
-  //         setValueCurveAtTime: {
-  //           values: [0, 0,],
-  //           startTime: 0,
-  //           duration: 1,
-  //         },
-  //       },
-  //       playbackRate: {
-  //         valueType: 'setValueAtTime',
-  //         setValueAtTime: {
-  //           value: 1.0,
-  //           startTime: 0,
-  //         },
-  //         setValueCurveAtTime: {
-  //           values: [0, 1.0,],
-  //           startTime: 0,
-  //           duration: 1,
-  //         },
-  //       },
-  //       buffer: [],
-  //       loop: true,
-  //       loopStart: 0,
-  //       loopEnd: 0,
-  //     },
-  //   },
-  // },
+  BUFFER: {
+    POSITION: {
+      x: 50,
+      y: 130,
+      width: '100px',
+      height: '50px',
+    },
+    NODE: {
+      type: NODE_TYPE.BUFFER,
+      properties: {
+        detune: AudioParam.getMethods({ value: 0, values: [0, 0,], },),
+        playbackRate: AudioParam.getMethods({ value: 1, values: [1, 1,], },),
+        buffer: null,
+        loop: true,
+        loopStart: 0,
+        loopEnd: 0,
+      },
+    },
+  },
 
   ANALYSER: {
     POSITION: {
