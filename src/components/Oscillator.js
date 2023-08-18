@@ -1,11 +1,12 @@
 import { h, } from 'preact';
-import { useRef, } from 'preact/hooks';
-import AudioParams from './AudioParams';
-import { HZ, NODE_TYPE, } from '../constants';
+import { useMemo, useRef, } from 'preact/hooks';
+import { NODE_TYPE, } from '../constants';
 import Input from '../primitives/Input';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
+import { createAudioParamProps, } from '../factories/audioParams';
+import MultipleAudioParams from './MultipleAudioParams';
 
 const orange = '#ffa500';
 export default function Oscillator({ index, ...props },) {
@@ -13,6 +14,8 @@ export default function Oscillator({ index, ...props },) {
   const dragRef = useRef();
   const [nodes,] = useImmerx('nodes',);
   const [, update,] = useImmerx(null,);
+
+  const audioProps = useMemo(() => createAudioParamProps('OSCILLATOR',), [],);
 
   const setOscillatorType = (type,) => {
     update((draft,) => void (draft.nodes[index].properties.type = type),);
@@ -40,18 +43,9 @@ export default function Oscillator({ index, ...props },) {
           flexFlow: 'column',
         }}
       >
-        <AudioParams
-          valueName="frequency"
-          label="Frequency"
+        <MultipleAudioParams
+          audioParams={audioProps}
           color={orange}
-          units={HZ}
-          index={index}
-        />
-        <AudioParams
-          valueName="detune"
-          label="Detune"
-          color={orange}
-          units="cents"
           index={index}
         />
         <Select

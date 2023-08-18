@@ -25,6 +25,7 @@ export const AUDIO_PARAM_PROPS = [
   'ratio',
   'detune',
   'playbackRate',
+  'Q',
   'pan',
 ];
 

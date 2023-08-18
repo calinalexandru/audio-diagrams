@@ -1,10 +1,11 @@
 import { h, } from 'preact';
-import { useCallback, useEffect, useRef, } from 'preact/hooks';
+import { useCallback, useEffect, useMemo, useRef, } from 'preact/hooks';
 import { NODE_TYPE, } from '../constants';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
-import AudioParams from './AudioParams';
+import { createAudioParamProps, } from '../factories/audioParams';
+import MultipleAudioParams from './MultipleAudioParams';
 
 export default function Buffer({ index, ...props },) {
   const elRef = useRef();
@@ -14,8 +15,9 @@ export default function Buffer({ index, ...props },) {
   const [nodes,] = useImmerx('nodes',);
   const [, update,] = useImmerx(null,);
 
+  const audioProps = useMemo(() => createAudioParamProps('BUFFER',), [],);
+
   const setLoop = (val,) => {
-    console.log('setLoop', val,);
     update((draft,) => void (draft.nodes[index].properties.loop = val),);
   };
 
@@ -73,15 +75,8 @@ export default function Buffer({ index, ...props },) {
           }}
           ref={fileRef}
         />
-        <AudioParams
-          valueName="playbackRate"
-          label="Playback Rate"
-          color="red"
-          index={index}
-        />
-        <AudioParams
-          valueName="detune"
-          label="Detune"
+        <MultipleAudioParams
+          audioParams={audioProps}
           color="red"
           index={index}
         />

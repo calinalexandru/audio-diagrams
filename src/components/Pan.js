@@ -5,7 +5,7 @@ import AudioParams from './AudioParams';
 import { NODE_TYPE, } from '../constants';
 
 const chocolate = '#d2691e';
-export default function Pan({ index, props,},) {
+export default function Pan({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
 
@@ -19,14 +19,12 @@ export default function Pan({ index, props,},) {
       name="Panner"
       {...props}
     >
-      <div>
-        <AudioParams
-          index={index}
-          color={chocolate}
-          valueName="pan"
-          label="Pan"
-        />
-      </div>
+      <AudioParams
+        index={index}
+        color={chocolate}
+        valueName="pan"
+        label="Pan"
+      />
     </BoxNode>
   );
 }

@@ -1,13 +1,18 @@
 import { h, } from 'preact';
-import { useRef, } from 'preact/hooks';
+import { useMemo, useRef, } from 'preact/hooks';
 import BoxNode from './BoxNode';
-import AudioParams from './AudioParams';
 import { NODE_TYPE, } from '../constants';
+import { createAudioParamProps, } from '../factories/audioParams';
+import MultipleAudioParams from './MultipleAudioParams';
 
 const darkseagreen = '#8fbc8f';
 export default function DynamicsCompressor({ index, ...props },) {
   const elRef = useRef();
   const dragRef = useRef();
+  const audioProps = useMemo(
+    () => createAudioParamProps('DYNAMICS_COMPRESSOR',),
+    [],
+  );
 
   return (
     <BoxNode
@@ -19,38 +24,11 @@ export default function DynamicsCompressor({ index, ...props },) {
       name="Dynamics Compressor"
       {...props}
     >
-      <div>
-        <AudioParams
-          color={darkseagreen}
-          index={index}
-          valueName="threshold"
-          label="Threshold"
-        />
-        <AudioParams
-          color={darkseagreen}
-          index={index}
-          valueName="attack"
-          label="Attack"
-        />
-        <AudioParams
-          color={darkseagreen}
-          index={index}
-          valueName="knee"
-          label="Knee"
-        />
-        <AudioParams
-          color={darkseagreen}
-          index={index}
-          valueName="ratio"
-          label="Ratio"
-        />
-        <AudioParams
-          color={darkseagreen}
-          index={index}
-          valueName="release"
-          label="Release"
-        />
-      </div>
+      <MultipleAudioParams
+        audioParams={audioProps}
+        color={darkseagreen}
+        index={index}
+      />
     </BoxNode>
   );
 }

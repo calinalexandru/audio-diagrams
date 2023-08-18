@@ -1,15 +1,11 @@
 import { h, } from 'preact';
-import { useRef, } from 'preact/hooks';
-import {
-  BIQUAD_FILTER_TYPES,
-  HZ,
-  MAX_FREQUENCY,
-  NODE_TYPE,
-} from '../constants';
+import { useMemo, useRef, } from 'preact/hooks';
+import { BIQUAD_FILTER_TYPES, NODE_TYPE, } from '../constants';
 import Select from '../primitives/Select';
 import { useImmerx, } from '../store/state';
 import BoxNode from './BoxNode';
-import AudioParams from './AudioParams';
+import { createAudioParamProps, } from '../factories/audioParams';
+import MultipleAudioParams from './MultipleAudioParams';
 
 const cornflowerblue = '#6495ed';
 export default function BiquadFilter({ index, ...props },) {
@@ -19,6 +15,8 @@ export default function BiquadFilter({ index, ...props },) {
   const dragRef = useRef();
 
   const [, update,] = useImmerx(null,);
+
+  const audioProps = useMemo(() => createAudioParamProps('BIQUAD_FILTER',), [],);
 
   const setType = (val,) => {
     update((draft,) => void (draft.nodes[index].properties.type = val),);
@@ -81,25 +79,10 @@ export default function BiquadFilter({ index, ...props },) {
               <option value={biquadFilterType}>{biquadFilterType}</option>
             ),)}
           </Select>
-          <AudioParams
-            index={index}
+          <MultipleAudioParams
+            audioParams={audioProps}
             color={cornflowerblue}
-            valueName="gain"
-            label="Gain"
-          />
-          <AudioParams
             index={index}
-            color={cornflowerblue}
-            units={HZ}
-            max={MAX_FREQUENCY}
-            valueName="frequency"
-            label="Frequency"
-          />
-          <AudioParams
-            index={index}
-            color={cornflowerblue}
-            valueName="Q"
-            label="Q"
           />
           {/* <Input
             label="Gain"
